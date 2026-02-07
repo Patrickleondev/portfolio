@@ -4,16 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI RedTeamer | Portfolio</title>
-    <meta name="description"
-        content="Portfolio de GANDONOU Koffi Patrick-Léon - Spécialiste AI RedTeaming & CyberSécurité">
+    <title>A Propos | AI RedTeamer</title>
+    <meta name="description" content="Biographie de Koffi Patrick-Léon G. - Spécialiste AI RedTeaming">
     <link rel="stylesheet" href="./style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;600;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -24,8 +20,8 @@
             <nav class="glass-nav">
                 <div class="logo">Koffi Patrick-Léon G.</div>
                 <ul>
-                    <li><a href="./index.html" class="active">Accueil</a></li>
-                    <li><a href="./about.html">A Propos</a></li>
+                    <li><a href="./index.html">Accueil</a></li>
+                    <li><a href="./about.html" class="active">A Propos</a></li>
                     <li><a href="./expertise.html">Expertise</a></li>
                     <li><a href="./projects.html">Projets</a></li>
                     <li><a href="./blog/">Blog</a></li>
@@ -33,29 +29,27 @@
             </nav>
         </header>
 
-        <section id="home" class="hero-section full-height">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <p class="greeting">Hello, I am</p>
-                    <h1 class="glitch" data-text="AI Red Teamer">AI Red Teamer</h1>
-                    <h2 class="role">Aspiring Security Researcher & Pentester</h2>
-                    <p class="bio-short">
-                        Passionné par la sécurisation des LLMs et l'offensive security.
-                        En constante évolution pour anticiper les attaques adverses.
+        <section class="section-container">
+            <h2 class="section-title">A propos de moi</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        Passionné par la <strong>Cybersécurité</strong> et plus spécifiquement par les vulnérabilités de
+                        l'<strong>Intelligence Artificielle</strong>.
                     </p>
-
-                    <div class="cta-group">
-                        <a href="./about.html" class="btn primary">Mon Parcours</a>
-                        <a href="./projects.html" class="btn secondary">Mes Projets</a>
-                    </div>
+                    <p>
+                        En tant qu'**Aspiring AI Red Teamer**, je me consacre à comprendre comment les modèles de
+                        langage (LLMs) peuvent être manipulés ou compromis (Prompt Injection, Jailbreak, Poisoning) afin
+                        de mieux les sécuriser.
+                    </p>
+                    <p>
+                        Mon parcours technique couvre à la fois l'offensive security (Pentesting, CTF) et la défense, le
+                        tout soutenu par une rigueur scientifique. Je ne suis pas encore en poste en entreprise, mais je
+                        construis activement mes compétences à travers des certifications reconnues et des challenges
+                        techniques intenses sur TryHackMe et HackTheBox.
+                    </p>
                 </div>
-                <!-- Hero Image is now on the right -->
-                <div class="hero-image-container">
-                    <div class="image-frame">
-                        <img src="./assets/images/Professionnal_1.jpg" alt="Koffi Patrick-Léon Gandonou"
-                            class="profile-pic">
-                    </div>
-                </div>
+                <!-- Removed CV Download as requested -->
             </div>
         </section>
 
@@ -89,7 +83,6 @@
             </div>
         </footer>
     </main>
-
     <script type="module" src="./main.js"></script>
 </body>
 

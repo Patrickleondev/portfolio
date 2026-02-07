@@ -51,7 +51,7 @@ const typeWriterElements = [
     { selector: '#about-hook', delay: 1500 }
 ];
 
-function typeWriter(element, text, i = 0, speed = 30) {
+function typeWriter(element, text, i = 0, speed = 75) {
     if (i < text.length) {
         element.innerHTML += text.charAt(i);
         i++;

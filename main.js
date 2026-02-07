@@ -42,22 +42,39 @@ window.addEventListener('resize', () => {
 });
 
 // Typewriter Effect
-const typewriter = document.querySelector('.typewriter');
-if (typewriter) {
-    const text = typewriter.innerHTML;
-    typewriter.innerHTML = '';
-    let i = 0;
+const typeWriterElements = [
+    { selector: '.greeting', delay: 0 },
+    { selector: '.glitch', delay: 1000 },
+    { selector: '.role', delay: 2000 },
+    { selector: '.bio-short', delay: 3500 }
+];
 
-    function type() {
-        if (i < text.length) {
-            typewriter.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, 50);
-        }
+function typeWriter(element, text, i = 0, speed = 30) {
+    if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(() => typeWriter(element, text, i, speed), speed);
+    } else {
+        element.style.borderRight = "none"; // Remove cursor after typing
     }
-
-    window.onload = type;
 }
+
+window.addEventListener('load', () => {
+    typeWriterElements.forEach(({ selector, delay }) => {
+        const element = document.querySelector(selector);
+        if (element) {
+            const text = element.getAttribute('data-text') || element.innerText;
+            element.innerText = ''; // Clear initial text
+            element.style.opacity = '1';
+            element.style.visibility = 'visible';
+
+            setTimeout(() => {
+                element.style.borderRight = "2px solid var(--accent-color)"; // Add cursor
+                typeWriter(element, text);
+            }, delay);
+        }
+    });
+});
 // Audio Context for Hover Effect (Hacker Style)
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 

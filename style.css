@@ -26,6 +26,19 @@ body {
     overflow-x: hidden;
 }
 
+/* Cursor Blink Animation */
+@keyframes blink {
+
+    0%,
+    100% {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: var(--accent-color);
+    }
+}
+
 #matrix-bg {
     position: fixed;
     top: 0;

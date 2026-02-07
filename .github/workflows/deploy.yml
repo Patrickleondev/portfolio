@@ -32,6 +32,8 @@ jobs:
       - name: Build Jekyll (Blog) 🔧
         run: |
           cd blog
+          # No Gemfile.lock might exist in first push
+          bundle config set --local path 'vendor/bundle'
           bundle install
           bundle exec jekyll build --baseurl /Mon_Portfolio/blog
           cd ..
@@ -41,6 +43,7 @@ jobs:
           # Move Jekyll output into Vite's dist/blog
           mkdir -p dist/blog
           cp -R blog/_site/* dist/blog/
+          touch dist/.nojekyll
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4

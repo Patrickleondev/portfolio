@@ -478,11 +478,24 @@ footer {
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+}
+
+.social-icons-footer {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+padding: 0 2rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1.5rem;
 }
 
 .social-icons-footer {

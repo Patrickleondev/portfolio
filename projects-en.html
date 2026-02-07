@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects | AI RedTeamer</title>
+    <link rel="stylesheet" href="./style.css?v=2" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="matrix-bg"></div>
+    <div class="overlay"></div>
+    <main>
+        <header>
+            <nav class="glass-nav">
+                <div class="logo">Koffi Patrick-Léon GANDONOU</div>
+                <ul>
+                    <li><a href="./index-en.html">Home</a></li>
+                    <li><a href="./about-en.html">About</a></li>
+                    <li><a href="./expertise-en.html">Expertise</a></li>
+                    <li><a href="./projects-en.html" class="active">Projects</a></li>
+                    <li><a href="./contact-en.html">Contact</a></li>
+                    <li><a href="./blog/">Blog</a></li>
+                    <li class="lang-switch">
+                        <a href="./projects.html">FR</a> | <a href="./projects-en.html" class="active">EN</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="section-container" id="services">
+            <h2 class="section-title" id="services-title" style="visibility: hidden;">My Services</h2>
+            <div class="services-grid">
+                <div class="service-card" data-tilt>
+                    <div class="service-icon"><i class="fas fa-bug"></i></div>
+                    <h3>Audit & Pentesting</h3>
+                    <p>Identification of web, network, and application vulnerabilities before they are exploited.</p>
+                </div>
+                <div class="service-card" data-tilt>
+                    <div class="service-icon"><i class="fas fa-brain"></i></div>
+                    <h3>AI Red Teaming</h3>
+                    <p>Evaluating the robustness of LLM models against prompt injection and jailbreak attacks.</p>
+                </div>
+                <div class="service-card" data-tilt>
+                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Cloud Security</h3>
+                    <p>Hardening of infrastructures and secure configurations (Docker, Kubernetes, AWS).</p>
+                </div>
+                <div class="service-card" data-tilt>
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <h3>DevSecOps</h3>
+                    <p>Integrating security by design into CI/CD pipelines and the development lifecycle.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-container" id="realizations">
+            <h2 class="section-title" id="realizations-title" style="visibility: hidden;">Main Projects</h2>
+            <div class="projects-grid">
+                <!-- GuardIAn -->
+                <div class="project-card"
+                    onclick="window.open('https://github.com/Patrickleondev/Hackathon_au_Togo_IT_Days_2025_EPL_Team', '_blank')">
+                    <div class="project-status"><i class="fas fa-trophy" style="color: gold;"></i> 1st Prize - Togo IT
+                        Days 2025</div>
+                    <div class="project-info">
+                        <h3>GuardIAn - Ransomware Defense</h3>
+                        <p class="project-desc">Intelligent system for detection and neutralization of ransomwares based
+                            on kill chain analysis and malicious behavior. Static/dynamic analysis of executables (ELF,
+                            EXE/DLL, macOS), suspect signature detection, identification and neutralization of malicious
+                            processes with automatic quarantine. Integration of Hugging Face and traditional ML models
+                            to reduce false positives.</p>
+                        <div class="tech-stack">
+                            <span>Python</span><span>ML/AI</span><span>Hugging Face</span><span>Network Analysis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SanoC -->
+                <div class="project-card"
+                    onclick="window.open('https://github.com/Patrickleondev/Projet_Final_Niveau_Avance_DCLIC', '_blank')">
+                    <div class="project-status"><i class="fas fa-medal" style="color: #cd7f32;"></i> 4th Place
+                        Nationwide - MIABE Hackathon (16 countries)</div>
+                    <div class="project-info">
+                        <h3>SanoC - Digital Health</h3>
+                        <p class="project-desc">Digital community health platform: medical appointments, automatic
+                            medication reminders (notifications), secured digital medical record (allergies, blood type,
+                            history), geolocation of health centers. Contribution to functional and technical design
+                            with focus on medical data security.</p>
+                        <div class="tech-stack">
+                            <span>Flutter</span><span>Mobile Dev</span><span>Data Security</span><span>Firebase</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AgriVision -->
+                <div class="project-card"
+                    onclick="window.open('https://github.com/Patrickleondev/Modele_de_Classification_d_Image_Agricole', '_blank')">
+                    <div class="project-status"><i class="fas fa-check-circle" style="color: var(--accent-color);"></i>
+                        Final Project FORCE-N (97% Accuracy)</div>
+                    <div class="project-info">
+                        <h3>AgriVision - Computer Vision</h3>
+                        <p class="project-desc">Computer vision model for agricultural image classification (+50
+                            classes). Uses ResNet-50 and MobileNetV2 with ML and Deep Learning approaches. Data
+                            preprocessing, model training, and performance analysis. Final accuracy: 97%.</p>
+                        <div class="tech-stack">
+                            <span>Python</span><span>TensorFlow</span><span>ResNet-50</span><span>MobileNetV2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="social-icons-footer">
+                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" title="TryHackMe">
+                        <img src="https://simpleicons.org/icons/tryhackme.svg" alt="TryHackMe" class="icon-svg">
+                    </a>
+                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" title="HackTheBox">
+                        <img src="https://simpleicons.org/icons/hackthebox.svg" alt="HackTheBox" class="icon-svg">
+                    </a>
+                    <a href="https://github.com/Patrickleondev" target="_blank" title="GitHub">
+                        <img src="https://simpleicons.org/icons/github.svg" alt="GitHub" class="icon-svg">
+                    </a>
+                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin icon-svg"
+                            style="font-size: 24px; display: flex; align-items: center; justify-content: center;"></i>
+                    </a>
+                    <a href="https://x.com/gkpl0010" target="_blank" title="X (Twitter)">
+                        <img src="https://simpleicons.org/icons/x.svg" alt="X" class="icon-svg">
+                    </a>
+                </div>
+                <div class="contact-info"
+                    style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <a href="https://wa.me/22893035706" target="_blank" class="whatsapp-btn">
+                        <img src="https://simpleicons.org/icons/whatsapp.svg" alt="WhatsApp" class="icon-svg-small">
+                        Contact via WhatsApp
+                    </a>
+                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email">
+                        <i class="fas fa-envelope icon-svg" style="font-size: 24px;"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2026 Koffi Patrick-Léon Gandonou. Built for AI Security.</p>
+            </div>
+        </footer>
+    </main>
+    <script type="module" src="./main.js?v=3"></script>
+</body>
+
+</html>

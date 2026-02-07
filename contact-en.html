@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | AI RedTeamer</title>
+    <meta name="description" content="Contact Koffi Patrick-Léon G. - AI Red Teamer & Pentester">
+    <link rel="stylesheet" href="./style.css?v=2" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="matrix-bg"></div>
+    <div class="overlay"></div>
+    <main>
+        <header>
+            <nav class="glass-nav">
+                <div class="logo">Koffi Patrick-Léon GANDONOU</div>
+                <ul>
+                    <li><a href="./index-en.html">Home</a></li>
+                    <li><a href="./about-en.html">About</a></li>
+                    <li><a href="./expertise-en.html">Expertise</a></li>
+                    <li><a href="./projects-en.html">Projects</a></li>
+                    <li><a href="./contact-en.html" class="active">Contact</a></li>
+                    <li><a href="./blog/">Blog</a></li>
+                    <li class="lang-switch">
+                        <a href="./contact.html">FR</a> | <a href="./contact-en.html" class="active">EN</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="section-container">
+            <h2 class="section-title">Contact me</h2>
+
+            <!-- Contact Form -->
+            <div class="contact-container">
+                <div class="contact-intro">
+                    <p style="text-align: center; color: var(--dim-color); margin-bottom: 2rem;">
+                        <i class="fas fa-terminal" style="color: var(--accent-color);"></i>
+                        Have a project in cybersecurity or AI Security? Feel free to contact me.
+                    </p>
+                </div>
+
+                <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="Your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="Object of your message">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" rows="6" required
+                            placeholder="Your message..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn primary submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send message
+                    </button>
+
+                    <div id="form-status" class="form-status"></div>
+                </form>
+
+                <!-- Alternative Contact Methods -->
+                <div class="contact-methods">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-color);">
+                        Or contact me directly
+                    </h3>
+                    <div class="contact-links">
+                        <a href="mailto:gandonoupatrickleon@gmail.com" class="contact-link">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email</span>
+                        </a>
+                        <a href="https://wa.me/22893035706" target="_blank" class="contact-link">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank"
+                            class="contact-link">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="social-icons-footer">
+                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" title="TryHackMe">
+                        <img src="https://simpleicons.org/icons/tryhackme.svg" alt="TryHackMe" class="icon-svg">
+                    </a>
+                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" title="HackTheBox">
+                        <img src="https://simpleicons.org/icons/hackthebox.svg" alt="HackTheBox" class="icon-svg">
+                    </a>
+                    <a href="https://github.com/Patrickleondev" target="_blank" title="GitHub">
+                        <img src="https://simpleicons.org/icons/github.svg" alt="GitHub" class="icon-svg">
+                    </a>
+                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin icon-svg"
+                            style="font-size: 24px; display: flex; align-items: center; justify-content: center;"></i>
+                    </a>
+                    <a href="https://x.com/gkpl0010" target="_blank" title="X (Twitter)">
+                        <img src="https://simpleicons.org/icons/x.svg" alt="X" class="icon-svg">
+                    </a>
+                </div>
+                <div class="contact-info"
+                    style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <a href="https://wa.me/22893035706" target="_blank" class="whatsapp-btn">
+                        <img src="https://simpleicons.org/icons/whatsapp.svg" alt="WhatsApp" class="icon-svg-small">
+                        Contact via WhatsApp
+                    </a>
+                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email">
+                        <i class="fas fa-envelope icon-svg" style="font-size: 24px;"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2026 Koffi Patrick-Léon Gandonou. Built for AI Security.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script type="module" src="./main.js?v=3"></script>
+    <script>
+        // Form submission handling
+        const form = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = form.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formStatus.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> Message sent successfully! I will respond soon.</div>';
+                    form.reset();
+                } else {
+                    throw new Error('Error during sending');
+                }
+            } catch (error) {
+                formStatus.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error during sending. Please retry or contact me directly by email.</div>';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send message';
+            }
+        });
+    </script>
+</body>
+
+</html>

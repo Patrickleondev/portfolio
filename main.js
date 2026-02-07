@@ -44,9 +44,9 @@ window.addEventListener('resize', () => {
 // Typewriter Effect
 const typeWriterElements = [
     { selector: '.greeting', delay: 0 },
-    { selector: '.glitch', delay: 1000 },
-    { selector: '.role', delay: 2000 },
-    { selector: '.bio-short', delay: 3500 },
+    { selector: '.glitch', delay: 500 },
+    { selector: '.role', delay: 1500 },
+    { selector: '.bio-short', delay: 2500 },
     { selector: '#about-title', delay: 500 },
     { selector: '#about-hook', delay: 1500 }
 ];
@@ -65,8 +65,8 @@ window.addEventListener('load', () => {
     typeWriterElements.forEach(({ selector, delay }) => {
         const element = document.querySelector(selector);
         if (element) {
-            const text = element.getAttribute('data-text') || element.innerText;
-            element.innerText = ''; // Clear initial text
+            const text = element.getAttribute('data-text') || element.textContent;
+            element.textContent = ''; // Clear initial text
             element.style.opacity = '1';
             element.style.visibility = 'visible';
 

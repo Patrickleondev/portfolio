@@ -5,7 +5,7 @@ description: Explore technical writeups and deep dives into AI RedTeaming and Cy
 theme: jekyll-theme-chirpy
 
 author:
-  name: Koffi Patrick-Léon GANDONOU
+  name: T3chW1zard
   twitter: gkpl0010
   github: Patrickleondev
 
@@ -14,7 +14,7 @@ baseurl: "/portfolio/blog"
 
 # Social Links
 social:
-  name: Koffi Patrick-Léon GANDONOU
+  name: T3chW1zard
   links:
     - https://github.com/Patrickleondev
     - https://twitter.com/gkpl0010

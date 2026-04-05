@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-05T23:22:14+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">TryHackMe — BankGPT [AI Red Teaming]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/thm-bankgpt-ai-red-teaming/" rel="alternate" type="text/html" title="TryHackMe — BankGPT [AI Red Teaming]" /><published>2026-02-06T23:15:00+00:00</published><updated>2026-02-06T23:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/thm-bankgpt-ai-red-teaming</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/thm-bankgpt-ai-red-teaming/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-05T23:33:06+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">TryHackMe — BankGPT [AI Red Teaming]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/thm-bankgpt-ai-red-teaming/" rel="alternate" type="text/html" title="TryHackMe — BankGPT [AI Red Teaming]" /><published>2026-02-06T23:15:00+00:00</published><updated>2026-02-06T23:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/thm-bankgpt-ai-red-teaming</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/thm-bankgpt-ai-red-teaming/"><![CDATA[<blockquote>
   <p><strong>Plateforme :</strong> TryHackMe · <strong>Type :</strong> AI Red Teaming · <strong>Difficulté :</strong> Easy<br />
 <strong>Room :</strong> <a href="https://tryhackme.com/jr/bankgpt">BankGPT</a></p>
 </blockquote>
@@ -908,11 +908,11 @@ En Perl, Ruby, Python, JavaScript — la règle est la même : <strong>ne jamais
 
 <hr />
 
-<p><img src="/portfolio/blog/assets/img/posts/ctf/jean-overview-1.jpeg" alt="Plateforme Jean D'Hack CTF 2026" />
+<p><img src="/assets/img/posts/ctf/jean-overview-1.jpeg" alt="Plateforme Jean D'Hack CTF 2026" />
 <em>Jean D’Hack CTF 2026 — plateforme</em></p>
 
-<p><img src="/portfolio/blog/assets/img/posts/ctf/jean-overview-2.jpeg" alt="Scoreboard" />
+<p><img src="/assets/img/posts/ctf/jean-overview-2.jpeg" alt="Scoreboard" />
 <em>Scoreboard</em></p>
 
-<p><img src="/portfolio/blog/assets/img/posts/ctf/jean-overview-3.jpeg" alt="Interface CTF" />
+<p><img src="/assets/img/posts/ctf/jean-overview-3.jpeg" alt="Interface CTF" />
 <em>Interface CTF</em></p>]]></content><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><category term="CTF" /><category term="Jean-DHack-2026" /><category term="crypto" /><category term="pwn" /><category term="reverse" /><category term="ctf-2026" /><summary type="html"><![CDATA[Organisateur : Jean D’Hack CTF Date : Février 2026 Catégories jouées : Pwn · Crypto · Reverse]]></summary></entry></feed>

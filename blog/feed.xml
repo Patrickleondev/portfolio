@@ -1,32 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-05T18:58:54+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">RedTeamer Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>T3chW1zard</name></author><entry><title type="html">AI RedTeaming : Jailbreaking BankGPT</title><link href="https://patrickleondev.github.io/portfolio/blog/ai%20redteaming/labs/2026/02/06/bankgpt-jailbreak.html" rel="alternate" type="text/html" title="AI RedTeaming : Jailbreaking BankGPT" /><published>2026-02-06T23:15:00+00:00</published><updated>2026-02-06T23:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/ai%20redteaming/labs/2026/02/06/bankgpt-jailbreak</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/ai%20redteaming/labs/2026/02/06/bankgpt-jailbreak.html"><![CDATA[<h2 id="contexte-du-lab">Contexte du Lab</h2>
-
-<p>Dans ce lab pedagogique de red teaming LLM, l’objectif etait de verifier si un assistant pouvait maintenir ses garde-fous face a des requetes apparemment legitimes.</p>
-
-<p><img src="/portfolio/blog/assets/img/posts/ctf/bankgpt-prompt-1.png" alt="Conversation screenshot 1" /></p>
-
-<p><img src="/portfolio/blog/assets/img/posts/ctf/bankgpt-prompt-2.png" alt="Conversation screenshot 2" /></p>
-
-<h2 id="observation-principale">Observation Principale</h2>
-
-<p>Le modele a fini par exposer une information sensible en repondant a une demande de clarification process, ce qui montre une faiblesse d’isolation entre:</p>
-
-<ul>
-  <li>le contexte metier autorise</li>
-  <li>les secrets internes</li>
-</ul>
-
-<h2 id="points-de-defense">Points de Defense</h2>
-
-<ol>
-  <li>Ajouter une couche de redaction systematique des secrets en sortie</li>
-  <li>Renforcer les policies de refus sur les objets sensibles, meme en contexte legitimant</li>
-  <li>Mettre en place des tests automatiques de fuite d’information dans la CI</li>
-  <li>Segmenter les sources internes exposees au modele</li>
-</ol>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>Cette experience confirme qu’un assistant peut paraitre robuste en tests directs, tout en restant fragile aux requetes decontournees. La posture defensive doit combiner filtrage de sortie, garde-fous contextuels et evaluation continue.</p>]]></content><author><name>T3chW1zard</name></author><category term="AI RedTeaming" /><category term="Labs" /><category term="prompt-injection" /><category term="jailbreak" /><category term="tryhackme" /><summary type="html"><![CDATA[Contexte du Lab]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://patrickleondev.github.io/portfolio/blog/assets/img/posts/ctf/bankgpt-prompt-1.png" /><media:content medium="image" url="https://patrickleondev.github.io/portfolio/blog/assets/img/posts/ctf/bankgpt-prompt-1.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">TryHackMe — BankGPT [AI Red Teaming]</title><link href="https://patrickleondev.github.io/portfolio/blog/lab/tryhackme/ai-redteaming/2026/02/06/thm-bankgpt-ai-red-teaming.html" rel="alternate" type="text/html" title="TryHackMe — BankGPT [AI Red Teaming]" /><published>2026-02-06T23:15:00+00:00</published><updated>2026-02-06T23:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/lab/tryhackme/ai-redteaming/2026/02/06/thm-bankgpt-ai-red-teaming</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/lab/tryhackme/ai-redteaming/2026/02/06/thm-bankgpt-ai-red-teaming.html"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-05T18:59:55+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">RedTeamer Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>T3chW1zard</name></author><entry><title type="html">TryHackMe — BankGPT [AI Red Teaming]</title><link href="https://patrickleondev.github.io/portfolio/blog/lab/tryhackme/ai-redteaming/2026/02/06/thm-bankgpt-ai-red-teaming.html" rel="alternate" type="text/html" title="TryHackMe — BankGPT [AI Red Teaming]" /><published>2026-02-06T23:15:00+00:00</published><updated>2026-02-06T23:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/lab/tryhackme/ai-redteaming/2026/02/06/thm-bankgpt-ai-red-teaming</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/lab/tryhackme/ai-redteaming/2026/02/06/thm-bankgpt-ai-red-teaming.html"><![CDATA[<blockquote>
   <p><strong>Plateforme :</strong> TryHackMe · <strong>Type :</strong> AI Red Teaming · <strong>Difficulté :</strong> Easy<br />
 <strong>Room :</strong> <a href="https://tryhackme.com/jr/bankgpt">BankGPT</a></p>
 </blockquote>

@@ -5,7 +5,8 @@ description: Explore technical writeups and deep dives into AI RedTeaming and Cy
 theme: jekyll-theme-chirpy
 
 author:
-  name: T3chW1zard
+  name: t3chw1z4rd
+  email:gkpl0010@gmail.com
   twitter: gkpl0010
   github: Patrickleondev
 
@@ -14,11 +15,11 @@ baseurl: "/portfolio/blog"
 
 # Social Links
 social:
-  name: t3w1z4rd
+  name: t3chw1z4rd
   links:
     - https://www.linkedin.com/in/patrick-léon-gandonou
     - https://github.com/Patrickleondev
-    - https://twitter.com/gkpl0010
+    - https://x.com/gkpl0010
 
 # Jekyll plugins
 plugins:
@@ -45,7 +46,7 @@ kramdown:
 lang: fr-FR
 timezone: UTC
 avatar: ''
-theme_mode: dark
+theme_mode:
 
 sass:
   style: compressed

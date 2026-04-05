@@ -28,6 +28,6 @@ image:
 
 ---
 
-![Scoreboard](/assets/img/posts/ctf/jean-overview-2.jpeg)
+![Scoreboard](/portfolio/blog/assets/img/posts/ctf/jean-overview-2.jpeg)
 
-![Interface CTF](/assets/img/posts/ctf/jean-overview-3.jpeg)
+![Interface CTF](/portfolio/blog/assets/img/posts/ctf/jean-overview-3.jpeg)

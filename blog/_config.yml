@@ -46,7 +46,7 @@ kramdown:
 # Chirpy settings
 lang: fr-FR
 timezone: UTC
-avatar: ''
+avatar: '/assets/img/naruto.jpg'
 theme_mode:
 
 sass:

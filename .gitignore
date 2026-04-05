@@ -2,3 +2,11 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# Jekyll
+blog/vendor/
+blog/_site/
+blog/.bundle/
+
+# Documentation locale (ne pas pousser sur GitHub)
+GUIDE_BLOG_CTF.md

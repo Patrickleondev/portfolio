@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "jekyll", "~> 4.3.2"
-gem "jekyll-theme-chirpy"
+gem "jekyll-theme-chirpy", "~> 6.5"
 
 gem "tzinfo-data"
 gem "webrick"
@@ -14,5 +14,4 @@ group :jekyll_plugins do
   gem "jekyll-sitemap"
   gem "jekyll-archives"
   gem "jekyll-include-cache"
-  gem "jekyll-remote-theme"
 end

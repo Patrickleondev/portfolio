@@ -5,6 +5,13 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -19,30 +26,30 @@ jobs:
 
       - name: Build Vite (Landing Page) 🔧
         run: |
-          npm install
+          npm ci
           npm run build
 
-      - name: Setup Ruby/Jekyll 💎
+      - name: Setup Ruby 💎
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler-cache: true
-          working-directory: blog
+          bundler-cache: false
 
-      - name: Build Jekyll (Blog) 🔧
+      - name: Install gems & Build Jekyll (Blog) 🔧
         run: |
           cd blog
-          # No Gemfile.lock might exist in first push
-          bundle config set --local path 'vendor/bundle'
-          bundle install
-          bundle exec jekyll build --baseurl /portfolio/blog
+          bundle config set --local path vendor/bundle
+          bundle install --jobs 4 --retry 3
+          JEKYLL_ENV=production bundle exec jekyll build \
+            --source . \
+            --destination _site \
+            --baseurl /portfolio/blog
           cd ..
 
       - name: Merge Builds 📦
         run: |
-          # Move Jekyll output into Vite's dist/blog
           mkdir -p dist/blog
-          cp -R blog/_site/* dist/blog/
+          cp -R blog/_site/. dist/blog/
           touch dist/.nojekyll
 
       - name: Deploy 🚀

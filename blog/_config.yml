@@ -2,8 +2,7 @@ title: RedTeamer Blog
 tagline: Writeups CTF & AI RedTeaming Labs
 description: Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.
 
-# Theme source: https://github.com/cotes2020/jekyll-theme-chirpy
-remote_theme: cotes2020/jekyll-theme-chirpy
+theme: jekyll-theme-chirpy
 
 author:
   name: Koffi Patrick-Léon GANDONOU
@@ -30,7 +29,6 @@ plugins:
   - jekyll-feed
   - jekyll-archives
   - jekyll-include-cache
-  - jekyll-remote-theme
 
 # Pagination settings
 paginate: 10
@@ -47,22 +45,12 @@ kramdown:
 lang: fr-FR
 timezone: UTC
 
-# Sidebar
-tabs:
-  - title: Archives
-    url: /archives/
-    icon: fas fa-archive
-  - title: Categories
-    url: /categories/
-    icon: fas fa-stream
-  - title: Tags
-    url: /tags/
-    icon: fas fa-tags
+sass:
+  style: compressed
 
 # Build settings
 exclude:
   - Gemfile
-  - Gemfile.lock
   - vendor
   - .github
   - Dockerfile

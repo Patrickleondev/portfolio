@@ -6,16 +6,14 @@ categories: [CTF, Jean-DHack-2026]
 tags: [crypto, pwn, reverse, ctf-2026]
 pin: true
 toc: false
+image:
+  path: /assets/img/posts/ctf/jean-overview-1.jpeg
+  alt: "Jean D'Hack CTF 2026 — plateforme"
 ---
 
 **Organisateur :** Jean D'Hack CTF  
 **Date :** Février 2026  
 **Catégories jouées :** Pwn · Crypto · Reverse  
-
----
-
-![Jean D'Hack CTF 2026 — plateforme](/portfolio/blog/assets/img/posts/ctf/jean-overview-1.jpeg)
-_Jean D'Hack CTF 2026 — plateforme_
 
 ---
 

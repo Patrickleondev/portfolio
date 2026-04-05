@@ -2,7 +2,7 @@
 layout: post
 title: "TryHackMe — BankGPT [AI Red Teaming]"
 date: 2026-02-07 00:15:00 +0100
-categories: [Lab, TryHackMe, AI-RedTeaming]
+categories: [AI RedTeaming, TryHackMe]
 tags: [tryhackme, llm, prompt-injection, jailbreak, ai-security]
 toc: true
 image:

@@ -1,0 +1,67 @@
+{
+  "id": 86,
+  "title": "5 friends",
+  "description": "You encrypted your secret by passing it through 5 friends, each locking it with their own RSA key.You thought more locks meant more security, But you all share the same N and you accidentally leaked your own private key. Can you help to recover one the encrypted message. Check the attached output.txt file.",
+  "category": "CRYPTO",
+  "points": 100,
+  "difficulty": "easy",
+  "flag_format": "EcowasCTF{flaghere}",
+  "connection": null,
+  "submission_type": "flag",
+  "solve_count": 106,
+  "attachments": [
+    {
+      "id": 72,
+      "filename": "output.txt",
+      "size": 5055,
+      "download_url": "https://api.ecowasctf.com.gh/events/2/challenges/86/attachments/72/download?t=NzI6MTkzOjE3NzY2MzUyNTM.2A1_2m7n_PbijMKDjyAGM9DYysRvQ0gC_VksZEvCNlE"
+    }
+  ],
+  "recent_solves": [
+    {
+      "username": "8L4CK",
+      "solved_at": "2026-04-19T20:34:06.014384"
+    },
+    {
+      "username": "s1ngle",
+      "solved_at": "2026-04-19T20:25:33.371778"
+    },
+    {
+      "username": "newt0neX",
+      "solved_at": "2026-04-19T20:19:13.938983"
+    },
+    {
+      "username": "ab\u00e9natchin",
+      "solved_at": "2026-04-19T20:18:28.247424"
+    },
+    {
+      "username": "Jagne_05",
+      "solved_at": "2026-04-19T20:15:47.481480"
+    },
+    {
+      "username": "Kr0nos",
+      "solved_at": "2026-04-19T20:12:11.691855"
+    },
+    {
+      "username": "ju4dy",
+      "solved_at": "2026-04-19T20:04:20.198610"
+    },
+    {
+      "username": "Boot",
+      "solved_at": "2026-04-19T20:02:43.381523"
+    },
+    {
+      "username": "unisain",
+      "solved_at": "2026-04-19T20:01:57.023025"
+    },
+    {
+      "username": "HerBoy225",
+      "solved_at": "2026-04-19T19:57:40.838226"
+    }
+  ],
+  "has_vm": false,
+  "is_solved": false,
+  "team_solved": false,
+  "team_solved_by": null,
+  "deployment": null
+}

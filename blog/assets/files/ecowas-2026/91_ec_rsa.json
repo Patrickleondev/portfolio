@@ -1,0 +1,67 @@
+{
+  "id": 91,
+  "title": "EC-RSA",
+  "description": "Recover the message from the provided transcript.",
+  "category": "Crypto",
+  "points": 300,
+  "difficulty": "medium",
+  "flag_format": "EcowasCTF{...}",
+  "connection": null,
+  "submission_type": "flag",
+  "solve_count": 53,
+  "attachments": [
+    {
+      "id": 76,
+      "filename": "output.txt",
+      "size": 999,
+      "download_url": "https://api.ecowasctf.com.gh/events/3/challenges/91/attachments/76/download?t=NzY6MTkzOjE3NzcwNjIxNTM.t8sJfTGRjqC2YVxarRUkTRQKsDkWEI7r8-kxS5__Dys"
+    }
+  ],
+  "recent_solves": [
+    {
+      "username": "p3rf0rm3r",
+      "solved_at": "2026-04-24T19:20:54.273995"
+    },
+    {
+      "username": "Zedex",
+      "solved_at": "2026-04-24T19:19:08.633876"
+    },
+    {
+      "username": "Gr3atSp!r!t",
+      "solved_at": "2026-04-24T19:18:57.412225"
+    },
+    {
+      "username": "phenix",
+      "solved_at": "2026-04-24T19:17:27.931682"
+    },
+    {
+      "username": "Marshall69",
+      "solved_at": "2026-04-24T19:16:32.975662"
+    },
+    {
+      "username": "newt0neX",
+      "solved_at": "2026-04-24T19:15:15.756322"
+    },
+    {
+      "username": "D4C",
+      "solved_at": "2026-04-24T19:13:58.518410"
+    },
+    {
+      "username": "Hervegeorges002",
+      "solved_at": "2026-04-24T19:12:01.577900"
+    },
+    {
+      "username": "{D4em0n}",
+      "solved_at": "2026-04-24T19:12:01.343726"
+    },
+    {
+      "username": "beginner123",
+      "solved_at": "2026-04-24T19:10:55.841586"
+    }
+  ],
+  "has_vm": false,
+  "is_solved": false,
+  "team_solved": false,
+  "team_solved_by": null,
+  "deployment": null
+}

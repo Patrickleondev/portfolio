@@ -1,0 +1,67 @@
+{
+  "id": 56,
+  "title": "Dogon Nonce",
+  "description": "The Dogon elder signs every prophecy with the same ritual, but his hand trembles, always in the same direction. ",
+  "category": "Crypto",
+  "points": 500,
+  "difficulty": "hard",
+  "flag_format": "EcowasCTF{...}",
+  "connection": null,
+  "submission_type": "flag",
+  "solve_count": 127,
+  "attachments": [
+    {
+      "id": 43,
+      "filename": "signatures.json.txt",
+      "size": 28031,
+      "download_url": "https://api.ecowasctf.com.gh/events/2/challenges/56/attachments/43/download?t=NDM6MTkzOjE3NzY1NDMzMTQ.bBFZh4alVU-8ODy54QUKrHdAiDpsxqIC_KRFDRCHCLo"
+    }
+  ],
+  "recent_solves": [
+    {
+      "username": "lavitesse667",
+      "solved_at": "2026-04-18T01:34:18.231568"
+    },
+    {
+      "username": "Sevensix",
+      "solved_at": "2026-04-17T22:01:48.636276"
+    },
+    {
+      "username": "M.SIDIAN.",
+      "solved_at": "2026-04-17T21:59:42.993071"
+    },
+    {
+      "username": "{D4em0n}",
+      "solved_at": "2026-04-17T20:28:26.326928"
+    },
+    {
+      "username": "p3nt2r0us",
+      "solved_at": "2026-04-17T19:03:34.148728"
+    },
+    {
+      "username": "0xbaz3",
+      "solved_at": "2026-04-17T16:00:27.717022"
+    },
+    {
+      "username": "SilensPier",
+      "solved_at": "2026-04-17T13:59:57.287007"
+    },
+    {
+      "username": "nssi",
+      "solved_at": "2026-04-17T13:33:42.897862"
+    },
+    {
+      "username": "HerBoy225",
+      "solved_at": "2026-04-17T09:57:02.462657"
+    },
+    {
+      "username": "Shadow Knight",
+      "solved_at": "2026-04-17T09:01:10.984801"
+    }
+  ],
+  "has_vm": false,
+  "is_solved": true,
+  "team_solved": false,
+  "team_solved_by": null,
+  "deployment": null
+}

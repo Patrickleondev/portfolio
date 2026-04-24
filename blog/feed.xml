@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-24T22:48:28+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-24T22:54:39+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
   <p><strong>CTF :</strong> ECOWAS CTF 2026 (Événement 3) · <strong>Catégorie :</strong> Crypto · <strong>Difficulté :</strong> ⭐⭐ Medium · <strong>Points :</strong> 300<br />
 <strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index du CTF</a></strong></p>
 </blockquote>
@@ -6,6 +6,10 @@
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -131,7 +135,7 @@ G = (...)
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{singular_curves_factor_rsa_keys}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{singular_curves_factor_rsa_keys}
 </code></pre></div></div>
 
 <hr />
@@ -153,6 +157,10 @@ G = (...)
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -316,7 +324,7 @@ key_byte = v13 XOR key_byte
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{vm_lifted_nibbles_are_louder_than_strings}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{vm_lifted_nibbles_are_louder_than_strings}
 </code></pre></div></div>
 
 <hr />
@@ -338,6 +346,10 @@ key_byte = v13 XOR key_byte
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -444,7 +456,7 @@ czNjcjN0IQ==  → s3cr3t!
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{h4rdc0d3d_m0b1l3_xpl0it}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{h4rdc0d3d_m0b1l3_xpl0it}
 </code></pre></div></div>
 
 <hr />
@@ -466,6 +478,10 @@ czNjcjN0IQ==  → s3cr3t!
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -583,14 +599,14 @@ Taille: 116 352 octets
 
 <p><strong>Résultat :</strong></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{wh1t3_b0x_t4bl3s_sw4h1l1_2026}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{wh1t3_b0x_t4bl3s_sw4h1l1_2026}
 </code></pre></div></div>
 
 <hr />
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{wh1t3_b0x_t4bl3s_sw4h1l1_2026}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{wh1t3_b0x_t4bl3s_sw4h1l1_2026}
 </code></pre></div></div>
 
 <hr />
@@ -661,7 +677,7 @@ Taille: 116 352 octets
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{id0R_exp0sed_fl@g}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{id0R_exp0sed_fl@g}
 </code></pre></div></div>
 
 <hr />
@@ -743,7 +759,7 @@ curl http://challenge-url/admin-panel
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{st@ge_m@ster!!}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{st@ge_m@ster!!}
 </code></pre></div></div>
 
 <hr />
@@ -765,6 +781,10 @@ curl http://challenge-url/admin-panel
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -833,7 +853,7 @@ unzip challenge.apk <span class="nt">-d</span> apk_contents/
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{m0b1l3_4pKK_p3ek}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{m0b1l3_4pKK_p3ek}
 </code></pre></div></div>
 
 <hr />
@@ -855,6 +875,10 @@ unzip challenge.apk <span class="nt">-d</span> apk_contents/
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -952,7 +976,7 @@ unzip challenge.apk <span class="nt">-d</span> apk_contents/
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{90715ab05d61b03306f1ebf7e0fced7a}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{90715ab05d61b03306f1ebf7e0fced7a}
 </code></pre></div></div>
 
 <hr />
@@ -974,6 +998,10 @@ unzip challenge.apk <span class="nt">-d</span> apk_contents/
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -1060,7 +1088,7 @@ if result != targets[i] → Wrong
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{y0rub4_vm_r3v_master!}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{y0rub4_vm_r3v_master!}
 </code></pre></div></div>
 
 <hr />
@@ -1082,6 +1110,10 @@ if result != targets[i] → Wrong
 <hr />
 
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
+
+<blockquote>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+</blockquote>
 
 <table>
   <thead>
@@ -1228,14 +1260,14 @@ Seed 42:       valeurs_uniques=3   ← !!!
 
 <p><strong>Résultat à l’offset 4 :</strong></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}
 </code></pre></div></div>
 
 <hr />
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}
 </code></pre></div></div>
 
 <hr />

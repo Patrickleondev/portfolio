@@ -22,75 +22,140 @@ toc: true
 
 ---
 
-## Description
-
-Le troisième volume — le plus délicat. Les chuchotements sont maintenant chiffrés.
+---
 
 ---
 
-## Analyse
+## Fichiers
 
-Encore STEGSNOW, mais cette fois la sortie est chiffrée en **AES-256-CBC**. La clé doit être trouvée ailleurs : dans un fichier PCAP fourni avec le challenge.
-
-**Couches :**
-1. **STEGSNOW** → données chiffrées AES-256-CBC
-2. **PCAP analysis** → clé AES `ghostkey`
-3. **AES-256-CBC decrypt** → flag
+- `information_III.txt` (838 octets) — message texte suspect
+- `traffic.pcapng` (913 KB, 6057 paquets) — capture réseau
 
 ---
 
-## Solution
+## Étape 1 — Stegsnow sur information_III.txt
 
-### Étape 1 — STEGSNOW extraction
+Le fichier `information_III.txt` fait 838 octets alors que son contenu visible est minuscule :
+
+```
+Hey,
+
+Traffic logs look normal. Nothing suspicious detected.
+Let's proceed as planned.
+
+Regards,
+Admin
+```
+
+L'hexdump révèle des espaces et tabulations invisibles cachés entre les mots et en fin de lignes :
+
+```
+b"Hey,\t     \t       \t  \t   \t  ...\n\t\t \t  \t   ..."
+```
+
+→ C'est du **stegsnow** (whitespace steganography : tab = 1, espace = 0).
 
 ```bash
-stegsnow -C information.txt > encrypted.bin
+stegsnow -C information_III.txt
+# U2FsdGVkX19RtlsoTBDs5pXFLJnfWK6+XRQis1plG/aJpuRH6stxdWNxL9EF5j2w
 ```
 
-La sortie n'est pas lisible → données chiffrées.
+Le résultat est du **base64 OpenSSL chiffré AES-256-CBC** (préfixe `Salted__` une fois décodé).
 
-### Étape 2 — Analyse PCAP
+---
 
-Ouverture du PCAP dans Wireshark. Recherche de chaînes lisibles dans les paquets TCP :
+## Étape 2 — Trouver le mot de passe dans le PCAP
+
+Le PCAP contient 502 requêtes HTTP GET vers `127.0.0.1:80` — massivement du bruteforce de répertoires (dirbuster).
+
+Parmi elles, une requête particulièrement notable :
 
 ```
-Follow TCP Stream → trouver "key=ghostkey"
+GET /api?debug=ghostkey HTTP/1.1
 ```
 
-Ou via `tshark` :
+→ **Le mot de passe est `ghostkey`**, dissimulé dans une requête HTTP en apparence anodine noyée dans le scan.
 
+**Vérification** — avec l'outil tcpdump/tshark :
 ```bash
-tshark -r capture.pcap -Y "tcp" -T fields -e data | xxd -r -p | strings | grep key
+tshark -r traffic.pcapng -Y "http.request" -T fields -e http.request.uri | grep ghost
+# /api?debug=ghostkey
 ```
 
-**Clé trouvée :** `ghostkey`
+---
 
-### Étape 3 — Déchiffrement AES-256-CBC
+## Étape 3 — Déchiffrement AES-256-CBC
 
 ```python
-from Crypto.Cipher import AES
-import hashlib
+import base64, hashlib
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import padding
 
-key = hashlib.sha256(b"ghostkey").digest()  # 32 bytes pour AES-256
-# IV extrait des 16 premiers octets du fichier chiffré
-with open("encrypted.bin", "rb") as f:
-    data = f.read()
+enc_b64 = "U2FsdGVkX19RtlsoTBDs5pXFLJnfWK6+XRQis1plG/aJpuRH6stxdWNxL9EF5j2w"
+enc_data = base64.b64decode(enc_b64 + "==")
 
-iv = data[:16]
-cipher_data = data[16:]
-cipher = AES.new(key, AES.MODE_CBC, iv)
-plaintext = cipher.decrypt(cipher_data)
-print(plaintext.rstrip(b"\x00"))
+# Format OpenSSL : "Salted__" (8 octets) + sel (8 octets) + ciphertext
+salt = enc_data[8:16]
+ciphertext = enc_data[16:]
+
+# Dérivation de clé OpenSSL avec SHA-256
+def openssl_kdf(password, salt, key_len=32, iv_len=16):
+    b, d = b'', b''
+    while len(b) < key_len + iv_len:
+        h = hashlib.sha256(d + password + salt).digest()
+        b += h; d = h
+    return b[:key_len], b[key_len:key_len+iv_len]
+
+key, iv = openssl_kdf(b"ghostkey", salt)
+cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
+raw = cipher.decryptor().update(ciphertext) + cipher.decryptor().finalize()
+
+unpadder = padding.PKCS7(128).unpadder()
+plaintext = (unpadder.update(raw) + unpadder.finalize()).decode()
+print(plaintext)  # flag{c0v3rt_chAnn3l_m@st3r}
 ```
+
+---
+
+## Résumé de la chaîne stéganographique
+
+```
+information_III.txt
+    └─ stegsnow (whitespace steg) 
+           └─ Données chiffrées AES-256-CBC (base64 OpenSSL / Salted__)
+                  └─ Mot de passe : "ghostkey"
+                        └─ Trouvé dans traffic.pcapng : GET /api?debug=ghostkey
+                               └─ FLAG : flag{c0v3rt_chAnn3l_m@st3r}
+```
+
+---
+
+## Scripts utilisés
+
+- `solve_13.py` — analyse initiale du PCAP (DNS, ICMP, SYN ISN, IP ID)
+- `solve_13b.py` — HTTP streams complets, TTL analysis
+- `solve_13c.py` — HTTP 200 responses, ghostkey URL detection
+- `solve_13f.py` — PCAP packet structure, 838-byte payload identification
+- Déchiffrement inline Python avec `cryptography`
 
 ---
 
 ## Flag
 
-```text
+```
 flag{c0v3rt_chAnn3l_m@st3r}
 ```
 
 ---
 
-**[← Retour à l'index ECOWAS CTF 2026](/portfolio/blog/posts/ecowas-ctf-2026/)**
+## Leçons
+
+1. **Stegsnow** encode des bits dans les espaces/tabulations invisibles en fin de ligne
+2. Un mot de passe peut être caché dans une URL noyée parmi des centaines de faux positifs (dirbuster)
+3. OpenSSL AES-CBC avec `-md sha256` est le mode par défaut depuis OpenSSL 1.1.1
+4. Le format de flag `flag{...}` peut différer de `EcowasCTF{...}` selon le challenge
+
+---
+
+**[← Retour à l'index du CTF](/portfolio/blog/posts/ecowas-ctf-2026/)**

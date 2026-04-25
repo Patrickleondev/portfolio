@@ -12,55 +12,190 @@ toc: true
 
 ---
 
-## Description
+## Description du challenge
 
-Un gâteau en couches. Pelez-les une à une.
+> Le "challenge" est la description elle-même :
+>
+> `==AZzQ2MxUjN2AzMlRTY3QGNzMTZ0MzM4UTO3UGN0UTN2AzM3cjMzgTN1MTY0IzM4UTO3UGN0UTN2AzM3cjMzUjN3QjM1EzMxUTY3YDNyMDN2YzNlRzN1ITN`
 
----
-
-## Analyse
-
-Le ciphertext est encodé en **3 couches successives** :
-
-1. Base64 (inversé) → hex
-2. Hex → Base64
-3. Base64 → flag
-
-Le piège est que la première couche est une chaîne Base64 **inversée** (lue à l'envers).
+Il n'y a pas de fichier à télécharger — le flag est directement caché dans le texte de la description.
 
 ---
 
-## Solution
+## 📖 Notions de base
 
-### Avec CyberChef
+### Qu'est-ce que Base64 ?
 
-CyberChef Magic peut détecter automatiquement la plupart des couches. Utiliser **Magic** + **From Base64** → **From Hex** → **From Base64**.
+**Base64** est un encodage qui convertit des données binaires en texte ASCII en utilisant 64 caractères :
+- Majuscules `A-Z` (26)
+- Minuscules `a-z` (26)
+- Chiffres `0-9` (10)
+- `+` et `/` (2)
+- `=` comme caractère de bourrage (padding)
 
-### En Python
+**Propriétés visuelles :**
+- Se termine souvent par `=` ou `==`
+- Longueur toujours multiple de 4
+- N'utilise **que** les caractères ci-dessus
+
+### Qu'est-ce que l'hexadécimal ?
+
+L'**hexadécimal** (hex) utilise 16 symboles : `0-9` et `a-f`. Chaque octet est représenté par 2 caractères hex.
+
+Exemple : `0x45` = 69 en décimal = `'E'` en ASCII.
+
+### Qu'est-ce que l'encodage en couches (Layered encoding) ?
+
+Un **encodage en couches** (d'où le titre "Layer Cake") consiste à appliquer plusieurs encodages successifs :
+```
+message → Base64 → Hex → Base64 inversée → ...
+```
+
+Pour décoder, il faut identifier chaque couche et les défaire **dans l'ordre inverse**.
+
+---
+
+## Observation initiale
+
+Le texte de la description commence par `==` — ce sont des caractères de **bourrage Base64** qui, normalement, se trouvent à la fin. Cela suggère que la chaîne est **inversée**.
+
+```
+Chaîne normale B64 : "RWNvd2FzQ1RGe...=="
+Chaîne inversée    : "==...eGFzQ1RGe..."
+```
+
+---
+
+## Démarche de résolution
+
+### Étape 1 — Inverser la chaîne
+
+```python
+desc = "==AZzQ2MxUjN2AzMlRTY3QGNzMTZ0MzM4UTO3UGN0UTN2AzM3cjMzgTN1MTY0IzM4UTO3UGN0UTN2AzM3cjMzUjN3QjM1EzMxUTY3YDNyMDN2YzNlRzN1ITN"
+
+# Inverser = lire de droite à gauche
+reversed_str = desc[::-1]
+print(reversed_str)
+# → "NTI1NzRlNzY2NDMyNDY3YTUxMzE1MjQ..."
+```
+
+### Étape 2 — Décoder la chaîne inversée en Base64
 
 ```python
 import base64
 
-# Étape 1 : Inverser la chaîne et décoder Base64
-ciphertext = "..."  # donné
-step1 = base64.b64decode(ciphertext[::-1]).decode()
-
-# Étape 2 : Hex → bytes → Base64 decode
-step2 = base64.b64decode(bytes.fromhex(step1))
-
-# Étape 3 : Dernier décodage Base64
-step3 = base64.b64decode(step2)
-print(step3.decode())
+step1 = base64.b64decode(reversed_str).decode()
+print(step1)
+# → "52574e766432467a5131524765..."  ← une longue chaîne de chiffres hex !
 ```
+
+Le résultat est une chaîne constituée uniquement de chiffres `0-9` et lettres `a-f` — c'est de l'hexadécimal.
+
+### Étape 3 — Décoder l'hexadécimal
+
+```python
+step2 = bytes.fromhex(step1).decode()
+print(step2)
+# → "RWNvd2FzQ1RGe2w0eTNyX2J5X2w0eTNyX3N3MzN0fQ=="
+```
+
+On obtient une nouvelle chaîne Base64 (elle se termine par `==`).
+
+### Étape 4 — Décoder le Base64 final
+
+```python
+flag = base64.b64decode(step2).decode()
+print(flag)
+# → "EcowasCTF{l4y3r_by_l4y3r_sw33t}"
+```
+
+---
+
+## Résumé de la chaîne de décodage
+
+```
+Description originale : ==AZzQ2Mx...N1ITN
+        ↓  Étape 1 : Inverser la chaîne
+Chaîne inversée       : NTI1NzRl...
+        ↓  Étape 2 : Décoder Base64
+Hexadécimal           : 52574e76...
+        ↓  Étape 3 : Décoder Hex → bytes
+Base64 pur            : RWNvd2Fz...==
+        ↓  Étape 4 : Décoder Base64
+FLAG                  : EcowasCTF{l4y3r_by_l4y3r_sw33t}
+```
+
+Chaque couche est un "Layer" du "Cake" — d'où le titre !
+
+---
+
+## Script complet
+
+```python
+import base64
+
+# Étape 0 : le texte de la description du challenge
+desc = "==AZzQ2MxUjN2AzMlRTY3QGNzMTZ0MzM4UTO3UGN0UTN2AzM3cjMzgTN1MTY0" \
+       "IzM4UTO3UGN0UTN2AzM3cjMzUjN3QjM1EzMxUTY3YDNyMDN2YzNlRzN1ITN"
+
+print(f"Chaîne originale : {desc[:40]}...")
+
+# Étape 1 : Inverser
+reversed_str = desc[::-1]
+print(f"Inversée         : {reversed_str[:40]}...")
+
+# Étape 2 : Décoder Base64
+step1 = base64.b64decode(reversed_str).decode()
+print(f"Après Base64     : {step1[:40]}...")
+
+# Étape 3 : Décoder Hex
+step2 = bytes.fromhex(step1).decode()
+print(f"Après Hex        : {step2[:40]}...")
+
+# Étape 4 : Décoder Base64 final
+flag = base64.b64decode(step2).decode()
+print(f"\nFLAG : {flag}")
+```
+
+**Sortie :**
+```
+Chaîne originale : ==AZzQ2MxUjN2AzMlRTY3QGNzMTZ0MzM4UTO3UGN0U...
+Inversée         : NTI1NzRlNzY2NDMyNDY3YTUxMzE1MjQ3NjUzMjc3Mz...
+Après Base64     : 52574e766432467a513152476532773065544e795832...
+Après Hex        : RWNvd2FzQ1RGe2w0eTNyX2J5X2w0eTNyX3N3MzN0fQ==
+FLAG : EcowasCTF{l4y3r_by_l4y3r_sw33t}
+```
+
+---
+
+## Comment reconnaître les encodages en CTF
+
+| Indice visuel | Encodage probable |
+|---------------|-------------------|
+| `==` au début (inversé) | Base64 inversé |
+| Commence par `==` ou `=` en fin | Base64 normal |
+| Uniquement `0-9`, `a-f`, longueur paire | Hexadécimal |
+| Que des lettres majuscules, parfois `2` et `7` | Base32 |
+| `%XX` dans l'URL | URL encoding |
+| `&#xxx;` dans HTML | HTML entities |
+
+### L'approche CTF universelle pour les encodages
+
+1. **Identifier** : regarder les caractères utilisés
+2. **Décoder une couche** : Base64, Hex, ROT13...
+3. **Répéter** jusqu'à obtenir quelque chose de lisible
+4. **Vérifier** : est-ce que ça commence par `EcowasCTF{` ?
 
 ---
 
 ## Flag
 
-```text
+```
 EcowasCTF{l4y3r_by_l4y3r_sw33t}
 ```
 
 ---
 
-**[← Retour à l'index ECOWAS CTF 2026](/portfolio/blog/posts/ecowas-ctf-2026/)**
+---
+
+**[← Retour à l'index du CTF](/portfolio/blog/posts/ecowas-ctf-2026/)**

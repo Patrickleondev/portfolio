@@ -12,17 +12,6 @@ toc: true
 
 ---
 
-title: Coppersmith
-ctf: ECOWAS CTF 2025
-date: 2026-04-14
-category: misc
-difficulty: hard
-points: 500
-flag_format: EcowasCTF{...}
-flag: EcowasCTF{c0pp3rsm1th_f1nds_th3_nil3_s0urce}
-author: team
----
-
 # #57 – Coppersmith (Misc, 500 pts)
 
 ## Challenge Description

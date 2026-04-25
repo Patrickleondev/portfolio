@@ -22,17 +22,6 @@ toc: true
 
 ---
 
-title: Star Drums
-ctf: ECOWAS CTF 2025
-date: 2026-04-14
-category: steganography
-difficulty: medium
-points: 200
-flag_format: EcowasCTF{...}
-flag: EcowasCTF{s4h3l_dr4ms_m0rs3_b64_r0t13}
-author: team
----
-
 # #60 – Star Drums (Steganography, 200 pts)
 
 ## Challenge Description

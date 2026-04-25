@@ -22,17 +22,6 @@ toc: true
 
 ---
 
-title: Dogon Nonce
-ctf: ECOWAS CTF 2025
-date: 2026-04-14
-category: crypto
-difficulty: hard
-points: 500
-flag_format: EcowasCTF{...}
-flag: EcowasCTF{h1dd3n_numb3r_pr0bl3m_sh4k3s_th3_3ld3r}
-author: team
----
-
 # #56 – Dogon Nonce (Crypto, 500 pts)
 
 ## Challenge Description

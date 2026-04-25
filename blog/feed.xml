@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-25T07:53:23+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-25T08:02:08+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
   <p><strong>CTF :</strong> ECOWAS CTF 2026 (Événement 3) · <strong>Catégorie :</strong> Crypto · <strong>Difficulté :</strong> ⭐⭐ Medium · <strong>Points :</strong> 300<br />
 <strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index du CTF</a></strong></p>
 </blockquote>
@@ -1018,91 +1018,291 @@ unzip challenge.apk <span class="nt">-d</span> apk_contents/
   </tbody>
 </table>
 
-<h2 id="description">Description</h2>
+<hr />
 
-<p>Une machine virtuelle personnalisée nommée d’après le peuple <strong>Yoruba</strong> d’Afrique de l’Ouest. Rétro-ingénierie pour trouver le flag.</p>
+<p><strong>CTF :</strong> ECOWAS CTF 2026<br />
+<strong>Date :</strong> Avril 2026<br />
+<strong>Catégorie :</strong> Reverse Engineering<br />
+<strong>Difficulté :</strong> Hard<br />
+<strong>Points :</strong> 500<br />
+<strong>Solves :</strong> 106<br />
+<strong>Format du flag :</strong> <code class="language-plaintext highlighter-rouge">EcowasCTF{...}</code><br />
+<strong>Flag :</strong> <code class="language-plaintext highlighter-rouge">EcowasCTF{y0rub4_vm_r3v_master!}</code><br />
+<strong>Auteur :</strong> ITACHI</p>
 
 <hr />
 
-<h2 id="analyse">Analyse</h2>
+<h2 id="description-du-challenge">Description du challenge</h2>
 
-<p>Le binaire ELF 64-bit implémente une <strong>VM personnalisée</strong> qui valide le flag caractère par caractère :</p>
+<blockquote>
+  <p>Une machine virtuelle personnalisée nommée d’après le peuple Yoruba d’Afrique de l’Ouest.<br />
+Rétro-ingénierie pour trouver le flag.</p>
+</blockquote>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>result = sbox[input[i] ^ keys[i]]
-if result != targets[i] → Wrong
+<p><strong>Fichier fourni :</strong> <code class="language-plaintext highlighter-rouge">yoruba_vm</code> (binaire Linux ELF 64-bit)</p>
+
+<hr />
+
+<h2 id="vue-densemble">Vue d’ensemble</h2>
+
+<p>Le binaire implémente une <strong>machine virtuelle (VM) personnalisée</strong> qui lit votre entrée et la valide caractère par caractère via une <strong>table de substitution AES (S-Box) combinée à un XOR</strong>. Pour résoudre le challenge, on reverse la logique de vérification, on extrait les constantes (clés et cibles), puis on calcule mathématiquement l’entrée qui satisfait toutes les contraintes — sans jamais exécuter le programme.</p>
+
+<p><strong>Technique principale :</strong> Analyse statique + inversion de S-Box.</p>
+
+<hr />
+
+<h2 id="contexte--cest-quoi-une--vm--dans-un-ctf-">Contexte : C’est quoi une « VM » dans un CTF ?</h2>
+
+<p>Dans les challenges de reverse, une « VM » ne désigne pas VirtualBox ou VMware. Cela signifie que le binaire <strong>interprète ses propres opcodes personnalisés</strong> — comme un mini-langage de programmation qui tourne à l’intérieur du vrai CPU.</p>
+
+<p>Au lieu de reverser directement de l’assembleur complexe, on commence par reverser la <strong>boucle de dispatch de la VM</strong> (le <code class="language-plaintext highlighter-rouge">switch</code>/<code class="language-plaintext highlighter-rouge">if</code> qui gère chaque opcode), on comprend ce que fait chaque instruction, puis on trace le <strong>programme VM</strong> (le bytecode embarqué) pour reconstruire la logique globale.</p>
+
+<blockquote>
+  <p><strong>Analogie :</strong> Le binaire est un interpréteur Python, et à l’intérieur il y a un script <code class="language-plaintext highlighter-rouge">.py</code> que tu dois comprendre. Tu reverses d’abord l’interpréteur, puis tu lis le script.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="étape-1--reconnaissance--identifier-le-binaire">Étape 1 : Reconnaissance — Identifier le binaire</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file yoruba_vm
+<span class="c"># yoruba_vm: ELF 64-bit LSB executable, x86-64, dynamically linked</span>
+
+strings yoruba_vm | <span class="nb">head</span> <span class="nt">-30</span>
+<span class="c"># Enter flag:</span>
+<span class="c"># Correct!</span>
+<span class="c"># Wrong!</span>
 </code></pre></div></div>
 
-<p><strong>Composants :</strong></p>
+<p><strong>Observations clés :</strong></p>
 <ul>
-  <li><strong>S-Box AES</strong> : table de substitution non-linéaire (256 bytes)</li>
-  <li><strong>keys[32]</strong> : tableau de clés XOR par position (hardcodé)</li>
-  <li><strong>targets[32]</strong> : valeurs cibles attendues (hardcodées)</li>
+  <li>C’est un ELF Linux standard x86-64</li>
+  <li>Il demande un flag et affiche « Correct! » ou « Wrong! »</li>
+  <li>Aucun flag en clair → la vérification se fait caractère par caractère</li>
 </ul>
 
-<p><strong>Inversion :</strong> Construire la <strong>S-Box inverse</strong> et XOR avec les clés.</p>
+<hr />
+
+<h2 id="étape-2--désassemblage--trouver-la-logique-de-validation">Étape 2 : Désassemblage — Trouver la logique de validation</h2>
+
+<p>On ouvre le binaire dans Ghidra (ou tout désassembleur). On cherche les références croisées vers la chaîne <code class="language-plaintext highlighter-rouge">"Correct!"</code> pour localiser la fonction de validation.</p>
+
+<p>Le pseudo-code pertinent :</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">32</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">byte</span> <span class="n">result</span> <span class="o">=</span> <span class="n">sbox</span><span class="p">[</span> <span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"Wrong!"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">puts</span><span class="p">(</span><span class="s">"Correct!"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Chaque caractère de l’entrée subit deux opérations :</p>
+<ol>
+  <li><strong>XOR</strong> avec un octet de clé</li>
+  <li><strong>Substitution</strong> dans une table S-Box de 256 octets</li>
+</ol>
+
+<p>Le résultat doit correspondre à une valeur cible codée en dur.</p>
 
 <hr />
 
-<h2 id="solution">Solution</h2>
+<h2 id="contexte--cest-quoi-une-s-box-">Contexte : C’est quoi une S-Box ?</h2>
 
-<h3 id="étape-1--extraire-les-constantes-depuis-ghidra">Étape 1 — Extraire les constantes depuis Ghidra</h3>
+<p>Une <strong>S-Box (Boîte de Substitution)</strong> est une table de correspondance utilisée en cryptographie. Pour un index donné, elle retourne une valeur fixe. C’est exactement la même table que celle utilisée dans le chiffrement AES.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># S-Box AES standard (ou extraire du binaire)
-</span><span class="n">SBOX</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x7c</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0x7b</span><span class="p">,</span> <span class="mh">0xf2</span><span class="p">,</span> <span class="mh">0x6b</span><span class="p">,</span> <span class="mh">0x6f</span><span class="p">,</span> <span class="mh">0xc5</span><span class="p">,</span>
-    <span class="c1"># ... 256 valeurs au total
-</span><span class="p">]</span>
-
-<span class="c1"># Extraire keys[] et targets[] depuis les sections .data du binaire
-# (adresses à trouver dans Ghidra via la fonction de validation)
-</span><span class="n">keys</span>    <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="n">x</span><span class="p">...,</span> <span class="p">...]</span>  <span class="c1"># 32 bytes
-</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="n">x</span><span class="p">...,</span> <span class="p">...]</span>  <span class="c1"># 32 bytes
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   <span class="o">=</span> <span class="mi">99</span>   <span class="c1"># 0x00 → 0x63
+</span><span class="n">sbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="o">=</span> <span class="mi">124</span>  <span class="c1"># 0x01 → 0x7c
+# ... 256 entrées au total
 </span></code></pre></div></div>
 
-<h3 id="étape-2--construire-la-s-box-inverse">Étape 2 — Construire la S-Box inverse</h3>
+<p>C’est une <strong>bijection</strong> : chaque entrée correspond exactement à une sortie, et vice-versa. C’est cette propriété qui rend le challenge soluble : on peut <strong>l’inverser</strong>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inv_sbox</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">SBOX</span><span class="p">):</span>
+<hr />
+
+<h2 id="étape-3--extraire-les-constantes">Étape 3 : Extraire les constantes</h2>
+
+<p>Depuis le binaire désassemblé, on extrait :</p>
+
+<p><strong>S-Box AES standard (256 octets) :</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sbox</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">99</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">242</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">197</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">103</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span>  <span class="mi">254</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span>
+    <span class="mi">202</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span>  <span class="mi">71</span><span class="p">,</span>  <span class="mi">240</span><span class="p">,</span> <span class="mi">173</span><span class="p">,</span> <span class="mi">212</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span>
+    <span class="c1"># ... (table complète dans le script ci-dessous)
+</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p><strong>Clés (32 octets, masque XOR par caractère) :</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">keys</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mh">0x5A</span><span class="p">,</span> <span class="mh">0x5B</span><span class="p">,</span> <span class="mh">0x58</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0x5E</span><span class="p">,</span> <span class="mh">0x5F</span><span class="p">,</span> <span class="mh">0x5C</span><span class="p">,</span> <span class="mh">0x5D</span><span class="p">,</span>
+    <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0x53</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x57</span><span class="p">,</span> <span class="mh">0x54</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span>
+    <span class="mh">0x4A</span><span class="p">,</span> <span class="mh">0x4B</span><span class="p">,</span> <span class="mh">0x48</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x4E</span><span class="p">,</span> <span class="mh">0x4F</span><span class="p">,</span> <span class="mh">0x4C</span><span class="p">,</span> <span class="mh">0x4D</span><span class="p">,</span>
+    <span class="mh">0x42</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0x47</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0x45</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p><strong>Cibles (32 octets, sortie S-Box attendue) :</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mh">0xa0</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x2a</span><span class="p">,</span> <span class="mh">0x6f</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x08</span><span class="p">,</span>
+    <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x3a</span><span class="p">,</span> <span class="mh">0xcc</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0x13</span><span class="p">,</span>
+    <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0x1b</span><span class="p">,</span>
+    <span class="mh">0xbe</span><span class="p">,</span> <span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0x9b</span><span class="p">,</span> <span class="mh">0x69</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x5a</span><span class="p">,</span> <span class="mh">0x75</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="étape-4--résoudre--inverser-les-maths">Étape 4 : Résoudre — Inverser les maths</h2>
+
+<p>La contrainte de vérification est :</p>
+
+\[\text{sbox}[\text{input}[i] \oplus \text{keys}[i]] = \text{targets}[i]\]
+
+<p>Pour retrouver <code class="language-plaintext highlighter-rouge">input[i]</code>, on inverse les deux opérations :</p>
+
+<ol>
+  <li><strong>Inverser la S-Box :</strong> construire <code class="language-plaintext highlighter-rouge">inv_sbox</code> tel que <code class="language-plaintext highlighter-rouge">inv_sbox[sbox[x]] = x</code> pour tout x</li>
+  <li><strong>Annuler le XOR :</strong> <code class="language-plaintext highlighter-rouge">input[i] = inv_sbox[targets[i]] XOR keys[i]</code></li>
+</ol>
+
+<p>Le XOR est sa propre inverse : si <code class="language-plaintext highlighter-rouge">a XOR k = b</code>, alors <code class="language-plaintext highlighter-rouge">b XOR k = a</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Construire la S-Box inverse
+</span><span class="n">inv_sbox</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">sbox</span><span class="p">):</span>
     <span class="n">inv_sbox</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+<span class="c1"># Récupérer chaque caractère du flag
+</span><span class="n">flag</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">([</span><span class="n">inv_sbox</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">^</span> <span class="n">k</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">keys</span><span class="p">)])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">flag</span><span class="p">.</span><span class="nf">decode</span><span class="p">())</span>
+<span class="c1"># EcowasCTF{y0rub4_vm_r3v_master!}
+</span></code></pre></div></div>
+
+<p>C’est toute la solution — pas de brute-force, pas de fuzzing, uniquement des maths.</p>
+
+<hr />
+
+<h2 id="script-de-résolution-complet">Script de résolution complet</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python3
+</span><span class="sh">"""</span><span class="s">
+ECOWAS CTF 2026 — Yoruba VM (Rev 500pts)
+Solution : inverser la S-Box + XOR pour retrouver le flag depuis les contraintes codées en dur.
+</span><span class="sh">"""</span>
+
+<span class="n">sbox</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">99</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">242</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">197</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">103</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span>  <span class="mi">254</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span>
+    <span class="mi">202</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span>  <span class="mi">71</span><span class="p">,</span>  <span class="mi">240</span><span class="p">,</span> <span class="mi">173</span><span class="p">,</span> <span class="mi">212</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span>
+    <span class="mi">183</span><span class="p">,</span> <span class="mi">253</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span>  <span class="mi">54</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span>  <span class="mi">247</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span>  <span class="mi">165</span><span class="p">,</span> <span class="mi">229</span><span class="p">,</span> <span class="mi">241</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">216</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span>  <span class="mi">21</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>   <span class="mi">199</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span>  <span class="mi">195</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span>  <span class="mi">150</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>   <span class="mi">154</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span>   <span class="mi">18</span><span class="p">,</span>  <span class="mi">128</span><span class="p">,</span> <span class="mi">226</span><span class="p">,</span> <span class="mi">235</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span>  <span class="mi">178</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">,</span>   <span class="mi">131</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>  <span class="mi">26</span><span class="p">,</span>  <span class="mi">27</span><span class="p">,</span>  <span class="mi">110</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span>  <span class="mi">160</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span>  <span class="mi">59</span><span class="p">,</span>  <span class="mi">214</span><span class="p">,</span> <span class="mi">179</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span>  <span class="mi">227</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span>  <span class="mi">132</span><span class="p">,</span>
+    <span class="mi">83</span><span class="p">,</span>  <span class="mi">209</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">237</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span>  <span class="mi">252</span><span class="p">,</span> <span class="mi">177</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span>  <span class="mi">106</span><span class="p">,</span> <span class="mi">203</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span>  <span class="mi">74</span><span class="p">,</span>  <span class="mi">76</span><span class="p">,</span>  <span class="mi">88</span><span class="p">,</span>  <span class="mi">207</span><span class="p">,</span>
+    <span class="mi">208</span><span class="p">,</span> <span class="mi">239</span><span class="p">,</span> <span class="mi">170</span><span class="p">,</span> <span class="mi">251</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span>  <span class="mi">77</span><span class="p">,</span>  <span class="mi">51</span><span class="p">,</span>  <span class="mi">133</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span>  <span class="mi">249</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>   <span class="mi">127</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span>  <span class="mi">60</span><span class="p">,</span>  <span class="mi">159</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span>
+    <span class="mi">81</span><span class="p">,</span>  <span class="mi">163</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span>  <span class="mi">143</span><span class="p">,</span> <span class="mi">146</span><span class="p">,</span> <span class="mi">157</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span>  <span class="mi">245</span><span class="p">,</span> <span class="mi">188</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">218</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">16</span><span class="p">,</span>  <span class="mi">255</span><span class="p">,</span> <span class="mi">243</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span>
+    <span class="mi">205</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>  <span class="mi">19</span><span class="p">,</span>  <span class="mi">236</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span>  <span class="mi">151</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span>  <span class="mi">23</span><span class="p">,</span>  <span class="mi">196</span><span class="p">,</span> <span class="mi">167</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span>  <span class="mi">100</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span>  <span class="mi">25</span><span class="p">,</span>  <span class="mi">115</span><span class="p">,</span>
+    <span class="mi">96</span><span class="p">,</span>  <span class="mi">129</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span>  <span class="mi">220</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span>  <span class="mi">42</span><span class="p">,</span>  <span class="mi">144</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span>  <span class="mi">238</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span>  <span class="mi">222</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span>  <span class="mi">11</span><span class="p">,</span>  <span class="mi">219</span><span class="p">,</span>
+    <span class="mi">224</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>  <span class="mi">58</span><span class="p">,</span>  <span class="mi">10</span><span class="p">,</span>  <span class="mi">73</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>   <span class="mi">36</span><span class="p">,</span>  <span class="mi">92</span><span class="p">,</span>  <span class="mi">194</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">172</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span>  <span class="mi">145</span><span class="p">,</span> <span class="mi">149</span><span class="p">,</span> <span class="mi">228</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span>
+    <span class="mi">231</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span>  <span class="mi">109</span><span class="p">,</span> <span class="mi">141</span><span class="p">,</span> <span class="mi">213</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span>  <span class="mi">169</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span>  <span class="mi">244</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">174</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="mi">186</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span>  <span class="mi">46</span><span class="p">,</span>  <span class="mi">28</span><span class="p">,</span>  <span class="mi">166</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">198</span><span class="p">,</span> <span class="mi">232</span><span class="p">,</span> <span class="mi">221</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span>  <span class="mi">75</span><span class="p">,</span>  <span class="mi">189</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="mi">138</span><span class="p">,</span>
+    <span class="mi">112</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span>  <span class="mi">181</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>   <span class="mi">246</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span>  <span class="mi">97</span><span class="p">,</span>  <span class="mi">53</span><span class="p">,</span>  <span class="mi">87</span><span class="p">,</span>  <span class="mi">185</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span>  <span class="mi">158</span><span class="p">,</span>
+    <span class="mi">225</span><span class="p">,</span> <span class="mi">248</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span>  <span class="mi">105</span><span class="p">,</span> <span class="mi">217</span><span class="p">,</span> <span class="mi">142</span><span class="p">,</span> <span class="mi">148</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span>  <span class="mi">135</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">206</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span>  <span class="mi">40</span><span class="p">,</span>  <span class="mi">223</span><span class="p">,</span>
+    <span class="mi">140</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span>  <span class="mi">191</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span>  <span class="mi">104</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span>  <span class="mi">153</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span>  <span class="mi">15</span><span class="p">,</span>  <span class="mi">176</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span>  <span class="mi">187</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mh">0x5A</span><span class="p">,</span> <span class="mh">0x5B</span><span class="p">,</span> <span class="mh">0x58</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0x5E</span><span class="p">,</span> <span class="mh">0x5F</span><span class="p">,</span> <span class="mh">0x5C</span><span class="p">,</span> <span class="mh">0x5D</span><span class="p">,</span>
+    <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0x53</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x57</span><span class="p">,</span> <span class="mh">0x54</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span>
+    <span class="mh">0x4A</span><span class="p">,</span> <span class="mh">0x4B</span><span class="p">,</span> <span class="mh">0x48</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x4E</span><span class="p">,</span> <span class="mh">0x4F</span><span class="p">,</span> <span class="mh">0x4C</span><span class="p">,</span> <span class="mh">0x4D</span><span class="p">,</span>
+    <span class="mh">0x42</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0x47</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0x45</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">targets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mh">0xa0</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x2a</span><span class="p">,</span> <span class="mh">0x6f</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x08</span><span class="p">,</span>
+    <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x3a</span><span class="p">,</span> <span class="mh">0xcc</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0x13</span><span class="p">,</span>
+    <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0x1b</span><span class="p">,</span>
+    <span class="mh">0xbe</span><span class="p">,</span> <span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0x9b</span><span class="p">,</span> <span class="mh">0x69</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x5a</span><span class="p">,</span> <span class="mh">0x75</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Construire la S-Box inverse
+</span><span class="n">inv_sbox</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">sbox</span><span class="p">):</span>
+    <span class="n">inv_sbox</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+<span class="c1"># Retrouver le flag
+</span><span class="n">flag</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">([</span><span class="n">inv_sbox</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">^</span> <span class="n">k</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">keys</span><span class="p">)])</span>
+
+<span class="c1"># Vérification
+</span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">targets</span><span class="p">)):</span>
+    <span class="k">assert</span> <span class="n">sbox</span><span class="p">[</span><span class="n">inp</span> <span class="o">^</span> <span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="p">,</span> <span class="sa">f</span><span class="sh">"</span><span class="s">Erreur à la position </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="sh">"</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Flag : </span><span class="si">{</span><span class="n">flag</span><span class="p">.</span><span class="nf">decode</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="étape-3--calculer-le-flag">Étape 3 — Calculer le flag</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">flag</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
-    <span class="c1"># input[i] = inv_sbox[targets[i]] ^ keys[i]
-</span>    <span class="n">flag</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">inv_sbox</span><span class="p">[</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">^</span> <span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="nf">bytes</span><span class="p">(</span><span class="n">flag</span><span class="p">).</span><span class="nf">decode</span><span class="p">())</span>
+<p><strong>Sortie :</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Flag : EcowasCTF{y0rub4_vm_r3v_master!}
 </code></pre></div></div>
-
-<h3 id="vérification-mathématique">Vérification mathématique</h3>
-
-\[\text{result} = \text{SBOX}[\text{input}[i] \oplus \text{keys}[i]] = \text{targets}[i]\]
-
-\[\Rightarrow \text{input}[i] \oplus \text{keys}[i] = \text{SBOX}^{-1}[\text{targets}[i]]\]
-
-\[\Rightarrow \text{input}[i] = \text{SBOX}^{-1}[\text{targets}[i]] \oplus \text{keys}[i]\]
 
 <hr />
 
 <h2 id="flag">Flag</h2>
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{y0rub4_vm_r3v_master!}
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{y0rub4_vm_r3v_master!}
 </code></pre></div></div>
 
 <hr />
 
-<h2 id="leçons-retenues">Leçons retenues</h2>
+<h2 id="points-clés-à-retenir">Points clés à retenir</h2>
 
 <ul>
-  <li><strong>Inverser une S-Box</strong> : si <code class="language-plaintext highlighter-rouge">sbox[x] = y</code> alors <code class="language-plaintext highlighter-rouge">inv_sbox[y] = x</code> — simple tableau de 256 entrées</li>
-  <li>Pas besoin d’exécuter le binaire — l’analyse statique suffit pour extraire les 3 tableaux</li>
-  <li>La S-Box AES est une constante connue — vérifier si le binaire l’utilise directement</li>
-  <li><strong>Yoruba</strong> : peuple d’Afrique de l’Ouest (Nigeria, Bénin, Togo) avec une riche tradition cryptique dans l’Ifá</li>
+  <li><strong>Reverse de VM personnalisée :</strong> toujours trouver la boucle de dispatch en premier, puis tracer chaque opcode. Ici la VM se réduisait à une boucle de validation une fois la structure comprise.</li>
+  <li><strong>S-Box + XOR est trivialement inversible :</strong> les deux opérations sont réversibles en O(1) — ne jamais brute-forcer ce qui peut être résolu mathématiquement.</li>
+  <li><strong>L’analyse statique est plus rapide que le dynamique :</strong> on n’a jamais exécuté le binaire. Extraire les constantes et inverser les maths est plus sûr, plus rapide, et fonctionne même sans machine Linux.</li>
 </ul>
 
-<p><strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index ECOWAS CTF 2026</a></strong></p>]]></content><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><category term="CTF" /><category term="ECOWAS-CTF-2026" /><category term="reverse" /><category term="elf" /><category term="custom-vm" /><category term="aes-sbox" /><category term="xor" /><category term="static-analysis" /><category term="ghidra" /><category term="inversion" /><category term="yoruba" /><summary type="html"><![CDATA[CTF : ECOWAS CTF 2026 · Catégorie : Reverse Engineering · Difficulté : ⭐⭐⭐ (Hard) · Points : 500 ← Retour à l’index du CTF]]></summary></entry><entry><title type="html">ECOWAS CTF 2026 — Elmina Shadows [Steganography/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-elmina-shadows/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — Elmina Shadows [Steganography/Medium]" /><published>2026-04-24T11:15:00+00:00</published><updated>2026-04-24T11:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-elmina-shadows</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-elmina-shadows/"><![CDATA[<blockquote>
+<hr />
+
+<h2 id="ressources-pour-débutants">Ressources pour débutants</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sujet</th>
+      <th>Ressource</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Introduction au reverse engineering</td>
+      <td><a href="https://www.youtube.com/playlist?list=PLhixgUqwRTjxglIswKp9mpkfPNfHkzyeN">LiveOverflow RE playlist (YouTube)</a></td>
+    </tr>
+    <tr>
+      <td>Ghidra (décompilateur gratuit)</td>
+      <td><a href="https://ghidra-sre.org">ghidra-sre.org</a></td>
+    </tr>
+    <tr>
+      <td>S-Box AES expliquée</td>
+      <td><a href="https://en.wikipedia.org/wiki/Rijndael_S-box">Wikipedia : Rijndael S-box</a></td>
+    </tr>
+    <tr>
+      <td>XOR en CTF</td>
+      <td><a href="https://cryptohack.org/courses/intro/xorbasics/">CryptoHack intro XOR</a></td>
+    </tr>
+    <tr>
+      <td>Techniques de reverse VM</td>
+      <td><a href="https://research.checkpoint.com/2009/adventure-in-vm-obfuscation/">checkpoint.com blog VM obfuscation</a></td>
+    </tr>
+    <tr>
+      <td>Pratique reverse</td>
+      <td><a href="https://crackmes.one">crackmes.one</a> · <a href="https://picoctf.org">picoCTF RE</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<p><strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index du CTF</a></strong></p>]]></content><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><category term="CTF" /><category term="ECOWAS-CTF-2026" /><category term="reverse" /><category term="elf" /><category term="custom-vm" /><category term="aes-sbox" /><category term="xor" /><category term="static-analysis" /><category term="ghidra" /><category term="inversion" /><category term="yoruba" /><summary type="html"><![CDATA[CTF : ECOWAS CTF 2026 · Catégorie : Reverse Engineering · Difficulté : ⭐⭐⭐ (Hard) · Points : 500 ← Retour à l’index du CTF]]></summary></entry><entry><title type="html">ECOWAS CTF 2026 — Elmina Shadows [Steganography/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-elmina-shadows/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — Elmina Shadows [Steganography/Medium]" /><published>2026-04-24T11:15:00+00:00</published><updated>2026-04-24T11:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-elmina-shadows</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-elmina-shadows/"><![CDATA[<blockquote>
   <p><strong>CTF :</strong> ECOWAS CTF 2026 · <strong>Catégorie :</strong> Steganography · <strong>Difficulté :</strong> ⭐⭐ Medium · <strong>Points :</strong> 200<br />
 <strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index du CTF</a></strong></p>
 </blockquote>
@@ -1130,155 +1330,457 @@ if result != targets[i] → Wrong
   </tbody>
 </table>
 
-<h2 id="description-du-challenge">Description du challenge</h2>
-
-<blockquote>
-  <p>“The stone fort of Elmina casts long shadows. One shadow carries the key and another carries the secret.”</p>
-</blockquote>
-
-<p>Le fort d’Elmina est un château colonial au Ghana, construit par les Portugais en 1482 — l’un des centres de la traite négrière. Le thème “ombre” est métaphorique : <em>une ombre porte la clé, une autre porte le secret</em>.</p>
-
-<p><strong>Fichier fourni :</strong> <code class="language-plaintext highlighter-rouge">elmina.zip</code></p>
-
 <hr />
 
-<h2 id="analyse">Analyse</h2>
+<h2 id="1-analyse-initiale--quest-ce-quon-a-">1. Analyse initiale — Qu’est-ce qu’on a ?</h2>
 
 <h3 id="étape-1--examiner-le-zip">Étape 1 : Examiner le ZIP</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">zipfile</span>
-
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">'</span><span class="s">elmina.zip</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Comment ZIP:</span><span class="sh">'</span><span class="p">,</span> <span class="n">z</span><span class="p">.</span><span class="n">comment</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">z</span><span class="p">.</span><span class="nf">infolist</span><span class="p">():</span>
-        <span class="nf">print</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">info</span><span class="p">.</span><span class="n">file_size</span><span class="p">)</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unzip <span class="nt">-v</span> elmina.zip
+<span class="c"># → fort.png (269447 bytes, méthode stored = pas de compression)</span>
 </code></pre></div></div>
 
-<p><strong>Trouvaille clé :</strong> Le commentaire ZIP contient :</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Shadow remembers its name: ELMINA
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s2">"
+import zipfile
+with zipfile.ZipFile('elmina.zip') as z:
+    print('Comment ZIP:', z.comment)
+    for info in z.infolist():
+        print(info.filename, info.file_size)
+"</span>
+<span class="c"># Comment ZIP: b'Shadow remembers its name: ELMINA'</span>
 </code></pre></div></div>
 
-<p>C’est la clé XOR/PRNG.</p>
+<p><strong>Trouvaille clé</strong> : Le commentaire ZIP dit <code class="language-plaintext highlighter-rouge">Shadow remembers its name: ELMINA</code>. C’est la clé !</p>
 
 <blockquote>
-  <p><strong>Astuce :</strong> Les fichiers ZIP peuvent contenir un commentaire global, souvent ignoré. Toujours vérifier avec <code class="language-plaintext highlighter-rouge">zipfile.ZipFile.comment</code> ou <code class="language-plaintext highlighter-rouge">zipinfo</code>.</p>
+  <p><strong>Ressource</strong> : Les fichiers ZIP peuvent contenir un commentaire global. C’est une info souvent oubliée — à toujours vérifier avec <code class="language-plaintext highlighter-rouge">zipinfo</code> ou Python.</p>
 </blockquote>
 
-<h3 id="étape-2--analyser-limage">Étape 2 : Analyser l’image</h3>
+<h3 id="étape-2--examiner-limage">Étape 2 : Examiner l’image</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 
 <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">fort.png</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">img</span><span class="p">).</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">)</span>
-<span class="c1"># Taille : (300, 300) RGB
-</span>
-<span class="k">for</span> <span class="n">ch</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">([</span><span class="sh">'</span><span class="s">R</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">G</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">B</span><span class="sh">'</span><span class="p">]):</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">size</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">mode</span><span class="p">)</span>  <span class="c1"># (300, 300) RGB
+</span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+<span class="c1"># Statistiques des valeurs de pixels
+</span><span class="k">for</span> <span class="n">ch</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">([</span><span class="sh">'</span><span class="s">R</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">G</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">B</span><span class="sh">'</span><span class="p">]):</span>
     <span class="n">vals</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[:,:,</span><span class="n">ch</span><span class="p">].</span><span class="nf">flatten</span><span class="p">()</span>
     <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">: min=</span><span class="si">{</span><span class="n">vals</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span><span class="si">}</span><span class="s">, max=</span><span class="si">{</span><span class="n">vals</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span><span class="si">}</span><span class="s">, mean=</span><span class="si">{</span><span class="n">vals</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><strong>Observations :</strong></p>
-<ul>
-  <li>Tous les pixels sont dans la plage [20, 180] — exactement la plage de <code class="language-plaintext highlighter-rouge">random.randint(20, 180)</code>.</li>
-  <li>L’image ressemble à du bruit coloré aléatoire — probablement un <strong>masque PRNG</strong>.</li>
-</ul>
+<p><strong>Résultat</strong> :</p>
 
-<h3 id="étape-3--trouver-le-seed-prng">Étape 3 : Trouver le seed PRNG</h3>
-
-<p>On teste les seeds évidents (notamment <code class="language-plaintext highlighter-rouge">42</code> — un classique en CTF) :</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">random</span>
-
-<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">fort.png</span><span class="sh">"</span><span class="p">)).</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">)</span>
-<span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">shape</span>  <span class="c1"># 300, 300, 3
-</span><span class="n">n_pixels</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">c</span>  <span class="c1"># 270000
-</span>
-<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">"</span><span class="s">ELMINA</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">elmina</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">shadow</span><span class="sh">"</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
-    <span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">shadow</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_pixels</span><span class="p">)],</span>
-                      <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nf">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">shadow</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
-    <span class="n">unique_vals</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">unique</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="nf">flatten</span><span class="p">()))</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Seed </span><span class="si">{</span><span class="n">seed</span><span class="si">!r}</span><span class="s">: valeurs_uniques=</span><span class="si">{</span><span class="n">unique_vals</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R: min=20, max=180, mean=100.0
+G: min=20, max=181, mean=100.1
+B: min=20, max=180, mean=100.0
 </code></pre></div></div>
 
-<p><strong>Résultat crucial :</strong></p>
+<p>Observations importantes :</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Seed 'ELMINA': valeurs_uniques=256
-Seed 42:       valeurs_uniques=3   ← !!!
-</code></pre></div></div>
-
-<p>Avec <strong>seed=42</strong>, la différence n’a que <strong>3 valeurs</strong> : <code class="language-plaintext highlighter-rouge">{0, 1, 255}</code>.</p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">0</code> → pixel inchangé</li>
-  <li><code class="language-plaintext highlighter-rouge">1</code> → LSB mis à 1</li>
-  <li><code class="language-plaintext highlighter-rouge">255</code> (= -1 mod 256) → LSB mis à 0</li>
+  <li>Les pixels sont dans la plage [20, 180] — pas [0, 255] ! C’est bizarre.</li>
+  <li>L’image ressemble à du bruit coloré aléatoire.</li>
+  <li>Il y a 3 pixels avec G=181 (légèrement hors plage normale).</li>
 </ul>
 
-<p>L’image a été construite avec <code class="language-plaintext highlighter-rouge">random.seed(42)</code> comme couverture PRNG.</p>
+<p>L’image ressemble à un <strong>masque one-time pad</strong> ou une <strong>image générée par PRNG</strong>.</p>
 
-<h3 id="étape-4--extraction-des-données-cachées">Étape 4 : Extraction des données cachées</h3>
+<hr />
 
-<p>La clé <code class="language-plaintext highlighter-rouge">ELMINA</code> est utilisée comme <strong>clé XOR répétée</strong> sur les bits extraits.</p>
+<h2 id="2-les-outils-classiques-tous-ont-échoué">2. Les outils classiques (tous ont échoué)</h2>
+
+<h3 id="zsteg--lsb-dans-png">zsteg — LSB dans PNG</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--rm</span> <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/data dominicbreuker/stego-toolkit zsteg /data/fort.png
+</code></pre></div></div>
+
+<p>→ Aucun résultat pertinent.</p>
+
+<h3 id="steghide--données-cachées-avec-mot-de-passe">steghide — données cachées avec mot de passe</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>steghide extract <span class="nt">-sf</span> fort.bmp <span class="nt">-p</span> <span class="s2">"ELMINA"</span>
+steghide extract <span class="nt">-sf</span> fort.bmp <span class="nt">-p</span> <span class="s2">"elmina"</span>
+steghide extract <span class="nt">-sf</span> fort.bmp <span class="nt">-p</span> <span class="s2">""</span>
+<span class="c"># ... toutes les variations</span>
+</code></pre></div></div>
+
+<p>→ Échec. Steghide ne trouve rien.</p>
+
+<h3 id="stegseek--bruteforce-steghide-avec-rockyoutxt">stegseek — bruteforce steghide avec rockyou.txt</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run rickdejager/stegseek fort.bmp rockyou.txt
+</code></pre></div></div>
+
+<p>→ <code class="language-plaintext highlighter-rouge">[!] error: Could not find a valid passphrase.</code> — Pas un challenge steghide.</p>
+
+<h3 id="stegoveritas--analyse-automatique">stegoveritas — analyse automatique</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stegoveritas fort.png
+</code></pre></div></div>
+
+<p>→ Fichier <code class="language-plaintext highlighter-rouge">LSBExtracted.bin</code> vide. Rien.</p>
+
+<h3 id="binwalk--fichiers-cachés">binwalk — fichiers cachés</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>binwalk elmina.zip
+binwalk fort.png
+</code></pre></div></div>
+
+<p>→ Aucun fichier caché détecté.</p>
+
+<h3 id="analyse-des-chunks-png">Analyse des chunks PNG</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">struct</span><span class="p">,</span> <span class="n">zlib</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">fort.png</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="k">while</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">'</span><span class="s">&gt;I</span><span class="sh">'</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">pos</span><span class="p">:</span><span class="n">pos</span><span class="o">+</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">chunk_type</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">pos</span><span class="o">+</span><span class="mi">4</span><span class="p">:</span><span class="n">pos</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Chunk </span><span class="si">{</span><span class="n">chunk_type</span><span class="si">}</span><span class="s"> à </span><span class="si">{</span><span class="n">pos</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s"> bytes</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">pos</span> <span class="o">+=</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">length</span>
+</code></pre></div></div>
+
+<p>→ Structure normale : IHDR, IDAT×5, IEND. Rien d’anormal.</p>
+
+<hr />
+
+<h2 id="3-piste--les-valeurs-de-pixels-sont-trop-régulières">3. Piste : les valeurs de pixels sont trop régulières</h2>
+
+<p>Les pixels sont tous dans [20, 180]. C’est exactement la plage que produit <code class="language-plaintext highlighter-rouge">random.randint(20, 180)</code> en Python ! L’image est peut-être générée avec un <strong>PRNG (générateur de nombres pseudo-aléatoires)</strong> et la donnée cachée est le <strong>XOR/différence</strong> avec l’image originale.</p>
+
+<h3 id="concept--visual-secret-sharing--prng-cover">Concept : Visual Secret Sharing / PRNG Cover</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Image_cachée = Image_réelle XOR Image_PRNG
+              ou
+Image_cachée = Image_réelle - Image_PRNG (mod 256)
+</code></pre></div></div>
+
+<p>Pour récupérer <code class="language-plaintext highlighter-rouge">Image_réelle</code>, on a besoin du <strong>seed</strong> du PRNG.</p>
+
+<hr />
+
+<h2 id="4-trouver-le-seed">4. Trouver le seed</h2>
+
+<p>On teste des seeds évidents :</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
-<span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">fort.png</span><span class="sh">"</span><span class="p">)).</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">)</span>
 <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">shape</span>
+<span class="n">n_pixels</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">c</span>  <span class="c1"># 300*300*3 = 270000
+</span>
+<span class="n">seeds_to_try</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sh">"</span><span class="s">ELMINA</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">elmina</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">shadow</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">fort</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">castle</span><span class="sh">"</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">300</span>
+<span class="p">]</span>
 
-<span class="c1"># Générer le masque PRNG
-</span><span class="n">shadow</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">h</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">c</span><span class="p">)],</span>
+<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="n">seeds_to_try</span><span class="p">:</span>
+    <span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="c1"># Générer le masque PRNG comme l'image de fond
+</span>    <span class="n">shadow</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_pixels</span><span class="p">)],</span>
+                      <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nf">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+  
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">shadow</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
+    <span class="n">unique_vals</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">unique</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="nf">flatten</span><span class="p">()))</span>
+    <span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">diff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Seed </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s">: valeurs_uniques=</span><span class="si">{</span><span class="n">unique_vals</span><span class="si">}</span><span class="s">, zeros=</span><span class="si">{</span><span class="n">zeros</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">n_pixels</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Résultat crucial</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Seed ELMINA: valeurs_uniques=256, zeros=89842
+Seed elmina: valeurs_uniques=256, zeros=89701
+Seed shadow: valeurs_uniques=256, zeros=89812
+Seed 42:     valeurs_uniques=3,   zeros=269808  ← !!!
+Seed 0:      valeurs_uniques=256, zeros=89823
+</code></pre></div></div>
+
+<p>Avec <strong>seed=42</strong>, la différence n’a que <strong>3 valeurs uniques</strong> : <code class="language-plaintext highlighter-rouge">{0, 1, 255}</code> !</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">0</code> → les deux images sont identiques (pas de modification)</li>
+  <li><code class="language-plaintext highlighter-rouge">1</code> → image_réelle = image_PRNG + 1 (le LSB a été mis à 1)</li>
+  <li><code class="language-plaintext highlighter-rouge">255</code> → image_réelle = image_PRNG - 1 (le LSB a été mis à 0) [255 ≡ -1 mod 256]</li>
+</ul>
+
+<p>C’est une modification de ±1 sur certains pixels — c’est exactement la signature d’une <strong>stéganographie LSB</strong> !</p>
+
+<blockquote>
+  <p><strong>Comprendre 0/1/255</strong> : Si <code class="language-plaintext highlighter-rouge">shadow[i] = 100</code> et <code class="language-plaintext highlighter-rouge">fort[i] = 101</code>, alors <code class="language-plaintext highlighter-rouge">diff = 1</code> → le bit a été modifié vers le haut. Si <code class="language-plaintext highlighter-rouge">fort[i] = 99</code>, <code class="language-plaintext highlighter-rouge">diff = 255 = -1 mod 256</code> → modifié vers le bas. Les deux représentent un bit LSB changé.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="5-analyser-les-pixels-modifiés">5. Analyser les pixels modifiés</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">shadow</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_pixels</span><span class="p">)],</span>
                   <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nf">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">shadow</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
 
-<span class="c1"># Extraire les bits LSB (différence entre image et masque)
-</span><span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">shadow</span><span class="p">).</span><span class="nf">flatten</span><span class="p">()</span>
-<span class="n">bits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">diff</span><span class="p">]</span>
-<span class="n">bits</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bits</span> <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">]</span>
+<span class="c1"># Quels canaux sont modifiés ?
+</span><span class="k">for</span> <span class="n">ch</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">([</span><span class="sh">'</span><span class="s">R</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">G</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">B</span><span class="sh">'</span><span class="p">]):</span>
+    <span class="n">nz</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">diff</span><span class="p">[:,:,</span><span class="n">ch</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">nz</span><span class="si">}</span><span class="s"> pixels modifiés</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
 
-<span class="c1"># Regrouper en octets
-</span><span class="n">raw_bytes</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">()</span>
+<p><strong>Résultat</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R: 0 pixels modifiés
+G: 192 pixels modifiés   ← Seulement le canal Vert !
+B: 0 pixels modifiés
+</code></pre></div></div>
+
+<p>Et ces 192 pixels modifiés sont <strong>uniquement dans les lignes 0 et 1</strong> (les deux premières lignes de l’image) :</p>
+
+<ul>
+  <li>Ligne 0 : 161 pixels modifiés</li>
+  <li>Ligne 1 : 31 pixels modifiés</li>
+</ul>
+
+<p>Total : 192 modifications = 192 bits = 24 octets.</p>
+
+<hr />
+
+<h2 id="6-extraire-le-message-lsb">6. Extraire le message LSB</h2>
+
+<p>Le canal Vert contient le message. Chaque pixel du canal G a un LSB qui encode un bit du message.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Extraire le LSB du canal G des lignes 0 et 1
+</span><span class="n">g_channel</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">bits</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>  <span class="c1"># Lignes 0 et 1
+</span>    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">300</span><span class="p">):</span>  <span class="c1"># 300 colonnes
+</span>        <span class="n">bits</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">g_channel</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># LSB
+</span>
+<span class="c1"># Décoder en octets (MSB en premier)
+</span><span class="n">byte_data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
     <span class="n">byte</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
         <span class="n">byte</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">bits</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
-    <span class="n">raw_bytes</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+    <span class="n">byte_data</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
 
-<span class="c1"># Déchiffrement XOR avec la clé ELMINA
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Données brutes (hex) : </span><span class="si">{</span><span class="n">byte_data</span><span class="p">.</span><span class="nf">hex</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Données brutes (texte) : </span><span class="si">{</span><span class="n">byte_data</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="sh">'</span><span class="s">latin-1</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Résultat</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Données brutes (hex) : 002b002f223e2f32...
+Données brutes (texte) : +/"&gt;/2...}-(}#}...
+</code></pre></div></div>
+
+<p>C’est du “texte” mais pas encore lisible. Il faut appliquer la clé !</p>
+
+<hr />
+
+<h2 id="7-déchiffrement-xor-avec-la-clé-elmina">7. Déchiffrement XOR avec la clé ELMINA</h2>
+
+<p>Le message est chiffré avec un <strong>XOR à clé répétée</strong> (Repeating Key XOR, aussi appelé Vigenère XOR), avec la clé <code class="language-plaintext highlighter-rouge">ELMINA</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">key</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">ELMINA</span><span class="sh">"</span>
+
+<span class="c1"># Essayer différents décalages de la clé (offset)
+</span><span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="n">xored</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">(</span><span class="n">byte_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">key</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">%</span> <span class="nf">len</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+                  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">byte_data</span><span class="p">)))</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">xored</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="sh">"</span><span class="s">replace</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">printable</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">xored</span> <span class="k">if</span> <span class="mi">32</span> <span class="o">&lt;=</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="mi">126</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Offset </span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">text</span><span class="p">[</span><span class="si">:</span><span class="mi">60</span><span class="p">]</span><span class="si">}</span><span class="s"> (lisible: </span><span class="si">{</span><span class="n">printable</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">xored</span><span class="p">)</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Résultat</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Offset 0: EgMflj~KQEs8ae4m...
+Offset 1: LfIac{cOVJw1`a3b...
+Offset 2: MbNngrb{HYN~0df&lt;...
+Offset 3: IeAjnsf|G]G4ci8o...
+Offset 4: NjEcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}  ← !!!
+Offset 5: AnLbkpnwJUB|&lt;hd0...
+</code></pre></div></div>
+
+<p>Avec <strong>offset=4</strong> (la clé commence à la 5ème lettre, <code class="language-plaintext highlighter-rouge">N</code>), on obtient le flag !</p>
+
+<blockquote>
+  <p><strong>Pourquoi un offset ?</strong> Le padding nul au début du message (<code class="language-plaintext highlighter-rouge">0x00 0x00</code>) a fait que les premiers octets ne correspondent pas au début de la clé. L’auteur a commencé le chiffrement à une position particulière dans la clé.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="8-script-complet-de-résolution">8. Script complet de résolution</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python3
+</span><span class="sh">"""</span><span class="s">Résolution complète du challenge Elmina Shadows</span><span class="sh">"""</span>
+<span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="c1"># --- Étape 1 : Charger l'image ---
+</span><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">fort.png</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">img</span><span class="p">).</span><span class="nf">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">)</span>
+<span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">shape</span>
+
+<span class="c1"># --- Étape 2 : Générer l'image PRNG (seed=42) ---
+</span><span class="n">n_pixels</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">c</span>
+<span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">shadow</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_pixels</span><span class="p">)],</span>
+                  <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">).</span><span class="nf">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># --- Étape 3 : Vérifier (optionnel) ---
+</span><span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">shadow</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Valeurs uniques dans la diff : </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nf">unique</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="nf">flatten</span><span class="p">())</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># → [0 1 255] — Parfait !
+</span>
+<span class="c1"># --- Étape 4 : Extraire les LSB du canal G (lignes 0-1) ---
+</span><span class="n">g_channel</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">bits</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">300</span><span class="p">):</span>
+        <span class="n">bits</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">g_channel</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">byte_data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="n">byte</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">byte</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">bits</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+    <span class="n">byte_data</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+
+<span class="c1"># --- Étape 5 : XOR avec ELMINA (offset=4) ---
 </span><span class="n">key</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">ELMINA</span><span class="sh">"</span>
-<span class="n">decrypted</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">(</span><span class="n">b</span> <span class="o">^</span> <span class="n">key</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nf">len</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">raw_bytes</span><span class="p">))</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">flag_bytes</span> <span class="o">=</span> <span class="nf">bytes</span><span class="p">(</span><span class="n">byte_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">key</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">%</span> <span class="nf">len</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">byte_data</span><span class="p">)))</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">flag_bytes</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="sh">"</span><span class="s">replace</span><span class="sh">"</span><span class="p">)</span>
 
-<span class="c1"># Chercher la position du flag
-</span><span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">decrypted</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span><span class="p">):</span>
-    <span class="n">chunk</span> <span class="o">=</span> <span class="n">decrypted</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="mi">50</span><span class="p">]</span>
-    <span class="k">if</span> <span class="sa">b</span><span class="sh">'</span><span class="s">EcowasCTF</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">chunk</span> <span class="ow">or</span> <span class="sa">b</span><span class="sh">'</span><span class="s">ecowas</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">chunk</span><span class="p">.</span><span class="nf">lower</span><span class="p">():</span>
-        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Offset </span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">chunk</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-        <span class="k">break</span>
-</code></pre></div></div>
+<span class="c1"># Extraire le flag
+</span><span class="kn">import</span> <span class="n">re</span>
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sa">r</span><span class="sh">'</span><span class="s">EcowasCTF\{[^}]+\}</span><span class="sh">'</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Flag : </span><span class="si">{</span><span class="k">match</span><span class="p">.</span><span class="nf">group</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># → EcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}
+</span></code></pre></div></div>
 
-<p><strong>Résultat à l’offset 4 :</strong></p>
+<hr />
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}
+<h2 id="9-récapitulatif-de-la-logique-du-challenge">9. Récapitulatif de la logique du challenge</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────────────────────┐
+│              COMMENT LE CHALLENGE A ÉTÉ CRÉÉ            │
+│                                                          │
+│  Message secret                                          │
+│      ↓                                                   │
+│  XOR avec clé "ELMINA" (offset 4) → message_chiffré     │
+│      ↓                                                   │
+│  Embedding dans LSB canal G (lignes 0-1 de l'image)     │
+│      ↓                                                   │
+│  Image générée par PRNG(seed=42) utilisée comme base     │
+│      ↓                                                   │
+│  Image finale : fort.png                                 │
+└─────────────────────────────────────────────────────────┘
+
+POUR RÉSOUDRE :
+  fort.png
+      ↓
+  Générer PRNG(seed=42) → trouver les pixels modifiés
+      ↓
+  Extraire LSB canal G → message_chiffré
+      ↓
+  XOR avec "ELMINA" (offset 4) → flag !
 </code></pre></div></div>
 
 <hr />
 
-<h2 id="flag">Flag</h2>
+<h2 id="10-pourquoi-cétait-difficile">10. Pourquoi c’était difficile</h2>
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EcowasCTF{3lm1n4_sh4d0ws_x0r_r3p34t1ng_k3y}
-</code></pre></div></div>
+<p>Ce challenge était retors pour plusieurs raisons :</p>
+
+<ol>
+  <li><strong>Les outils classiques ne fonctionnent pas</strong> : zsteg, steghide, stegoveritas sont inutiles car la stéganographie utilise une technique personnalisée.</li>
+  <li><strong>La clé (seed=42) n’est pas dans le fichier</strong> : Le seed est le nombre mystérieux <code class="language-plaintext highlighter-rouge">42</code> (référence à <em>Le Guide du Voyageur Galactique</em>). Seul le bruteforce ou l’intuition permettait de le trouver.</li>
+  <li><strong>Double couche</strong> : Il fallait d’abord trouver le mécanisme PRNG, puis trouver la clé XOR avec son offset.</li>
+  <li>
+    <p><strong>L’indice “deux ombres”</strong> dans la description faisait référence à :</p>
+
+    <ul>
+      <li>L’<strong>image PRNG</strong> (une ombre = le masque aléatoire, seed 42)</li>
+      <li>La <strong>clé XOR ELMINA</strong> (l’autre ombre = la clé de chiffrement)</li>
+    </ul>
+  </li>
+</ol>
 
 <hr />
 
-<h2 id="ce-que-jai-retenu">Ce que j’ai retenu</h2>
+<h2 id="11-résumé-des-approches-tentées">11. Résumé des approches tentées</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Approche</th>
+      <th>Résultat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zsteg</code>, <code class="language-plaintext highlighter-rouge">steghide</code>, <code class="language-plaintext highlighter-rouge">stegoveritas</code></td>
+      <td>❌ Aucun résultat</td>
+    </tr>
+    <tr>
+      <td>Bruteforce steghide avec rockyou.txt</td>
+      <td>❌ Aucun mot de passe trouvé</td>
+    </tr>
+    <tr>
+      <td>Analyse chunks PNG</td>
+      <td>❌ Structure normale</td>
+    </tr>
+    <tr>
+      <td>LSB canaux R/G/B sans clé</td>
+      <td>❌ Données illisibles</td>
+    </tr>
+    <tr>
+      <td>XOR entre canaux R/G/B</td>
+      <td>❌ Bruit aléatoire</td>
+    </tr>
+    <tr>
+      <td>Décryptage AES/RC4</td>
+      <td>❌ Faux positif</td>
+    </tr>
+    <tr>
+      <td>Comparaison avec PRNG seed “ELMINA”</td>
+      <td>❌ Diff non structurée</td>
+    </tr>
+    <tr>
+      <td>Comparaison avec PRNG seed 42</td>
+      <td>✅ Diff = {0, 1, 255} seulement</td>
+    </tr>
+    <tr>
+      <td>LSB canal G lignes 0-1 + XOR ELMINA offset 4</td>
+      <td>✅<strong>Flag trouvé !</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="12-ressources-utiles">12. Ressources utiles</h2>
 
 <ul>
-  <li><strong>Commentaire ZIP</strong> : souvent ignoré mais peut contenir la clé ou un hint critique. Toujours vérifier <code class="language-plaintext highlighter-rouge">zipfile.comment</code>.</li>
-  <li><strong>Plage de pixels restreinte [20, 180]</strong> : signe fort d’une image générée par PRNG (<code class="language-plaintext highlighter-rouge">random.randint</code>), pas une photo naturelle.</li>
-  <li><strong>Seed=42</strong> : classique en CTF pour les PRNG Python. Si les valeurs uniques de la différence s’effondrent → bingo.</li>
-  <li><strong>XOR répétée + clé dans le ZIP</strong> : pattern “ombre porte la clé, ombre porte le secret” = deux couches (PRNG + XOR).</li>
+  <li><a href="https://cryptopals.com/sets/1/challenges/6">Repeating Key XOR — cryptopals.com</a> — challenge classique pour comprendre le XOR répété</li>
+  <li><a href="https://en.wikipedia.org/wiki/Steganography#Digital_steganography">PRNG-based steganography</a> — explication générale</li>
+  <li><a href="https://gchq.github.io/CyberChef/">CyberChef</a> — outil en ligne pour XOR, LSB, etc.</li>
+  <li><a href="https://ctf101.org/forensics/what-is-steganography/">CTF 101 — Steganography</a></li>
+  <li><a href="https://pycryptodome.readthedocs.io/">PyCryptodome</a> — bibliothèque Python pour la crypto</li>
+  <li><a href="https://picoctf.org/">picoCTF Forensics/Stego challenges</a> — pour pratiquer</li>
 </ul>
 
-<p><strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index ECOWAS CTF 2026</a></strong></p>]]></content><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><category term="CTF" /><category term="ECOWAS-CTF-2026" /><category term="steganography" /><category term="xor" /><category term="prng" /><category term="png" /><category term="zip-comment" /><category term="repeating-key" /><category term="medium" /><summary type="html"><![CDATA[CTF : ECOWAS CTF 2026 · Catégorie : Steganography · Difficulté : ⭐⭐ Medium · Points : 200 ← Retour à l’index du CTF]]></summary></entry></feed>
+<hr />
+
+<p><strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index du CTF</a></strong></p>]]></content><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><category term="CTF" /><category term="ECOWAS-CTF-2026" /><category term="steganography" /><category term="xor" /><category term="prng" /><category term="png" /><category term="zip-comment" /><category term="repeating-key" /><category term="medium" /><summary type="html"><![CDATA[CTF : ECOWAS CTF 2026 · Catégorie : Steganography · Difficulté : ⭐⭐ Medium · Points : 200 ← Retour à l’index du CTF]]></summary></entry></feed>

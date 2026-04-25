@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-24T23:20:53+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-25T07:53:23+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
   <p><strong>CTF :</strong> ECOWAS CTF 2026 (Événement 3) · <strong>Catégorie :</strong> Crypto · <strong>Difficulté :</strong> ⭐⭐ Medium · <strong>Points :</strong> 300<br />
 <strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index du CTF</a></strong></p>
 </blockquote>
@@ -8,7 +8,7 @@
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>
@@ -159,7 +159,7 @@ G = (...)
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>
@@ -348,7 +348,7 @@ key_byte = v13 XOR key_byte
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>
@@ -480,7 +480,7 @@ czNjcjN0IQ==  → s3cr3t!
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>
@@ -783,7 +783,7 @@ curl http://challenge-url/admin-panel
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>
@@ -877,7 +877,7 @@ unzip challenge.apk <span class="nt">-d</span> apk_contents/
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>
@@ -1000,7 +1000,7 @@ unzip challenge.apk <span class="nt">-d</span> apk_contents/
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>
@@ -1112,7 +1112,7 @@ if result != targets[i] → Wrong
 <h2 id="fichiers-du-challenge">Fichiers du challenge</h2>
 
 <blockquote>
-  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus, <a href="https://patrickleondev.github.io/portfolio/#contact">contactez-moi</a> ou consultez les archives de la plateforme.</p>
+  <p>⚠️ <strong>Note :</strong> Les fichiers sont hébergés sur la plateforme ECOWAS CTF. Les liens de téléchargement peuvent expirer après la fin de la compétition. Si un lien ne fonctionne plus ou consultez les archives de la plateforme.</p>
 </blockquote>
 
 <table>

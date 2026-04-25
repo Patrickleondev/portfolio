@@ -36,10 +36,6 @@ Le djinn — une entité magique de la mythologie arabe/islamique — garde un s
 
 Avant de plonger dans la solution, voici les concepts clés à comprendre :
 
-### Qu'est-ce que le Reverse Engineering (RE) ?
-
-Le Reverse Engineering (ingénierie inverse) consiste à analyser un programme **compilé** (binaire) pour comprendre ce qu'il fait, sans avoir accès au code source. On "remonte" depuis la machine vers l'humain.
-
 ### Outils utilisés
 - **`file`** : identifie le type d'un fichier
 - **`strings`** : extrait les chaînes de caractères lisibles d'un binaire
@@ -249,7 +245,6 @@ TABLE = [
 # Conversion int8_t → uint8 : -1 → 255, -52 → 204, etc.
 TABLE = [value & 0xFF for value in TABLE]
 
-
 def step(value: int) -> int:
     """
     Fonction de transition d'état (LFSR modifié).
@@ -269,7 +264,6 @@ def step(value: int) -> int:
     # Nouvel état : partie 32 bits basse + (carry XOR feedback bit) comme LSB
     return ((doubled & 0xFFFFFFFF) + (((doubled >> 32) ^ bit) & 1)) & 0xFFFFFFFF
 
-
 def emit(value: int, key_xor: int, out_xor: int, invert: bool = False) -> int:
     """
     Génère un byte du flag à partir de l'état courant.
@@ -288,7 +282,6 @@ def emit(value: int, key_xor: int, out_xor: int, invert: bool = False) -> int:
         return (~byte) & 0xFF
     # XOR final pour "masquer" le résultat
     return byte ^ out_xor
-
 
 def main() -> None:
     # ---- ÉTAT INITIAL ----
@@ -351,7 +344,6 @@ def main() -> None:
 
     result = bytes(output)
     print(result.decode())   # → EcowasCTF{Dj1nN_5t4t3_mAcH1n3_0xD34D}
-
 
 if __name__ == "__main__":
     main()

@@ -22,41 +22,9 @@ Can you uncover what's hidden?"*
 
 ---
 
-## 📖 Notions de base à connaître
+La **[stéganographie](https://fr.wikipedia.org/wiki/St%C3%A9ganographie)** dissimule des données dans un fichier anodin (image, audio, texte) sans altération visible.
 
-### Qu'est-ce que la stéganographie ?
-
-La **stéganographie** (du grec *stéganos* = caché, *graphie* = écriture) est l'art de **cacher un message dans un autre message** de façon à ce que personne ne remarque même qu'un message est dissimulé.
-
-C'est différent du chiffrement (cryptographie) :
-- **Cryptographie** : le message est illisible (on *sait* qu'il y a un secret, mais on ne peut pas le lire)
-- **Stéganographie** : le message est invisible (on ne *réalise même pas* qu'il y a un secret)
-
-Exemples courants en stéganographie :
-| Support | Technique |
-|---------|-----------|
-| Image PNG | Bits de poids faible des pixels (LSB) |
-| Fichier audio | Perturbations infra ou ultra-soniques |
-| Fichier texte | Espaces et tabulations invisibles |
-| Document Word | Texte de couleur blanche sur fond blanc |
-
-### Qu'est-ce que STEGSNOW / Whitespace Steganography ?
-
-**STEGSNOW** est un outil (et une technique) qui cache des données binaires **dans les espaces blancs** (espaces invisibles) d'un fichier texte.
-
-Voici comment ça marche :
-```
-Texte visible : "Bonjour tout le monde."
-Texte réel   : "Bonjour   \t   tout  \t\t  le    monde."
-                         ^^^        ^^^^
-                    espaces cachés + tabulations cachées
-```
-
-La convention :
-- **Tabulation (`\t`)** = bit `1`
-- **Espace (` `)** = bit `0`
-
-Ces caractères sont **totalement invisibles** dans un éditeur de texte normal. Mais si on regarde l'hexdump du fichier, on les voit.
+[**stegsnow**](http://www.darkside.com.au/snow/) encode des données dans les espaces/tabulations de fin de ligne — invisibles à l'œil nu.
 
 ---
 

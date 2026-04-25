@@ -22,42 +22,6 @@ toc: true
 
 ---
 
-## 📖 Notions fondamentales
-
-### Qu'est-ce qu'un firmware IoT ?
-
-Un **firmware** (ou microprogramme) est le logiciel embarqué dans un appareil matériel — routeur, caméra IP, capteur IoT, etc. C'est ce qui fait "tourner" l'appareil.
-
-Les firmwares sont souvent :
-
-- Stockés en mémoire flash
-- Compressés pour économiser de la place
-- Structurés avec un en-tête (header) indiquant où trouver les données
-
-### Qu'est-ce qu'un header binaire ?
-
-Un **header** (en-tête) est une zone au début d'un fichier binaire qui contient des métadonnées :
-
-```
-[MAGIC 4B][VERSION][DEVICE_ID][TAILLE_PAYLOAD][OFFSET_PAYLOAD][CHECKSUM]...
-[BOOTLOADER (zone de démarrage)]
-[PAYLOAD COMPRESSÉ/CHIFFRÉ]
-```
-
-### Qu'est-ce que GZIP et zlib ?
-
-**GZIP** est un format de compression standard. **zlib** est la bibliothèque qui l'implémente. Les firmwares utilisent souvent GZIP pour compresser le système de fichiers embarqué.
-
-Signature GZIP dans les données : `1f 8b` (deux octets caractéristiques).
-
-### Qu'est-ce que XOR ?
-
-**XOR** (OU exclusif) est souvent utilisé pour "chiffrer" (obfusquer) des données dans les firmwares. Avec une clé `k`, chaque octet `b` devient `b XOR k`. Pour déchiffrer, il suffit de refaire `(b XOR k) XOR k = b`.
-
-### Qu'est-ce qu'une archive TAR ?
-
-**TAR** (Tape Archive) est un format d'archivage qui regroupe plusieurs fichiers et répertoires en un seul flux. Les systèmes de fichiers Linux embarqués sont souvent stockés sous forme d'archive TAR compressée.
-
 ---
 
 ## Étape 1 — Analyse de l'en-tête binaire

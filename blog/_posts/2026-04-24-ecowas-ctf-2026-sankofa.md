@@ -34,8 +34,6 @@ Le nom "Sankofa" est un symbole Adinkra signifiant **"Retourner chercher"** — 
 
 ---
 
-## 📖 Notions fondamentales
-
 ### Qu'est-ce que la cryptographie sur courbes elliptiques (ECC) ?
 
 La **cryptographie sur courbes elliptiques** (ECC - Elliptic Curve Cryptography) est une branche de la cryptographie asymétrique. On travaille sur une **courbe elliptique** définie par l'équation :

@@ -28,43 +28,12 @@ toc: true
 
 ---
 
-## 📖 Notions fondamentales
-
-### Qu'est-ce que le Reverse Engineering (RE) ?
-
-Le **Reverse Engineering** (rétro-ingénierie) consiste à analyser un programme compilé (binaire) pour comprendre son fonctionnement **sans avoir accès au code source**.
-
-En CTF, le schéma typique est :
-```
-Binaire mystère
-    ↓ On l'analyse (statiquement ou dynamiquement)
-    ↓ On comprend comment il vérifie une entrée
-    ↓ On trouve la condition de succès
-    → FLAG
-```
-
 ### Types d'analyse
 
 | Type | Description | Avantages |
 |------|-------------|-----------|
 | **Statique** | Examiner le binaire sans l'exécuter | Sûr, pas besoin du bon OS |
 | **Dynamique** | Exécuter et observer avec un debugger | Plus intuitif, voit les valeurs réelles |
-
-### Qu'est-ce qu'un binaire Mach-O ?
-
-Un **Mach-O** (Mach Object) est le format d'exécutable utilisé sur macOS (et iOS). C'est l'équivalent macOS de :
-- ELF (`Executable and Linkable Format`) sur Linux
-- PE (`Portable Executable` / `.exe`) sur Windows
-
-On peut étudier un Mach-O statiquement sur n'importe quel OS, même sans Mac.
-
-### Qu'est-ce que la commande `strings` ?
-
-La commande `strings` extrait toutes les **chaînes de caractères lisibles** (ASCII) d'un fichier binaire. C'est l'une des premières choses à faire en RE — pour trouver des messages, des clés, des noms de fonctions.
-
-```bash
-strings mon_binaire | grep -i "flag\|pass\|secret\|key"
-```
 
 ---
 

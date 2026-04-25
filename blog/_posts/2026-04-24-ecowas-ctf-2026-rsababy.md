@@ -27,8 +27,6 @@ L'indice **"m3"** est un jeu de mots : `m^3` (m puissance 3), ce qui révèle l'
 
 ---
 
-## 📖 Notions fondamentales sur RSA
-
 ### Comment fonctionne RSA ?
 
 RSA est un système de chiffrement asymétrique. Voici les bases :

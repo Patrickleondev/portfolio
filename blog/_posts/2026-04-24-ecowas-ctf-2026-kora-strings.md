@@ -164,28 +164,6 @@ Les données ne sont pas lisibles directement — il faut les déchiffrer.
 
 Le commentaire nous dit : `the string is tuned to 0x5B`. La clé de chiffrement est `0x5B`.
 
-### Qu'est-ce que le XOR ?
-
-**XOR** (ou exclusif) est une opération bit à bit :
-
-```
-0 XOR 0 = 0
-0 XOR 1 = 1
-1 XOR 0 = 1
-1 XOR 1 = 0
-```
-
-Pour chiffrer/déchiffrer avec un seul octet :
-
-```
-chiffré[i] = clair[i] XOR clé
-clair[i] = chiffré[i] XOR clé  ← même opération !
-```
-
-Le XOR est **symétrique** : appliquer la clé deux fois redonne l'original.
-
-> **Ressource** : [XOR dans le CTF — cryptopals.com](https://cryptopals.com/sets/1/challenges/2)
-
 ### Déchiffrement
 
 ```python

@@ -592,24 +592,6 @@ ct1 = list(vm_mem(0x210, 16))  # fe3b90e145f7fe90dad86f4a47421d2e
 
 ## Concept #3 — AES : comment ça marche et comment l'inverser
 
-### Qu'est-ce qu'AES ?
-
-AES (Advanced Encryption Standard) est le standard de chiffrement symétrique mondial depuis 2001. "Symétrique" signifie que la même clé chiffre et déchiffre.
-
-Dans cette version à 4 rounds :
-
-```
-Chiffrement:
-  état = plaintext (16 bytes)
-  état = état XOR k[0]        ← AddRoundKey
-  Pour i = 1, 2, 3, 4:
-    état = SubBytes(état)      ← substitution via S-box
-    état = ShiftRows(état)     ← permutation des lignes
-    état = MixColumns(état)    ← mélange des colonnes
-    état = état XOR k[i]       ← AddRoundKey
-  retourner état = ciphertext
-```
-
 ### Pourquoi peut-on déchiffrer ?
 
 Chaque opération AES est **réversible** :

@@ -22,37 +22,6 @@ Il n'y a pas de fichier à télécharger — le flag est directement caché dans
 
 ---
 
-## 📖 Notions de base
-
-### Qu'est-ce que Base64 ?
-
-**Base64** est un encodage qui convertit des données binaires en texte ASCII en utilisant 64 caractères :
-- Majuscules `A-Z` (26)
-- Minuscules `a-z` (26)
-- Chiffres `0-9` (10)
-- `+` et `/` (2)
-- `=` comme caractère de bourrage (padding)
-
-**Propriétés visuelles :**
-- Se termine souvent par `=` ou `==`
-- Longueur toujours multiple de 4
-- N'utilise **que** les caractères ci-dessus
-
-### Qu'est-ce que l'hexadécimal ?
-
-L'**hexadécimal** (hex) utilise 16 symboles : `0-9` et `a-f`. Chaque octet est représenté par 2 caractères hex.
-
-Exemple : `0x45` = 69 en décimal = `'E'` en ASCII.
-
-### Qu'est-ce que l'encodage en couches (Layered encoding) ?
-
-Un **encodage en couches** (d'où le titre "Layer Cake") consiste à appliquer plusieurs encodages successifs :
-```
-message → Base64 → Hex → Base64 inversée → ...
-```
-
-Pour décoder, il faut identifier chaque couche et les défaire **dans l'ordre inverse**.
-
 ---
 
 ## Observation initiale

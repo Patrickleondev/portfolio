@@ -78,8 +78,6 @@ C'est le **Rail Fence Cipher** (chiffre de la grille de clôture) !
 
 ---
 
-## 📖 Notions fondamentales
-
 ### Le Rail Fence Cipher (chiffre zigzag)
 
 Le **Rail Fence Cipher** est un chiffre de transposition classique. Le texte est écrit en zigzag sur plusieurs « rails » (rangées), puis lu rail par rail.
@@ -224,7 +222,6 @@ def rail_fence_decode_offset(ct, n_rails, offset=0):
         result.append(rails[r][rail_idx[r]])
         rail_idx[r] += 1
     return ''.join(result)
-
 
 ct = open('challs/Crypto/39_Emergency/output.txt', encoding='utf-8').read().strip()
 

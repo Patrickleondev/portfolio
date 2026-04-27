@@ -12,7 +12,7 @@ toc: true
 
 ---
 
-> **Writeup par : 0xWhoAm1** — Équipe **ITACHI | 0xWhoAm1 | 70aH**
+> **Writeup par : 0xWhoAm1** — Équipe **DarkPulse**
 
 ---
 

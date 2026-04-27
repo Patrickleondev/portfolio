@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-25T08:21:34+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR"><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://patrickleondev.github.io/portfolio/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://patrickleondev.github.io/portfolio/blog/" rel="alternate" type="text/html" hreflang="fr-FR" /><updated>2026-04-27T09:59:11+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/feed.xml</id><title type="html">t3chw1z4rd’s Blog</title><subtitle>Explore technical writeups and deep dives into AI RedTeaming and Cyber Security.</subtitle><author><name>t3chw1z4rd</name><email>gkpl0010@gmail.com</email></author><entry><title type="html">ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]</title><link href="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/" rel="alternate" type="text/html" title="ECOWAS CTF 2026 — EC-RSA [Crypto/Medium]" /><published>2026-04-24T12:15:00+00:00</published><updated>2026-04-24T12:15:00+00:00</updated><id>https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa</id><content type="html" xml:base="https://patrickleondev.github.io/portfolio/blog/posts/ecowas-ctf-2026-ec-rsa/"><![CDATA[<blockquote>
   <p><strong>CTF :</strong> ECOWAS CTF 2026 (Événement 3) · <strong>Catégorie :</strong> Crypto · <strong>Difficulté :</strong> ⭐⭐ Medium · <strong>Points :</strong> 300<br />
 <strong><a href="/portfolio/blog/posts/ecowas-ctf-2026/">← Retour à l’index du CTF</a></strong></p>
 </blockquote>
@@ -512,11 +512,52 @@ czNjcjN0IQ==  → s3cr3t!
 
 <h3 id="identification-du-binaire">Identification du binaire</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Magic: 0xCFFAEDFE  → Mach-O ARM64 (little-endian, 64-bit)
-Taille: 116 352 octets
+<p>Première étape systématique sur tout binaire inconnu :</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file swahili_mangle
+<span class="c"># swahili_mangle: Mach-O 64-bit arm64 executable, flags:&lt;NOUNDEFS|DYLDLINK|TWOLEVEL|PIE&gt;</span>
 </code></pre></div></div>
 
-<p>Même série que les autres challenges reverse de cet événement — des binaires macOS ARM64 analysés <strong>statiquement</strong> sous Windows avec capstone.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings swahili_mangle | <span class="nb">head</span> <span class="nt">-20</span>  <span class="c"># chercher des indices dans les chaînes visibles</span>
+</code></pre></div></div>
+
+<p><strong>Note :</strong> Ce binaire est un <strong>Mach-O ARM64</strong> (format macOS Apple Silicon). Sur Linux/Windows, on ne peut pas l’exécuter directement, mais l’analyse <strong>statique</strong> est tout à fait possible.</p>
+
+<h3 id="analyse-avec-ghidra">Analyse avec Ghidra</h3>
+
+<p><strong>Ghidra</strong> permet d’importer et désassembler ce binaire même sur Windows/Linux :</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">File</code> → <code class="language-plaintext highlighter-rouge">Import File</code> → <code class="language-plaintext highlighter-rouge">swahili_mangle</code>
+    <ul>
+      <li>Ghidra détecte automatiquement : <code class="language-plaintext highlighter-rouge">Mach-O 64-bit ARM64</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Auto-analyze</code> → <strong>Yes</strong> (laisser toutes les options par défaut)</li>
+  <li>Dans <code class="language-plaintext highlighter-rouge">Symbol Tree</code> → <code class="language-plaintext highlighter-rouge">Functions</code> → <code class="language-plaintext highlighter-rouge">main</code> → double-clic</li>
+  <li>Le <strong>Decompiler</strong> (volet droit) affiche le pseudo-code de la boucle de validation</li>
+</ol>
+
+<p>Dans Ghidra, on repère :</p>
+<ul>
+  <li>Une boucle sur 40 caractères (la longueur du flag)</li>
+  <li>Des appels répétés à des fonctions de lookup → white-box</li>
+  <li>Une section <code class="language-plaintext highlighter-rouge">__const</code> (accessible via <code class="language-plaintext highlighter-rouge">Window</code> → <code class="language-plaintext highlighter-rouge">Memory Map</code>) contenant les tables et les valeurs attendues</li>
+</ul>
+
+<p><strong>Alternative : Capstone + Python</strong> (analyse directement depuis le fichier binaire, sans GUI) :</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">capstone</span><span class="p">,</span> <span class="n">struct</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">swahili_mangle</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">binary</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="c1"># Désassembler la section __text pour comprendre la logique
+</span><span class="n">md</span> <span class="o">=</span> <span class="n">capstone</span><span class="p">.</span><span class="nc">Cs</span><span class="p">(</span><span class="n">capstone</span><span class="p">.</span><span class="n">CS_ARCH_ARM64</span><span class="p">,</span> <span class="n">capstone</span><span class="p">.</span><span class="n">CS_MODE_ARM</span><span class="p">)</span>
+<span class="n">TEXT_OFFSET</span> <span class="o">=</span> <span class="mh">0x3f62</span>  <span class="c1"># offset __text dans le fichier (ajuster via readelf ou Ghidra)
+</span><span class="k">for</span> <span class="n">instr</span> <span class="ow">in</span> <span class="n">md</span><span class="p">.</span><span class="nf">disasm</span><span class="p">(</span><span class="n">binary</span><span class="p">[</span><span class="n">TEXT_OFFSET</span><span class="p">:</span><span class="n">TEXT_OFFSET</span><span class="o">+</span><span class="mi">200</span><span class="p">],</span> <span class="mh">0x100003f62</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">0x</span><span class="si">{</span><span class="n">instr</span><span class="p">.</span><span class="n">address</span><span class="si">:</span><span class="n">x</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">instr</span><span class="p">.</span><span class="n">mnemonic</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">instr</span><span class="p">.</span><span class="n">op_str</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
 
 <h3 id="architecture-de-lalgorithme">Architecture de l’algorithme</h3>
 
@@ -708,7 +749,7 @@ Taille: 116 352 octets
 
 <p><strong>Chaîne d’exploitation :</strong></p>
 <ol>
-  <li>Commentaire HTML → référence à un fichier JavaScript</li>
+  <li>Source HTML → commentaire → référence à un fichier JavaScript</li>
   <li>JS → endpoint de debug hardcodé</li>
   <li>Endpoint de debug → chemin encodé en Base64</li>
   <li>Route cachée → flag</li>
@@ -720,8 +761,21 @@ Taille: 116 352 octets
 
 <h3 id="étape-1--lire-le-source-html">Étape 1 — Lire le source HTML</h3>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://challenge-url/ | <span class="nb">grep</span> <span class="nt">-i</span> <span class="s2">"&lt;!--</span><span class="se">\|\.</span><span class="s2">js"</span>
+<p><strong>Via le navigateur :</strong></p>
+<ul>
+  <li>Clic droit sur la page → <code class="language-plaintext highlighter-rouge">View Page Source</code> (ou <code class="language-plaintext highlighter-rouge">Ctrl+U</code>)</li>
+  <li>Chercher <code class="language-plaintext highlighter-rouge">&lt;!--</code> et <code class="language-plaintext highlighter-rouge">.js</code> pour trouver les commentaires et scripts</li>
+</ul>
+
+<p><strong>Via curl :</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://challenge-url/ | <span class="nb">grep</span> <span class="nt">-E</span> <span class="s2">"&lt;!--|</span><span class="se">\\</span><span class="s2">.js"</span>
 </code></pre></div></div>
+
+<p><strong>Via Burp Suite :</strong></p>
+<ul>
+  <li>Intercepter la réponse HTTP dans <code class="language-plaintext highlighter-rouge">HTTP History</code></li>
+  <li>Dans le volet Response, faire <code class="language-plaintext highlighter-rouge">Ctrl+F</code> pour chercher “js” ou “debug”</li>
+</ul>
 
 <p>Commentaire trouvé :</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Debug: voir /static/app.js --&gt;</span>
@@ -1083,9 +1137,41 @@ strings yoruba_vm | <span class="nb">head</span> <span class="nt">-30</span>
 
 <hr />
 
-<h2 id="étape-2--désassemblage--trouver-la-logique-de-validation">Étape 2 : Désassemblage — Trouver la logique de validation</h2>
+<h2 id="étape-2--désassemblage-avec-ghidra">Étape 2 : Désassemblage avec Ghidra</h2>
 
-<p>On ouvre le binaire dans Ghidra (ou tout désassembleur). On cherche les références croisées vers la chaîne <code class="language-plaintext highlighter-rouge">"Correct!"</code> pour localiser la fonction de validation.</p>
+<h3 id="workflow-ghidra-pour-ce-binaire-elf-x86-64">Workflow Ghidra pour ce binaire ELF x86-64</h3>
+
+<ol>
+  <li><strong>Lancer Ghidra</strong> → <code class="language-plaintext highlighter-rouge">File</code> → <code class="language-plaintext highlighter-rouge">New Project</code> → choisir un dossier et un nom</li>
+  <li><strong>Importer</strong> → <code class="language-plaintext highlighter-rouge">File</code> → <code class="language-plaintext highlighter-rouge">Import File</code> → sélectionner <code class="language-plaintext highlighter-rouge">yoruba_vm</code>
+    <ul>
+      <li>Ghidra détecte : <code class="language-plaintext highlighter-rouge">ELF 64-bit x86-64</code> (format Linux standard)</li>
+      <li>Cliquer <strong>OK</strong> puis <strong>Yes</strong> pour l’auto-analyse</li>
+    </ul>
+  </li>
+  <li><strong>Auto-analyse</strong> → laisser toutes les options par défaut → <strong>Analyze</strong> (10-20 secondes)</li>
+  <li><strong>Localiser la fonction de validation via les chaînes</strong> :
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Search</code> → <code class="language-plaintext highlighter-rouge">For Strings</code> → taper <code class="language-plaintext highlighter-rouge">Correct</code></li>
+      <li>Double-clic sur <code class="language-plaintext highlighter-rouge">"Correct!"</code> → Ghidra va à l’adresse dans le listing</li>
+      <li>Clic droit → <code class="language-plaintext highlighter-rouge">References</code> → <code class="language-plaintext highlighter-rouge">Find References to Address</code> → voir qui appelle ce code</li>
+    </ul>
+  </li>
+  <li><strong>Aller à <code class="language-plaintext highlighter-rouge">main</code></strong> :
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Symbol Tree</code> → <code class="language-plaintext highlighter-rouge">Functions</code> → <code class="language-plaintext highlighter-rouge">main</code> → double-clic</li>
+      <li>Le volet <strong>Decompiler</strong> (droite) affiche le pseudo-code C</li>
+    </ul>
+  </li>
+  <li><strong>Identifier les variables</strong> :
+    <ul>
+      <li>Dans le décompilateur, renommer les variables (<code class="language-plaintext highlighter-rouge">L</code> pour renommer) pour rendre le code lisible</li>
+      <li>Les tableaux de taille 256, 32 correspondent à : S-Box, clés, cibles</li>
+    </ul>
+  </li>
+</ol>
+
+<p>On cherche les références croisées vers la chaîne <code class="language-plaintext highlighter-rouge">"Correct!"</code> pour localiser la fonction de validation.</p>
 
 <p>Le pseudo-code pertinent :</p>
 

@@ -1446,3 +1446,30 @@ footer {
     border-radius: 50%;
     object-position: 50% 22%;
 }
+
+/* Moyens de contact : une ligne de 4 sur grand écran, 2 x 2 sur tablette, 1 colonne sur téléphone */
+.contact-links {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.contact-link {
+    padding: 1.25rem 0.75rem;
+    text-align: center;
+}
+
+.contact-link span {
+    white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+    .contact-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 420px) {
+    .contact-links {
+        grid-template-columns: 1fr;
+    }
+}

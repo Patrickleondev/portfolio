@@ -1417,3 +1417,12 @@ footer {
 #journey {
     padding-top: 1rem;
 }
+
+.expertise-image.logo-banner img[src*="kya"] {
+    max-height: 130px;
+}
+
+.timeline-logos img[src*="kya"] {
+    height: 72px;
+    padding: 4px;
+}

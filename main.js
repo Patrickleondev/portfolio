@@ -1,114 +1,157 @@
-// Matrix Background Effect
-const canvas = document.createElement('canvas');
-const ctx = canvas.getContext('2d');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isEnglish = document.documentElement.lang === 'en';
+
+// Fond Matrix : décoratif, masqué aux lecteurs d'écran, en pause quand l'onglet est caché
+// et figé si le visiteur a demandé moins d'animations.
 const matrixBg = document.getElementById('matrix-bg');
-matrixBg.appendChild(canvas);
+if (matrixBg) {
+    matrixBg.setAttribute('aria-hidden', 'true');
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    matrixBg.appendChild(canvas);
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()";
+    const fontSize = 16;
+    let drops = [];
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()";
-const fontSize = 16;
-const columns = canvas.width / fontSize;
-const drops = [];
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        drops = Array(Math.ceil(canvas.width / fontSize)).fill(1);
+    }
 
-for (let i = 0; i < columns; i++) {
-    drops[i] = 1;
-}
+    function draw() {
+        ctx.fillStyle = "rgba(13, 2, 8, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#00ff41";
+        ctx.font = fontSize + "px monospace";
 
-function draw() {
-    ctx.fillStyle = "rgba(13, 2, 8, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#00ff41";
-    ctx.font = fontSize + "px monospace";
-
-    for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
         }
-        drops[i]++;
     }
-}
 
-setInterval(draw, 33);
+    resize();
+    window.addEventListener('resize', resize);
 
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-// Typewriter Effect
-const typeWriterElements = [
-    { selector: '.greeting', delay: 0 },
-    { selector: '.glitch', delay: 500 },
-    { selector: '.role', delay: 1500 },
-    { selector: '.bio-short', delay: 2500 },
-    { selector: '#about-title', delay: 500 },
-    { selector: '#about-hook', delay: 1500 },
-    { selector: '#services-title', delay: 500 },
-    { selector: '#realizations-title', delay: 1000 },
-    { selector: '#expertise-title', delay: 500 },
-    { selector: '#tech-title', delay: 1000 }
-];
-
-function typeWriter(element, text, i = 0, speed = 75) {
-    if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(() => typeWriter(element, text, i, speed), speed);
+    if (reduceMotion) {
+        for (let i = 0; i < 60; i++) draw();
     } else {
-        element.style.borderRight = "none"; // Remove cursor after typing
+        let timer = setInterval(draw, 33);
+        document.addEventListener('visibilitychange', () => {
+            clearInterval(timer);
+            if (!document.hidden) timer = setInterval(draw, 33);
+        });
     }
 }
 
-window.addEventListener('load', () => {
-    typeWriterElements.forEach(({ selector, delay }) => {
-        const element = document.querySelector(selector);
-        if (element) {
-            const text = element.getAttribute('data-text') || element.textContent;
-            element.textContent = ''; // Clear initial text
-            element.style.opacity = '1';
-            element.style.visibility = 'visible';
+// Effet machine à écrire, limité aux titres courts. Le texte complet reste lisible
+// par les lecteurs d'écran (aria-label) et s'affiche directement sans animation.
+const typedSelectors = ['.greeting', '.glitch', '#about-title', '#services-title',
+    '#realizations-title', '#expertise-title', '#tech-title'];
 
-            setTimeout(() => {
-                element.style.borderRight = "2px solid var(--accent-color)"; // Add cursor
-                typeWriter(element, text);
-            }, delay);
+function typeWriter(element, text, i = 0) {
+    if (i < text.length) {
+        element.textContent += text.charAt(i);
+        setTimeout(() => typeWriter(element, text, i + 1), 45);
+    } else {
+        element.classList.remove('typing');
+    }
+}
+
+if (!reduceMotion) {
+    typedSelectors.forEach((selector, index) => {
+        const element = document.querySelector(selector);
+        if (!element) return;
+        const text = element.getAttribute('data-text') || element.textContent.trim();
+        element.setAttribute('aria-label', text);
+        element.textContent = '';
+        element.classList.add('typing');
+        setTimeout(() => typeWriter(element, text), index === 0 ? 0 : 300);
+    });
+}
+
+// Menu mobile repliable. Sans JavaScript, le menu reste simplement déplié.
+const nav = document.querySelector('.glass-nav');
+if (nav) {
+    const list = nav.querySelector('ul');
+    list.id = 'site-menu';
+    nav.querySelectorAll('a.active').forEach(a => a.setAttribute('aria-current', 'page'));
+
+    const toggle = document.createElement('button');
+    toggle.className = 'menu-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-controls', 'site-menu');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i><span class="sr-only">' +
+        (isEnglish ? 'Menu' : 'Menu') + '</span>';
+    nav.insertBefore(toggle, list);
+    document.documentElement.classList.add('js');
+
+    toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.focus();
         }
     });
-});
-// Audio Context for Hover Effect (Hacker Style)
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-function playHoverSound() {
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-
-    oscillator.type = 'sawtooth'; // More "cyber" sound
-    oscillator.frequency.setValueAtTime(120, audioCtx.currentTime);
-    oscillator.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.05); // Faster zip
-
-    gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-
-    oscillator.start();
-    oscillator.stop(audioCtx.currentTime + 0.05);
 }
 
-// Add hover listeners to interactive cards
-document.querySelectorAll('.service-card, .project-card, .btn, a').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        playHoverSound();
-        if (navigator.vibrate) navigator.vibrate(5); // Micro vibration
+// Visionneuse de certificats : ouvrable à la souris et au clavier, fermée par Échap,
+// le focus revient sur l'image d'origine.
+const certImages = document.querySelectorAll('.clickable-cert img');
+certImages.forEach(img => {
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', (isEnglish ? 'Enlarge: ' : 'Agrandir : ') + img.alt);
+
+    const open = () => {
+        const modal = document.createElement('div');
+        modal.className = 'lightbox';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', img.alt);
+
+        const closeBtn = document.createElement('button');
+        closeBtn.type = 'button';
+        closeBtn.className = 'lightbox-close';
+        closeBtn.innerHTML = '<i class="fas fa-xmark" aria-hidden="true"></i><span class="sr-only">' +
+            (isEnglish ? 'Close' : 'Fermer') + '</span>';
+
+        const zoomed = document.createElement('img');
+        zoomed.src = img.src;
+        zoomed.alt = img.alt;
+
+        modal.append(closeBtn, zoomed);
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+
+        const close = () => {
+            modal.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', onKey);
+            img.focus();
+        };
+        const onKey = e => {
+            if (e.key === 'Escape') close();
+            if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); }
+        };
+        modal.addEventListener('click', e => { if (e.target !== zoomed) close(); });
+        document.addEventListener('keydown', onKey);
+    };
+
+    img.addEventListener('click', open);
+    img.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
     });
 });

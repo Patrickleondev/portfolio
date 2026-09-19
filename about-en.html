@@ -4,9 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About | AI RedTeamer</title>
-    <meta name="description" content="Biography of Koffi Patrick-Léon G. - AI RedTeaming Specialist">
-    <link rel="stylesheet" href="./style.css?v=3" />
+    <title>Journey – Koffi Patrick-Léon Gandonou</title>
+    <meta property="og:title" content="Journey – Koffi Patrick-Léon Gandonou">
+    <meta property="og:description" content="Journey, experience (ANCy, KYA-Energy Group) and skills of Koffi Patrick-Léon Gandonou.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://patrickleondev.github.io/portfolio/assets/images/me.jpg">
+    <meta name="theme-color" content="#0d0208">
+    <link rel="icon" href="/portfolio/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/portfolio/favicon-32.png">
+    <link rel="apple-touch-icon" href="/portfolio/apple-touch-icon.png">
+    <meta name="description" content="Journey, experience (ANCy, KYA-Energy Group) and skills of Koffi Patrick-Léon Gandonou.">
+    <link rel="stylesheet" href="./style.css?v=4" />
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;600;800&display=swap"
         rel="stylesheet">
@@ -14,6 +22,7 @@
 </head>
 
 <body>
+    <a class="skip-link" href="#contenu">Skip to content</a>
     <div id="matrix-bg"></div>
     <div class="overlay"></div>
     <main>
@@ -33,32 +42,126 @@
                 </ul>
             </nav>
         </header>
+        <div id="contenu" tabindex="-1"></div>
 
         <section class="section-container">
-            <h2 class="section-title" id="about-title" style="visibility: hidden;">About me</h2>
+            <h2 class="section-title" id="about-title">About me</h2>
             <div class="about-grid">
                 <div class="about-text">
-                    <p id="about-hook" style="visibility: hidden;">
+                    <p id="about-hook">
                         <span class="highlight">//</span>
-                        With a background in computer science and systems, focusing on networks, security, and
-                        artificial intelligence,
-                        I am particularly interested in the design, administration, and securing of information systems.
+                        Third-year Computer Science student at CY Cergy Paris Université, after a bachelor's degree in
+                        Computer Science and Systems at the École Polytechnique de Lomé.
                     </p>
                     <p>
-                        My journey combines a solid academic foundation with practical experience in Linux environments,
-                        cybersecurity, and system monitoring, with a strong focus on infrastructure reliability,
-                        availability, and security.
+                        I spent nine months at KYA-Energy Group building and maintaining an ERP the staff use every
+                        day, then a month at Togo's National Cybersecurity Agency designing the architecture of a
+                        cybersecurity lab. I am heading towards cloud native infrastructure security, DevSecOps and
+                        red teaming of AI systems.
                     </p>
                 </div>
-                <!-- Removed CV Download as requested -->
             </div>
+
+        </section>
+
+            <section class="section-container" id="journey">
+                <h2 class="section-title">Journey</h2>
+
+                <h3 class="subsection-title"><i class="fas fa-briefcase" aria-hidden="true"></i> Experience</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-logos">
+                            <img src="./assets/images/logos/ancy.png" alt="National Cybersecurity Agency of Togo" width="201" height="75">
+                            <img src="./assets/images/logos/cda.png" alt="Cyber Defense Africa" width="144" height="91">
+                        </div>
+                        <span class="timeline-date">Jul – Aug 2026</span>
+                        <h3>Cybersecurity Intern (Wave 1)</h3>
+                        <p class="timeline-org">National Cybersecurity Agency of Togo (ANCy), with Cyber Defense Africa · Lomé</p>
+                        <ul>
+                            <li>Design of a segmented cybersecurity lab: multi-VDOM FortiGate 100E, Cisco Catalyst
+                                C9200, Proxmox VE on HPE ProLiant DL385.</li>
+                            <li>Technical architecture document and low-level design of the physical architecture.</li>
+                            <li>Per-zone VLAN addressing plan (MGMT, DMZ, SRVS, SOC, MMAS); proposed a SIEM zone
+                                separate from the SOC.</li>
+                            <li>Network flow matrix (41 rules) and first asset inventory (CMDB); caught addressing
+                                inconsistencies before publication.</li>
+                            <li>Hardening based on CIS Benchmarks; Git coordination for the team (Conventional Commits,
+                                merge requests, supervisor review).</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span>FortiGate</span><span>Cisco</span><span>Proxmox</span><span>CIS Benchmarks</span><span>Git</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">Jun – Aug 2026</span>
+                        <h3>Contractor – ERP Development</h3>
+                        <p class="timeline-org">KYA-Energy Group · Lomé</p>
+                        <ul>
+                            <li>Evolution and maintenance of the company's ERPNext/Frappe apps (kya_hr, kya_services),
+                                used in production by every department.</li>
+                            <li>Delivery through feature branches, then preprod and prod via Docker images.</li>
+                            <li>Documentation and handover to the IT team.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">Nov 2025 – May 2026</span>
+                        <h3>Intern – Information System Design</h3>
+                        <p class="timeline-org">KYA-Energy Group · Lomé</p>
+                        <ul>
+                            <li>Digitalisation of the Support Services department (HR, accounting, purchasing and
+                                stock, logistics) on ERPNext.</li>
+                            <li>Business requirements analysis and modelling of approval workflows.</li>
+                            <li>Frappe app development in Python, roles and permissions setup.</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span>ERPNext</span><span>Frappe</span><span>Python</span><span>Docker</span><span>MariaDB</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">Feb – Mar 2026</span>
+                        <h3>Cybersecurity Intern (remote)</h3>
+                        <p class="timeline-org">Future Interns</p>
+                        <ul>
+                            <li>Web vulnerability assessment, phishing campaign analysis, API audit against the OWASP
+                                API Top 10.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">Jul – Sep 2025</span>
+                        <h3>System and Oracle Administration Intern</h3>
+                        <p class="timeline-org">SMART2D · Lomé</p>
+                        <ul>
+                            <li>Red Hat and Oracle Linux administration, cron job scheduling, Oracle Database alert
+                                monitoring.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Education</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">2026 – 2027</span>
+                        <h3>Third year, Bachelor in Computer Science</h3>
+                        <p class="timeline-org">CY Cergy Paris Université</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2022 – 2025</span>
+                        <h3>Bachelor in Computer Science and Systems</h3>
+                        <p class="timeline-org">École Polytechnique de Lomé, University of Lomé</p>
+                    </div>
+                </div>
+            </section>
             <section class="section-container">
-                <h2 class="section-title" id="tech-title" style="visibility: hidden;">Technologies & Tools</h2>
+                <h2 class="section-title" id="tech-title">Technologies & Tools</h2>
                 <div class="skills-gallery">
                     <!-- Pentesting -->
                     <div class="expertise-card no-image">
                         <div class="expertise-content">
-                            <h3><i class="fas fa-bug" style="color: var(--accent-color);"></i> Pentesting & Red Teaming
+                            <h3><i class="fas fa-bug" aria-hidden="true" style="color: var(--accent-color);"></i> Pentesting & Red Teaming
                             </h3>
                             <ul class="competencies">
                                 <li><strong>Reconnaissance:</strong> Nmap, Shodan, Recon-ng</li>
@@ -72,7 +175,7 @@
                     <!-- AI Security -->
                     <div class="expertise-card no-image">
                         <div class="expertise-content">
-                            <h3><i class="fas fa-brain" style="color: var(--accent-color);"></i> AI & LLM Security</h3>
+                            <h3><i class="fas fa-brain" aria-hidden="true" style="color: var(--accent-color);"></i> AI & LLM Security</h3>
                             <ul class="competencies">
                                 <li><strong>Frameworks:</strong> PyTorch, TensorFlow, Hugging Face</li>
                                 <li><strong>Attacks:</strong> Prompt Injection, Jailbreaking, Model Inversion</li>
@@ -85,10 +188,10 @@
                     <!-- DevSecOps -->
                     <div class="expertise-card no-image">
                         <div class="expertise-content">
-                            <h3><i class="fas fa-code-branch" style="color: var(--accent-color);"></i> DevSecOps & Cloud
+                            <h3><i class="fas fa-code-branch" aria-hidden="true" style="color: var(--accent-color);"></i> DevSecOps & Cloud
                             </h3>
                             <ul class="competencies">
-                                <li><strong>Container:</strong> Docker, Kubernetes (K8s)</li>
+                                <li><strong>Container:</strong> Docker, Kubernetes (LFS250)</li>
                                 <li><strong>CI/CD:</strong> GitHub Actions, GitLab CI</li>
                                 <li><strong>Cloud:</strong> AWS (Security Groups, IAM), Azure</li>
                                 <li><strong>Code Analysis:</strong> SonarQube, Snyk</li>
@@ -96,10 +199,24 @@
                         </div>
                     </div>
 
+                    <!-- Network & Infrastructure -->
+                    <div class="expertise-card no-image">
+                        <div class="expertise-content">
+                            <h3><i class="fas fa-network-wired" aria-hidden="true" style="color: var(--accent-color);"></i> Network &amp;
+                                Infrastructure</h3>
+                            <ul class="competencies">
+                                <li><strong>Firewall:</strong> FortiGate (VDOM, inter-zone policies), IPFire</li>
+                                <li><strong>Network:</strong> Cisco Catalyst, VLANs, flow matrix</li>
+                                <li><strong>Virtualisation:</strong> Proxmox VE</li>
+                                <li><strong>Detection &amp; hardening:</strong> Wazuh, Suricata, CIS Benchmarks</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <!-- Mobile Development -->
                     <div class="expertise-card no-image">
                         <div class="expertise-content">
-                            <h3><i class="fas fa-mobile-alt" style="color: var(--accent-color);"></i> Mobile Development
+                            <h3><i class="fas fa-mobile-alt" aria-hidden="true" style="color: var(--accent-color);"></i> Mobile Development
                             </h3>
                             <ul class="competencies">
                                 <li><strong>Framework:</strong> Flutter (Dart)</li>
@@ -113,7 +230,7 @@
                     <!-- Programming & Databases -->
                     <div class="expertise-card no-image">
                         <div class="expertise-content">
-                            <h3><i class="fas fa-database" style="color: var(--accent-color);"></i> Programming &
+                            <h3><i class="fas fa-database" aria-hidden="true" style="color: var(--accent-color);"></i> Programming &
                                 Databases</h3>
                             <ul class="competencies">
                                 <li><strong>Languages:</strong> Python, Java, SQL, Dart</li>
@@ -130,38 +247,38 @@
             <footer>
                 <div class="footer-content">
                     <div class="social-icons-footer">
-                        <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" title="TryHackMe">
+                        <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" rel="noopener" title="TryHackMe">
                             <img src="https://simpleicons.org/icons/tryhackme.svg" alt="TryHackMe" class="icon-svg">
                         </a>
-                        <a href="https://app.hackthebox.com/users/2165503" target="_blank" title="HackTheBox">
+                        <a href="https://app.hackthebox.com/users/2165503" target="_blank" rel="noopener" title="HackTheBox">
                             <img src="https://simpleicons.org/icons/hackthebox.svg" alt="HackTheBox" class="icon-svg">
                         </a>
-                        <a href="https://github.com/Patrickleondev" target="_blank" title="GitHub">
+                        <a href="https://github.com/Patrickleondev" target="_blank" rel="noopener" title="GitHub">
                             <img src="https://simpleicons.org/icons/github.svg" alt="GitHub" class="icon-svg">
                         </a>
-                        <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" title="LinkedIn">
-                            <i class="fab fa-linkedin icon-svg"
+                        <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin icon-svg" aria-hidden="true"
                                 style="font-size: 24px; display: flex; align-items: center; justify-content: center;"></i>
                         </a>
-                        <a href="https://x.com/gkpl0010" target="_blank" title="X (Twitter)">
+                        <a href="https://x.com/gkpl0010" target="_blank" rel="noopener" title="X (Twitter)">
                             <img src="https://simpleicons.org/icons/x.svg" alt="X" class="icon-svg">
                         </a>
                     </div>
                     <div class="contact-info"
                         style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                        <a href="https://wa.me/22893035706" target="_blank" class="whatsapp-btn">
+                        <a href="https://wa.me/33758378853" target="_blank" rel="noopener" class="whatsapp-btn">
                             <img src="https://simpleicons.org/icons/whatsapp.svg" alt="WhatsApp" class="icon-svg-small">
                             Contact via WhatsApp
                         </a>
-                        <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email">
-                            <i class="fas fa-envelope icon-svg" style="font-size: 24px;"></i>
+                        <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email" aria-label="Email">
+                            <i class="fas fa-envelope icon-svg" aria-hidden="true" style="font-size: 24px;"></i>
                         </a>
                     </div>
                     <p class="copyright">© 2026 Koffi Patrick-Léon Gandonou. Built for AI Security.</p>
                 </div>
             </footer>
     </main>
-    <script type="module" src="./main.js?v=3"></script>
+    <script type="module" src="./main.js?v=4"></script>
 </body>
 
 </html>

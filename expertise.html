@@ -4,9 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Expertise | AI RedTeamer</title>
-    <meta name="description" content="Certifications et compétences en cybersécurité, IA et développement">
-    <link rel="stylesheet" href="./style.css?v=3" />
+    <title>Certifications – Koffi Patrick-Léon Gandonou</title>
+    <meta property="og:title" content="Certifications – Koffi Patrick-Léon Gandonou">
+    <meta property="og:description" content="Certifications, formations, stages et compétitions CTF de Koffi Patrick-Léon Gandonou.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://patrickleondev.github.io/portfolio/assets/images/me.jpg">
+    <meta name="theme-color" content="#0d0208">
+    <link rel="icon" href="/portfolio/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/portfolio/favicon-32.png">
+    <link rel="apple-touch-icon" href="/portfolio/apple-touch-icon.png">
+    <meta name="description" content="Certifications, formations, stages et compétitions CTF de Koffi Patrick-Léon Gandonou.">
+    <link rel="stylesheet" href="./style.css?v=4" />
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;600;800&display=swap"
         rel="stylesheet">
@@ -15,6 +23,7 @@
 </head>
 
 <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
     <div id="matrix-bg"></div>
     <div class="overlay"></div>
     <main>
@@ -34,14 +43,34 @@
                 </ul>
             </nav>
         </header>
+        <div id="contenu" tabindex="-1"></div>
 
         <section class="section-container" id="certifications">
-            <h2 class="section-title" id="expertise-title" style="visibility: hidden;">Certifications & Expertise</h2>
+            <h2 class="section-title" id="expertise-title">Certifications & Expertise</h2>
 
             <!-- Professional Certifications -->
             <div class="cert-block">
-                <h3><i class="fas fa-certificate" style="color: var(--accent-color);"></i> Certifications
+                <h3><i class="fas fa-certificate" aria-hidden="true" style="color: var(--accent-color);"></i> Certifications
                     Professionnelles</h3>
+
+                <!-- Linux Foundation -->
+                <h4 style="color: var(--accent-color); margin-top: 1.5rem;">Cloud Native &amp; Kubernetes</h4>
+                <div class="skills-gallery" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));">
+                    <div class="expertise-card clickable-cert">
+                        <div class="expertise-image" style="height: 280px;">
+                            <img src="./assets/images/LFS250_Kubernetes_Cloud_Native.png"
+                                alt="Certificat Kubernetes and Cloud Native Essentials (LFS250)">
+                        </div>
+                        <div class="expertise-content">
+                            <h3>Kubernetes and Cloud Native Essentials (LFS250)</h3>
+                            <p class="cert-origin">The Linux Foundation (Août 2026)</p>
+                            <p style="color: var(--dim-color); font-size: 0.9rem; margin-top: 0.5rem;">
+                                ID LF-uhgqahpefr · <a href="./assets/docs/LFS250_certificate.pdf" target="_blank" rel="noopener"
+                                    style="color: var(--accent-color);">voir le PDF</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- ISC2 -->
                 <h4 style="color: var(--accent-color); margin-top: 1.5rem;">ISC2 Certified in Cybersecurity (CC)</h4>
@@ -110,7 +139,7 @@
 
             <!-- Specialized Training -->
             <div class="cert-block">
-                <h3><i class="fas fa-graduation-cap" style="color: var(--accent-color);"></i> Formations Spécialisées
+                <h3><i class="fas fa-graduation-cap" aria-hidden="true" style="color: var(--accent-color);"></i> Formations Spécialisées
                 </h3>
 
                 <!-- Ethical Hacking -->
@@ -229,8 +258,32 @@
 
             <!-- Internship -->
             <div class="cert-block">
-                <h3><i class="fas fa-briefcase" style="color: var(--accent-color);"></i> Stage & Expérience Professionnelle</h3>
+                <h3><i class="fas fa-briefcase" aria-hidden="true" style="color: var(--accent-color);"></i> Stage & Expérience Professionnelle</h3>
                 <div class="skills-gallery" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <div class="expertise-card">
+                        <div class="expertise-image logo-banner" style="height: 160px;">
+                            <img src="./assets/images/logos/ancy.png" alt="Agence Nationale de la Cybersécurité">
+                            <img src="./assets/images/logos/cda.png" alt="Cyber Defense Africa">
+                        </div>
+                        <div class="expertise-content">
+                            <h3>Stage en cybersécurité</h3>
+                            <p class="cert-origin">Agence Nationale de la Cybersécurité – Togo (Juil.–Août 2026)</p>
+                            <p style="color: var(--dim-color); font-size: 0.9rem; margin-top: 0.5rem;">
+                                Conception d'un laboratoire de cybersécurité avec Cyber Defense Africa : architecture
+                                FortiGate / Cisco / Proxmox, plan VLAN, matrice de flux, CMDB, durcissement CIS.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="expertise-card no-image">
+                        <div class="expertise-content">
+                            <h3>Stage puis prestation – Système d'information</h3>
+                            <p class="cert-origin">KYA-Energy Group (Nov. 2025–Août 2026)</p>
+                            <p style="color: var(--dim-color); font-size: 0.9rem; margin-top: 0.5rem;">
+                                6 mois de stage puis 3 mois de prestation : digitalisation des Services Supports sur
+                                ERPNext/Frappe, applications en production.
+                            </p>
+                        </div>
+                    </div>
                     <div class="expertise-card clickable-cert">
                         <div class="expertise-image" style="height: 320px;">
                             <img src="./assets/images/Future_Interns_Certificate.jpeg" alt="Future Interns Cyber Security Certificate">
@@ -248,7 +301,7 @@
 
             <!-- CTF & Competitions -->
             <div class="cert-block">
-                <h3><i class="fas fa-flag" style="color: var(--accent-color);"></i> CTF & Compétitions</h3>
+                <h3><i class="fas fa-flag" aria-hidden="true" style="color: var(--accent-color);"></i> CTF & Compétitions</h3>
                 <div class="skills-gallery" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
                     <div class="expertise-card clickable-cert">
                         <div class="expertise-image" style="height: 280px;">
@@ -297,9 +350,18 @@
 
             <!-- Platform Achievements -->
             <div class="cert-block">
-                <h3><i class="fas fa-gamepad" style="color: var(--accent-color);"></i> Plateformes d'Entraînement</h3>
+                <h3><i class="fas fa-gamepad" aria-hidden="true" style="color: var(--accent-color);"></i> Plateformes d'Entraînement</h3>
+                <a class="github-card" href="https://github.com/Patrickleondev" target="_blank" rel="noopener">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                    <span class="github-card-text">
+                        <strong>GitHub · Patrickleondev</strong>
+                        <span>Code des projets, labs et writeups</span>
+                    </span>
+                    <img src="https://img.shields.io/github/followers/Patrickleondev?label=Abonnés&style=flat-square&color=00ff41&labelColor=1a1a1a"
+                        alt="" loading="lazy" height="20">
+                </a>
                 <div class="thm-badge-container">
-                    <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=2851747"
+                    <iframe title="TryHackMe" loading="lazy" src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=2851747"
                         style="width:100%;height:300px;border:none;"></iframe>
                 </div>
             </div>
@@ -310,31 +372,31 @@
         <footer>
             <div class="footer-content">
                 <div class="social-icons-footer">
-                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" title="TryHackMe">
+                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" rel="noopener" title="TryHackMe">
                         <img src="https://simpleicons.org/icons/tryhackme.svg" alt="TryHackMe" class="icon-svg">
                     </a>
-                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" title="HackTheBox">
+                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" rel="noopener" title="HackTheBox">
                         <img src="https://simpleicons.org/icons/hackthebox.svg" alt="HackTheBox" class="icon-svg">
                     </a>
-                    <a href="https://github.com/Patrickleondev" target="_blank" title="GitHub">
+                    <a href="https://github.com/Patrickleondev" target="_blank" rel="noopener" title="GitHub">
                         <img src="https://simpleicons.org/icons/github.svg" alt="GitHub" class="icon-svg">
                     </a>
-                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" title="LinkedIn">
-                        <i class="fab fa-linkedin icon-svg"
+                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin icon-svg" aria-hidden="true"
                             style="font-size: 24px; display: flex; align-items: center; justify-content: center;"></i>
                     </a>
-                    <a href="https://x.com/gkpl0010" target="_blank" title="X (Twitter)">
+                    <a href="https://x.com/gkpl0010" target="_blank" rel="noopener" title="X (Twitter)">
                         <img src="https://simpleicons.org/icons/x.svg" alt="X" class="icon-svg">
                     </a>
                 </div>
                 <div class="contact-info"
                     style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <a href="https://wa.me/22893035706" target="_blank" class="whatsapp-btn">
+                    <a href="https://wa.me/33758378853" target="_blank" rel="noopener" class="whatsapp-btn">
                         <img src="https://simpleicons.org/icons/whatsapp.svg" alt="WhatsApp" class="icon-svg-small">
                         Contact via WhatsApp
                     </a>
-                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email">
-                        <i class="fas fa-envelope icon-svg" style="font-size: 24px;"></i>
+                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email" aria-label="Email">
+                        <i class="fas fa-envelope icon-svg" aria-hidden="true" style="font-size: 24px;"></i>
                     </a>
                 </div>
                 <p class="copyright">© 2026 Koffi Patrick-Léon Gandonou. Built for AI Security.</p>
@@ -343,38 +405,12 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="./main.js?v=4"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Splide Carousels
-            if (document.querySelector('#splide-cisco')) new Splide('#splide-cisco', { perPage: 3, gap: '1rem', breakpoints: { 640: { perPage: 1 } } }).mount();
-            if (document.querySelector('#splide-ceh')) new Splide('#splide-ceh', { perPage: 2, gap: '1rem', breakpoints: { 640: { perPage: 1 } } }).mount();
-            if (document.querySelector('#splide-isc2')) new Splide('#splide-isc2', { perPage: 2, gap: '1rem', breakpoints: { 640: { perPage: 1 } } }).mount();
-
-            // Image zoom functionality
-            const clickableCerts = document.querySelectorAll('.clickable-cert img');
-            clickableCerts.forEach(img => {
-                img.style.cursor = 'pointer';
-                img.addEventListener('click', function () {
-                    const modal = document.createElement('div');
-                    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;cursor:pointer;';
-
-                    const zoomedImg = document.createElement('img');
-                    zoomedImg.src = this.src;
-                    zoomedImg.style.cssText = 'max-width:90%;max-height:90%;object-fit:contain;border-radius:8px;box-shadow:0 0 50px rgba(0,255,65,0.5);';
-
-                    modal.appendChild(zoomedImg);
-                    document.body.appendChild(modal);
-
-                    modal.addEventListener('click', () => modal.remove());
-                    document.addEventListener('keydown', function escHandler(e) {
-                        if (e.key === 'Escape') {
-                            modal.remove();
-                            document.removeEventListener('keydown', escHandler);
-                        }
-                    });
-                });
-            });
+            const opts = { gap: '1rem', breakpoints: { 640: { perPage: 1 } } };
+            if (document.querySelector('#splide-ceh')) new Splide('#splide-ceh', { ...opts, perPage: 2 }).mount();
+            if (document.querySelector('#splide-isc2')) new Splide('#splide-isc2', { ...opts, perPage: 2 }).mount();
         });
     </script>
 </body>

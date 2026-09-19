@@ -4,8 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects | AI RedTeamer</title>
-    <link rel="stylesheet" href="./style.css?v=3" />
+    <title>Projects – Koffi Patrick-Léon Gandonou</title>
+    <meta property="og:title" content="Projects – Koffi Patrick-Léon Gandonou">
+    <meta property="og:description" content="Projects of Koffi Patrick-Léon Gandonou: GuardIAn (1st prize Togo IT Days 2025), SanoC, AgriVision, security assessments.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://patrickleondev.github.io/portfolio/assets/images/me.jpg">
+    <meta name="theme-color" content="#0d0208">
+    <link rel="icon" href="/portfolio/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/portfolio/favicon-32.png">
+    <link rel="apple-touch-icon" href="/portfolio/apple-touch-icon.png">
+    <link rel="stylesheet" href="./style.css?v=4" />
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;600;800&display=swap"
         rel="stylesheet">
@@ -13,6 +21,7 @@
 </head>
 
 <body>
+    <a class="skip-link" href="#contenu">Skip to content</a>
     <div id="matrix-bg"></div>
     <div class="overlay"></div>
     <main>
@@ -32,27 +41,28 @@
                 </ul>
             </nav>
         </header>
+        <div id="contenu" tabindex="-1"></div>
 
         <section class="section-container" id="services">
-            <h2 class="section-title" id="services-title" style="visibility: hidden;">My Services</h2>
+            <h2 class="section-title" id="services-title">My Services</h2>
             <div class="services-grid">
                 <div class="service-card" data-tilt>
-                    <div class="service-icon"><i class="fas fa-bug"></i></div>
+                    <div class="service-icon"><i class="fas fa-bug" aria-hidden="true"></i></div>
                     <h3>Audit & Pentesting</h3>
                     <p>Identification of web, network, and application vulnerabilities before they are exploited.</p>
                 </div>
                 <div class="service-card" data-tilt>
-                    <div class="service-icon"><i class="fas fa-brain"></i></div>
+                    <div class="service-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
                     <h3>AI Red Teaming</h3>
                     <p>Evaluating the robustness of LLM models against prompt injection and jailbreak attacks.</p>
                 </div>
                 <div class="service-card" data-tilt>
-                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="service-icon"><i class="fas fa-shield-alt" aria-hidden="true"></i></div>
                     <h3>Cloud Security</h3>
                     <p>Hardening of infrastructures and secure configurations (Docker, Kubernetes, AWS).</p>
                 </div>
                 <div class="service-card" data-tilt>
-                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <div class="service-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
                     <h3>DevSecOps</h3>
                     <p>Integrating security by design into CI/CD pipelines and the development lifecycle.</p>
                 </div>
@@ -60,15 +70,14 @@
         </section>
 
         <section class="section-container" id="realizations">
-            <h2 class="section-title" id="realizations-title" style="visibility: hidden;">Main Projects</h2>
+            <h2 class="section-title" id="realizations-title">Main Projects</h2>
             <div class="projects-grid">
                 <!-- GuardIAn -->
-                <div class="project-card"
-                    onclick="window.open('https://github.com/Patrickleondev/Hackathon_au_Togo_IT_Days_2025_EPL_Team', '_blank')">
-                    <div class="project-status"><i class="fas fa-trophy" style="color: gold;"></i> 1st Prize - Togo IT
+                <div class="project-card">
+                    <div class="project-status"><i class="fas fa-trophy" aria-hidden="true" style="color: gold;"></i> 1st Prize - Togo IT
                         Days 2025</div>
                     <div class="project-info">
-                        <h3>GuardIAn - Ransomware Defense</h3>
+                        <h3><a class="card-link" href="https://github.com/Patrickleondev/Hackathon_au_Togo_IT_Days_2025_EPL_Team" target="_blank" rel="noopener">GuardIAn - Ransomware Defense</a></h3>
                         <p class="project-desc">Intelligent system for detection and neutralization of ransomwares based
                             on kill chain analysis and malicious behavior. Static/dynamic analysis of executables (ELF,
                             EXE/DLL, macOS), suspect signature detection, identification and neutralization of malicious
@@ -81,12 +90,11 @@
                 </div>
 
                 <!-- SanoC -->
-                <div class="project-card"
-                    onclick="window.open('https://github.com/Patrickleondev/Projet_Final_Niveau_Avance_DCLIC', '_blank')">
-                    <div class="project-status"><i class="fas fa-medal" style="color: #cd7f32;"></i> 4th Place
+                <div class="project-card">
+                    <div class="project-status"><i class="fas fa-medal" aria-hidden="true" style="color: #cd7f32;"></i> 4th Place
                         Nationwide - MIABE Hackathon (16 countries)</div>
                     <div class="project-info">
-                        <h3>SanoC - Digital Health</h3>
+                        <h3><a class="card-link" href="https://github.com/Patrickleondev/Projet_Final_Niveau_Avance_DCLIC" target="_blank" rel="noopener">SanoC - Digital Health</a></h3>
                         <p class="project-desc">Digital community health platform: medical appointments, automatic
                             medication reminders (notifications), secured digital medical record (allergies, blood type,
                             history), geolocation of health centers. Contribution to functional and technical design
@@ -98,12 +106,11 @@
                 </div>
 
                 <!-- AgriVision -->
-                <div class="project-card"
-                    onclick="window.open('https://github.com/Patrickleondev/Modele_de_Classification_d_Image_Agricole', '_blank')">
-                    <div class="project-status"><i class="fas fa-check-circle" style="color: var(--accent-color);"></i>
+                <div class="project-card">
+                    <div class="project-status"><i class="fas fa-check-circle" aria-hidden="true" style="color: var(--accent-color);"></i>
                         Final Project FORCE-N (97% Accuracy)</div>
                     <div class="project-info">
-                        <h3>AgriVision - Computer Vision</h3>
+                        <h3><a class="card-link" href="https://github.com/Patrickleondev/Modele_de_Classification_d_Image_Agricole" target="_blank" rel="noopener">AgriVision - Computer Vision</a></h3>
                         <p class="project-desc">Computer vision model for agricultural image classification (+50
                             classes). Uses ResNet-50 and MobileNetV2 with ML and Deep Learning approaches. Data
                             preprocessing, model training, and performance analysis. Final accuracy: 97%.</p>
@@ -118,11 +125,10 @@
         <section class="section-container" id="internship">
             <h2 class="section-title">Future Interns Internship 2026</h2>
             <div class="projects-grid">
-                <article class="project-card"
-                    onclick="window.open('https://github.com/Patrickleondev/FUTURE_CS_01', '_blank')">
-                    <div class="project-status"><i class="fas fa-briefcase"></i> Task 1 - Web VAPT</div>
+                <article class="project-card">
+                    <div class="project-status"><i class="fas fa-briefcase" aria-hidden="true"></i> Task 1 - Web VAPT</div>
                     <div class="project-info">
-                        <h3>Altoro Mutual Assessment</h3>
+                        <h3><a class="card-link" href="https://github.com/Patrickleondev/FUTURE_CS_01" target="_blank" rel="noopener">Altoro Mutual Assessment</a></h3>
                         <p class="project-desc">Passive vulnerability assessment using Nmap, WhatWeb, Nikto, and OWASP
                             ZAP. Business-oriented reporting with prioritized remediation actions.</p>
                         <p class="project-meta">Deliverables: VAPT report, technical evidence, step-by-step methodology.</p>
@@ -132,11 +138,10 @@
                     </div>
                 </article>
 
-                <article class="project-card"
-                    onclick="window.open('https://github.com/Patrickleondev/FUTURE_CS_02', '_blank')">
-                    <div class="project-status"><i class="fas fa-envelope-open-text"></i> Task 2 - Phishing</div>
+                <article class="project-card">
+                    <div class="project-status"><i class="fas fa-envelope-open-text" aria-hidden="true"></i> Task 2 - Phishing</div>
                     <div class="project-info">
-                        <h3>Phishing Detection & Awareness</h3>
+                        <h3><a class="card-link" href="https://github.com/Patrickleondev/FUTURE_CS_02" target="_blank" rel="noopener">Phishing Detection & Awareness</a></h3>
                         <p class="project-desc">Analysis of 3 realistic scenarios (credential phishing, BEC, internal
                             spear phishing) with risk classification and awareness guidance.</p>
                         <p class="project-meta">Deliverables: awareness report, red-flag matrix, practical recommendations.</p>
@@ -146,11 +151,10 @@
                     </div>
                 </article>
 
-                <article class="project-card"
-                    onclick="window.open('https://github.com/Patrickleondev/FUTURE_CS_03', '_blank')">
-                    <div class="project-status"><i class="fas fa-plug"></i> Task 3 - API Security</div>
+                <article class="project-card">
+                    <div class="project-status"><i class="fas fa-plug" aria-hidden="true"></i> Task 3 - API Security</div>
                     <div class="project-info">
-                        <h3>VAmPI API Risk Analysis</h3>
+                        <h3><a class="card-link" href="https://github.com/Patrickleondev/FUTURE_CS_03" target="_blank" rel="noopener">VAmPI API Risk Analysis</a></h3>
                         <p class="project-desc">Manual testing against OWASP API risks (BOLA, BFLA, excessive data
                             exposure) with impact evidence and zero-trust hardening strategy.</p>
                         <p class="project-meta">Deliverables: API report, Postman screenshots, automation script.</p>
@@ -165,15 +169,15 @@
         <section class="section-container" id="publications">
             <h2 class="section-title">Blog & Writeups</h2>
             <div class="projects-grid">
-                <article class="project-card" onclick="window.open('./blog/writeups/', '_blank')">
-                    <div class="project-status"><i class="fas fa-pen-nib"></i> Structured Publishing Flow</div>
+                <article class="project-card">
+                    <div class="project-status"><i class="fas fa-pen-nib" aria-hidden="true"></i> Structured Publishing Flow</div>
                     <div class="project-info">
-                        <h3>Writeups Section</h3>
+                        <h3><a class="card-link" href="./blog/writeups/">Writeups Section</a></h3>
                         <p class="project-desc">Clean publishing structure for technical articles, risk analyses, and CTF
                             writeups with better readability and navigation.</p>
                         <div class="project-links">
-                            <a href="./blog/writeups/" target="_blank" onclick="event.stopPropagation()">Open writeups</a>
-                            <a href="./blog/internship/" target="_blank" onclick="event.stopPropagation()">Open internship log</a>
+                            <a href="./blog/writeups/">Open writeups</a>
+                            <a href="./blog/internship/">Open internship log</a>
                         </div>
                     </div>
                 </article>
@@ -184,38 +188,38 @@
         <footer>
             <div class="footer-content">
                 <div class="social-icons-footer">
-                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" title="TryHackMe">
+                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" rel="noopener" title="TryHackMe">
                         <img src="https://simpleicons.org/icons/tryhackme.svg" alt="TryHackMe" class="icon-svg">
                     </a>
-                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" title="HackTheBox">
+                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" rel="noopener" title="HackTheBox">
                         <img src="https://simpleicons.org/icons/hackthebox.svg" alt="HackTheBox" class="icon-svg">
                     </a>
-                    <a href="https://github.com/Patrickleondev" target="_blank" title="GitHub">
+                    <a href="https://github.com/Patrickleondev" target="_blank" rel="noopener" title="GitHub">
                         <img src="https://simpleicons.org/icons/github.svg" alt="GitHub" class="icon-svg">
                     </a>
-                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" title="LinkedIn">
-                        <i class="fab fa-linkedin icon-svg"
+                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin icon-svg" aria-hidden="true"
                             style="font-size: 24px; display: flex; align-items: center; justify-content: center;"></i>
                     </a>
-                    <a href="https://x.com/gkpl0010" target="_blank" title="X (Twitter)">
+                    <a href="https://x.com/gkpl0010" target="_blank" rel="noopener" title="X (Twitter)">
                         <img src="https://simpleicons.org/icons/x.svg" alt="X" class="icon-svg">
                     </a>
                 </div>
                 <div class="contact-info"
                     style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <a href="https://wa.me/22893035706" target="_blank" class="whatsapp-btn">
+                    <a href="https://wa.me/33758378853" target="_blank" rel="noopener" class="whatsapp-btn">
                         <img src="https://simpleicons.org/icons/whatsapp.svg" alt="WhatsApp" class="icon-svg-small">
                         Contact via WhatsApp
                     </a>
-                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email">
-                        <i class="fas fa-envelope icon-svg" style="font-size: 24px;"></i>
+                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email" aria-label="Email">
+                        <i class="fas fa-envelope icon-svg" aria-hidden="true" style="font-size: 24px;"></i>
                     </a>
                 </div>
                 <p class="copyright">© 2026 Koffi Patrick-Léon Gandonou. Built for AI Security.</p>
             </div>
         </footer>
     </main>
-    <script type="module" src="./main.js?v=3"></script>
+    <script type="module" src="./main.js?v=4"></script>
 </body>
 
 </html>

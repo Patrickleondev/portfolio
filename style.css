@@ -1473,3 +1473,20 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* Curseur de l'effet machine à écrire */
+.type-cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: -0.1em;
+    background: var(--accent-color);
+    animation: type-blink 0.8s steps(1) infinite;
+}
+
+@keyframes type-blink {
+    50% {
+        opacity: 0;
+    }
+}

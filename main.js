@@ -50,29 +50,98 @@ if (matrixBg) {
     }
 }
 
-// Effet machine à écrire, limité aux titres courts. Le texte complet reste lisible
-// par les lecteurs d'écran (aria-label) et s'affiche directement sans animation.
-const typedSelectors = ['.greeting', '.glitch', '#about-title', '#services-title',
-    '#realizations-title', '#expertise-title', '#tech-title'];
+// Effet machine à écrire.
+// - Le haut de page s'écrit élément par élément, dans l'ordre.
+// - Les titres de section plus bas s'écrivent quand ils arrivent à l'écran.
+// - La place est réservée avant d'effacer : la page ne saute pas.
+// - Les lecteurs d'écran lisent le texte complet (copie masquée visuellement),
+//   et rien ne s'anime si le visiteur a demandé moins d'animations.
+const introSelectors = ['.greeting', '.glitch', '.hero-school', '.role', '.bio-short',
+    '#about-title', '.about-text p', '#expertise-title'];
 
-function typeWriter(element, text, i = 0) {
-    if (i < text.length) {
-        element.textContent += text.charAt(i);
-        setTimeout(() => typeWriter(element, text, i + 1), 45);
-    } else {
-        element.classList.remove('typing');
+function prepareTyping(element) {
+    if (element.dataset.typed) return null;
+    element.dataset.typed = '1';
+    element.style.visibility = '';
+    element.style.minHeight = element.offsetHeight + 'px';
+
+    const full = element.textContent.replace(/\s+/g, ' ').trim();
+    const visual = document.createElement('span');
+    visual.setAttribute('aria-hidden', 'true');
+    while (element.firstChild) visual.appendChild(element.firstChild);
+    const readable = document.createElement('span');
+    readable.className = 'sr-only';
+    readable.textContent = full;
+    element.append(readable, visual);
+
+    // On garde les balises internes (ex. le « // » en vert) et on vide seulement le texte.
+    const walker = document.createTreeWalker(visual, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) {
+        const node = walker.currentNode;
+        const text = node.textContent.replace(/\s+/g, ' ');
+        if (text.trim() === '' && nodes.length === 0) { node.textContent = ''; continue; }
+        nodes.push({ node, text });
+        node.textContent = '';
     }
+    return { element, nodes };
 }
 
+function typeInto(job, speed) {
+    return new Promise(resolve => {
+        const cursor = document.createElement('span');
+        cursor.className = 'type-cursor';
+        cursor.setAttribute('aria-hidden', 'true');
+        let n = 0, i = 0;
+
+        const step = () => {
+            if (n >= job.nodes.length) {
+                cursor.remove();
+                job.element.style.minHeight = '';
+                return resolve();
+            }
+            const { node, text } = job.nodes[n];
+            if (i === 0) node.parentNode.insertBefore(cursor, node.nextSibling);
+            node.textContent = text.slice(0, i + 1);
+            i++;
+            if (i >= text.length) { n++; i = 0; }
+            setTimeout(step, speed);
+        };
+        step();
+    });
+}
+
+const speedFor = el => (el.textContent.length > 60 ? 12 : 40);
+
 if (!reduceMotion) {
-    typedSelectors.forEach((selector, index) => {
-        const element = document.querySelector(selector);
-        if (!element) return;
-        const text = element.getAttribute('data-text') || element.textContent.trim();
-        element.setAttribute('aria-label', text);
-        element.textContent = '';
-        element.classList.add('typing');
-        setTimeout(() => typeWriter(element, text), index === 0 ? 0 : 300);
+    const intro = [];
+    introSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+            const job = prepareTyping(el);
+            if (job) intro.push(job);
+        });
+    });
+
+    (async () => {
+        for (const job of intro) {
+            await typeInto(job, speedFor(job.element));
+            await new Promise(r => setTimeout(r, 120));
+        }
+    })();
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            observer.unobserve(entry.target);
+            const job = prepareTyping(entry.target);
+            if (job) typeInto(job, 35);
+        });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.section-title, .subsection-title, .cert-block > h3').forEach(el => {
+        if (el.dataset.typed) return;
+        el.style.visibility = 'hidden';
+        observer.observe(el);
     });
 }
 

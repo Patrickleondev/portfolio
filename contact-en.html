@@ -4,18 +4,26 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact | AI RedTeamer</title>
-    <meta name="description" content="Contact Koffi Patrick-Léon G. - AI Red Teamer & Pentester">
+    <title>Contact – Koffi Patrick-Léon Gandonou</title>
+    <meta property="og:title" content="Contact – Koffi Patrick-Léon Gandonou">
+    <meta property="og:description" content="Contact Koffi Patrick-Léon Gandonou by email, phone, WhatsApp or LinkedIn.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://patrickleondev.github.io/portfolio/assets/images/me.jpg">
+    <meta name="theme-color" content="#0d0208">
+    <link rel="icon" href="/portfolio/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/portfolio/favicon-32.png">
+    <link rel="apple-touch-icon" href="/portfolio/apple-touch-icon.png">
+    <meta name="description" content="Contact Koffi Patrick-Léon Gandonou by email, phone, WhatsApp or LinkedIn.">
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;600;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script type="module" crossorigin src="/portfolio/assets/style-DbcOQzhP.js"></script>
-  <script type="module" crossorigin src="/portfolio/assets/main-CdYxh62B.js"></script>
-  <link rel="stylesheet" crossorigin href="/portfolio/assets/style-CfrD5w_K.css">
+  <script type="module" crossorigin src="/portfolio/assets/main-BW0uvYth.js"></script>
+  <link rel="stylesheet" crossorigin href="/portfolio/assets/main-1rh29SqH.css">
 </head>
 
 <body>
+    <a class="skip-link" href="#contenu">Skip to content</a>
     <div id="matrix-bg"></div>
     <div class="overlay"></div>
     <main>
@@ -35,6 +43,7 @@
                 </ul>
             </nav>
         </header>
+        <div id="contenu" tabindex="-1"></div>
 
         <section class="section-container">
             <h2 class="section-title">Contact me</h2>
@@ -43,20 +52,20 @@
             <div class="contact-container">
                 <div class="contact-intro">
                     <p style="text-align: center; color: var(--dim-color); margin-bottom: 2rem;">
-                        <i class="fas fa-terminal" style="color: var(--accent-color);"></i>
+                        <i class="fas fa-terminal" aria-hidden="true" style="color: var(--accent-color);"></i>
                         Have a project in cybersecurity or AI Security? Feel free to contact me.
                     </p>
                 </div>
 
-                <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <form id="contact-form" class="contact-form" action="mailto:gandonoupatrickleon@gmail.com" method="GET" novalidate>
                     <div class="form-group">
-                        <label for="name">Name <span class="required">*</span></label>
-                        <input type="text" id="name" name="name" required placeholder="Your full name">
+                        <label for="name">Name <span class="required" aria-hidden="true">*</span></label>
+                        <input type="text" id="name" name="name" autocomplete="name" required placeholder="Your full name">
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        <label for="email">Email <span class="required" aria-hidden="true">*</span></label>
+                        <input type="email" id="email" name="email" autocomplete="email" required placeholder="your.email@example.com">
                     </div>
 
                     <div class="form-group">
@@ -65,16 +74,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="message">Message <span class="required">*</span></label>
+                        <label for="message">Message <span class="required" aria-hidden="true">*</span></label>
                         <textarea id="message" name="message" rows="6" required
                             placeholder="Your message..."></textarea>
                     </div>
 
                     <button type="submit" class="btn primary submit-btn">
-                        <i class="fas fa-paper-plane"></i> Send message
+                        <i class="fas fa-paper-plane" aria-hidden="true"></i> Send message
                     </button>
 
-                    <div id="form-status" class="form-status"></div>
+                    <p class="form-note">The button opens your email app with the message ready to send.</p>
+                    <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
                 </form>
 
                 <!-- Alternative Contact Methods -->
@@ -84,16 +94,20 @@
                     </h3>
                     <div class="contact-links">
                         <a href="mailto:gandonoupatrickleon@gmail.com" class="contact-link">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
                             <span>Email</span>
                         </a>
-                        <a href="https://wa.me/22893035706" target="_blank" class="contact-link">
-                            <i class="fab fa-whatsapp"></i>
+                        <a href="tel:+33758378853" class="contact-link">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <span>+33 7 58 37 88 53</span>
+                        </a>
+                        <a href="https://wa.me/33758378853" target="_blank" rel="noopener" class="contact-link">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
                             <span>WhatsApp</span>
                         </a>
-                        <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank"
+                        <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" rel="noopener"
                             class="contact-link">
-                            <i class="fab fa-linkedin"></i>
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
                             <span>LinkedIn</span>
                         </a>
                     </div>
@@ -105,31 +119,31 @@
         <footer>
             <div class="footer-content">
                 <div class="social-icons-footer">
-                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" title="TryHackMe">
+                    <a href="https://tryhackme.com/p/t3chwiz4rd" target="_blank" rel="noopener" title="TryHackMe">
                         <img src="https://simpleicons.org/icons/tryhackme.svg" alt="TryHackMe" class="icon-svg">
                     </a>
-                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" title="HackTheBox">
+                    <a href="https://app.hackthebox.com/users/2165503" target="_blank" rel="noopener" title="HackTheBox">
                         <img src="https://simpleicons.org/icons/hackthebox.svg" alt="HackTheBox" class="icon-svg">
                     </a>
-                    <a href="https://github.com/Patrickleondev" target="_blank" title="GitHub">
+                    <a href="https://github.com/Patrickleondev" target="_blank" rel="noopener" title="GitHub">
                         <img src="https://simpleicons.org/icons/github.svg" alt="GitHub" class="icon-svg">
                     </a>
-                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" title="LinkedIn">
-                        <i class="fab fa-linkedin icon-svg"
+                    <a href="https://www.linkedin.com/in/patrick-léon-gandonou/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin icon-svg" aria-hidden="true"
                             style="font-size: 24px; display: flex; align-items: center; justify-content: center;"></i>
                     </a>
-                    <a href="https://x.com/gkpl0010" target="_blank" title="X (Twitter)">
+                    <a href="https://x.com/gkpl0010" target="_blank" rel="noopener" title="X (Twitter)">
                         <img src="https://simpleicons.org/icons/x.svg" alt="X" class="icon-svg">
                     </a>
                 </div>
                 <div class="contact-info"
                     style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <a href="https://wa.me/22893035706" target="_blank" class="whatsapp-btn">
+                    <a href="https://wa.me/33758378853" target="_blank" rel="noopener" class="whatsapp-btn">
                         <img src="https://simpleicons.org/icons/whatsapp.svg" alt="WhatsApp" class="icon-svg-small">
                         Contact via WhatsApp
                     </a>
-                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email">
-                        <i class="fas fa-envelope icon-svg" style="font-size: 24px;"></i>
+                    <a href="mailto:gandonoupatrickleon@gmail.com" class="email-icon" title="Email" aria-label="Email">
+                        <i class="fas fa-envelope icon-svg" aria-hidden="true" style="font-size: 24px;"></i>
                     </a>
                 </div>
                 <p class="copyright">© 2026 Koffi Patrick-Léon Gandonou. Built for AI Security.</p>
@@ -138,40 +152,23 @@
     </main>
 
     <script>
-        // Form submission handling
+        // Pas de service d'envoi : le formulaire compose un email dans la messagerie du visiteur.
         const form = document.getElementById('contact-form');
         const formStatus = document.getElementById('form-status');
+        const to = 'gandonoupatrickleon@gmail.com';
 
-        form.addEventListener('submit', async function (e) {
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
-
-            const submitBtn = form.querySelector('.submit-btn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-            const formData = new FormData(form);
-
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    formStatus.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> Message sent successfully! I will respond soon.</div>';
-                    form.reset();
-                } else {
-                    throw new Error('Error during sending');
-                }
-            } catch (error) {
-                formStatus.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error during sending. Please retry or contact me directly by email.</div>';
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send message';
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
             }
+            const data = new FormData(form);
+            const subject = data.get('subject') || 'Portfolio – ' + data.get('name');
+            const body = data.get('message') + '\n\n— ' + data.get('name') + ' (' + data.get('email') + ')';
+            window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) +
+                '&body=' + encodeURIComponent(body);
+            formStatus.innerHTML = '<div class="success-message">Your email app should now be open with the message ready. If nothing happened, write directly to <a href="mailto:' + to + '">' + to + '</a>.</div>';
         });
     </script>
 </body>

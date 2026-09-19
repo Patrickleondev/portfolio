@@ -1426,3 +1426,23 @@ footer {
     height: 72px;
     padding: 4px;
 }
+
+/* Établissement sous le titre de l'accueil */
+.hero-school {
+    font-family: var(--font-heading);
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 600;
+    color: var(--text-color);
+    margin: -0.25rem 0 1.5rem;
+}
+
+/* Photo de profil en cercle */
+.image-frame,
+.image-frame::after {
+    border-radius: 50%;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    object-position: 50% 22%;
+}

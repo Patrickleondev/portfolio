@@ -56,8 +56,14 @@ if (matrixBg) {
 // - La place est réservée avant d'effacer : la page ne saute pas.
 // - Les lecteurs d'écran lisent le texte complet (copie masquée visuellement),
 //   et rien ne s'anime si le visiteur a demandé moins d'animations.
-const introSelectors = ['.greeting', '.glitch', '.hero-school', '.role', '.bio-short',
-    '#about-title', '.about-text p', '#expertise-title'];
+// Chaque groupe s'écrit d'un coup ; les groupes s'enchaînent l'un après l'autre.
+const introGroups = [
+    ['.glitch'],
+    ['.hero-school', '.role', '.bio-short'],
+    ['#about-title'],
+    ['.about-text p'],
+    ['#expertise-title']
+];
 
 function prepareTyping(element) {
     if (element.dataset.typed) return null;
@@ -114,17 +120,16 @@ function typeInto(job, speed) {
 const speedFor = el => (el.textContent.length > 60 ? 12 : 40);
 
 if (!reduceMotion) {
-    const intro = [];
-    introSelectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(el => {
-            const job = prepareTyping(el);
-            if (job) intro.push(job);
-        });
-    });
+    const groups = introGroups
+        .map(selectors => selectors
+            .flatMap(selector => [...document.querySelectorAll(selector)])
+            .map(prepareTyping)
+            .filter(Boolean))
+        .filter(jobs => jobs.length);
 
     (async () => {
-        for (const job of intro) {
-            await typeInto(job, speedFor(job.element));
+        for (const jobs of groups) {
+            await Promise.all(jobs.map(job => typeInto(job, speedFor(job.element))));
             await new Promise(r => setTimeout(r, 120));
         }
     })();

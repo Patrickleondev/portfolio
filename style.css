@@ -1113,6 +1113,9 @@ footer {
 /* ---------- Accessibilité et confort de lecture ---------- */
 
 .sr-only {
+    /* copie lue par les lecteurs d'écran : ne doit pas être sélectionnable ni copiée */
+    user-select: none;
+    -webkit-user-select: none;
     position: absolute;
     width: 1px;
     height: 1px;

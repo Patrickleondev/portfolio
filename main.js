@@ -229,3 +229,30 @@ certImages.forEach(img => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
     });
 });
+
+// Son "cyber" au clic sur les liens et les boutons. Il était joué au survol jusqu'en
+// septembre 2026 ; au clic, il ne se déclenche que sur une action volontaire.
+let audioCtx = null;
+
+function playClickSound() {
+    try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(120, audioCtx.currentTime);
+        oscillator.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+        gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.05);
+    } catch (e) { /* audio indisponible : on reste silencieux */ }
+}
+
+document.addEventListener('click', e => {
+    if (e.target.closest('a, button, .btn')) playClickSound();
+});

@@ -1,5 +1,6 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isEnglish = document.documentElement.lang === 'en';
+const isLight = () => document.documentElement.dataset.theme === 'light';
 
 // Fond Matrix : décoratif, masqué aux lecteurs d'écran, en pause quand l'onglet est caché
 // et figé si le visiteur a demandé moins d'animations.
@@ -21,9 +22,9 @@ if (matrixBg) {
     }
 
     function draw() {
-        ctx.fillStyle = "rgba(13, 2, 8, 0.05)";
+        ctx.fillStyle = isLight() ? "rgba(244, 247, 244, 0.08)" : "rgba(13, 2, 8, 0.05)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#00ff41";
+        ctx.fillStyle = isLight() ? "#0b8a3a" : "#00ff41";
         ctx.font = fontSize + "px monospace";
 
         for (let i = 0; i < drops.length; i++) {
@@ -180,6 +181,38 @@ if (nav) {
     });
 }
 
+// Thème clair / sombre. Le clair est celui par défaut ; le choix ne dure que le temps
+// de la visite. Le <head> de chaque page l'applique avant l'affichage.
+if (nav) {
+    const item = document.createElement('li');
+    item.className = 'theme-item';
+    const themeBtn = document.createElement('button');
+    themeBtn.type = 'button';
+    themeBtn.className = 'theme-toggle';
+    item.appendChild(themeBtn);
+    nav.querySelector('.lang-switch').before(item);
+
+    const render = () => {
+        const light = isLight();
+        const label = light
+            ? (isEnglish ? 'Switch to dark mode' : 'Passer en fond sombre')
+            : (isEnglish ? 'Switch to light mode' : 'Passer en fond clair');
+        themeBtn.innerHTML = '<i class="fas ' + (light ? 'fa-moon' : 'fa-sun') + '" aria-hidden="true"></i>';
+        themeBtn.setAttribute('aria-label', label);
+        themeBtn.title = label;
+        document.querySelector('meta[name="theme-color"]').content = light ? '#f4f7f4' : '#0d0208';
+    };
+
+    themeBtn.addEventListener('click', () => {
+        const light = !isLight();
+        if (light) document.documentElement.dataset.theme = 'light';
+        else delete document.documentElement.dataset.theme;
+        try { sessionStorage.setItem('theme', light ? 'light' : 'dark'); } catch (e) { /* stockage indisponible */ }
+        render();
+    });
+    render();
+}
+
 // Visionneuse de certificats : ouvrable à la souris et au clavier, fermée par Échap,
 // le focus revient sur l'image d'origine.
 const certImages = document.querySelectorAll('.clickable-cert img');
@@ -230,8 +263,8 @@ certImages.forEach(img => {
     });
 });
 
-// Son "cyber" au clic sur les liens et les boutons. Il était joué au survol jusqu'en
-// septembre 2026 ; au clic, il ne se déclenche que sur une action volontaire.
+// Son "cyber" au survol des liens, boutons et cartes. Les navigateurs n'autorisent
+// le son qu'après une première interaction (clic ou touche) : avant, il reste muet.
 let audioCtx = null;
 
 function playClickSound() {
@@ -253,6 +286,8 @@ function playClickSound() {
     } catch (e) { /* audio indisponible : on reste silencieux */ }
 }
 
-document.addEventListener('click', e => {
-    if (e.target.closest('a, button, .btn')) playClickSound();
+document.querySelectorAll('a, button, .btn, .service-card, .project-card').forEach(el => {
+    el.addEventListener('pointerenter', e => {
+        if (e.pointerType === 'mouse') playClickSound();
+    });
 });

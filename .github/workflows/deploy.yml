@@ -1,9 +1,12 @@
 name: Deploy to GitHub Pages (Hybrid Vite + Jekyll)
 
+# Lancement manuel seulement (onglet Actions) tant que la facturation bloque GitHub Actions :
+# sinon chaque push sur main échoue et envoie un mail. Une fois réglé, remettre :
+#   push:
+#     branches:
+#       - main
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   contents: write

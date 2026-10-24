@@ -291,3 +291,63 @@ document.querySelectorAll('a, button, .btn, .service-card, .project-card').forEa
         if (e.pointerType === 'mouse') playClickSound();
     });
 });
+
+// Notification par mail à chaque visite (une par session), via EmailJS.
+const EMAILJS = {
+    publicKey: 'iDAAJccPUyJWnHZ_f',
+    serviceId: 'service_hm39lyc',
+    templateId: 'template_7f7jy9k'
+};
+// Robots qui affichent un aperçu du lien, pas les navigateurs intégrés aux applications
+// (l'application LinkedIn ouvre le site dans un vrai navigateur, à ne pas ignorer).
+const BOT_PATTERN = /bot\b|bot\/|crawl|spider|slurp|headless|lighthouse|facebookexternalhit|linkedinbot|^whatsapp\/|telegrambot|skypeuripreview/i;
+
+async function sendVisitNotification() {
+    try {
+        if (sessionStorage.getItem('visit-notified')) return;
+    } catch (e) { /* stockage indisponible : on envoie quand même */ }
+
+    // La localisation est un bonus : si un bloqueur de publicité bloque ipapi.co,
+    // le mail part quand même, sans ville ni pays.
+    let ipData = {};
+    try {
+        ipData = await fetch('https://ipapi.co/json/').then(res => res.json());
+    } catch (e) { /* localisation indisponible */ }
+
+    let entreprise = ipData.org || 'N/A';
+    if (/orange|free|sfr|bouygues/i.test(entreprise)) {
+        entreprise = 'Particulier / réseau privé';
+    }
+
+    try {
+        const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                service_id: EMAILJS.serviceId,
+                template_id: EMAILJS.templateId,
+                user_id: EMAILJS.publicKey,
+                template_params: {
+                    ip: ipData.ip || 'N/A',
+                    country: ipData.country_name || 'N/A',
+                    city: ipData.city || 'N/A',
+                    isp: ipData.org || 'N/A',
+                    entreprise: entreprise,
+                    browser: navigator.userAgent.substring(0, 120),
+                    page: window.location.href,
+                    date: new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+                }
+            })
+        });
+        if (!response.ok) throw new Error(response.status + ' ' + await response.text());
+        // marquée seulement une fois le mail réellement parti
+        try { sessionStorage.setItem('visit-notified', '1'); } catch (e) { /* rien */ }
+        console.log('Notification de visite envoyée');
+    } catch (error) {
+        console.log('Notification de visite non envoyée', error);
+    }
+}
+
+if (location.hostname.endsWith('github.io') && !navigator.webdriver && !BOT_PATTERN.test(navigator.userAgent)) {
+    sendVisitNotification();
+}
